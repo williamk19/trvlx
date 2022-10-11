@@ -1,7 +1,8 @@
 import React from "react";
 import { Head } from "@inertiajs/inertia-react";
 import NavbarLandingPage from '@/Components/NavbarLandingPage';
-import HeroLandingPage from '@/Components/HeroLandingPage';
+import HeroLandingPage from '@/Components/LandingPage/HeroLandingPage';
+import FooterLandingPage from '@/Components/LandingPage/FooterLandingPage';
 
 export default function Welcome(props) {
   return (
@@ -9,6 +10,7 @@ export default function Welcome(props) {
       <Head title="Travel Booking System" />
       <NavbarLandingPage />
       <HeroLandingPage />
+      <FooterLandingPage />
     </div>
   );
 }
