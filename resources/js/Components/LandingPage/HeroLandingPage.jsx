@@ -13,7 +13,7 @@ const HeroLandingPage = () => {
           </h1>
           <p className="py-6">Dengan Armada Transportasi yang Sehat, Bersih, Harum, pelayanan yang maksimal dan didukung oleh Driver Ramah Profesional serta Customer Service yang fast respon selama 24 jam akan membuat Anda semakin nyaman di perjalanan.</p>
         </div>
-        <div className="card overflow-visible flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+        <div className="card border border-cyan-500 overflow-visible flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <div className="card-body">
             <div className="form-control">
               <label className="label">
@@ -40,7 +40,7 @@ const HeroLandingPage = () => {
               </select>
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Cari Travel</button>
+              <button className="btn btn-info font-bold">Cari Travel</button>
             </div>
           </div>
         </div>
