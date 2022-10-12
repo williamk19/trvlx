@@ -4,6 +4,7 @@ import NavbarLandingPage from '@/Components/NavbarLandingPage';
 import HeroLandingPage from '@/Components/LandingPage/HeroLandingPage';
 import FooterLandingPage from '@/Components/LandingPage/FooterLandingPage';
 import BenefitsLandingPage from '@/Components/LandingPage/BenefitsLandingPage';
+import TravelPackageLandingPage from '@/Components/LandingPage/TravelPackageLandingPage';
 
 export default function Welcome(props) {
   return (
@@ -12,6 +13,7 @@ export default function Welcome(props) {
       <NavbarLandingPage />
       <HeroLandingPage />
       <BenefitsLandingPage />
+      <TravelPackageLandingPage />
       <FooterLandingPage />
     </div>
   );
