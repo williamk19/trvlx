@@ -5,6 +5,8 @@ import HeroLandingPage from '@/Components/LandingPage/HeroLandingPage';
 import FooterLandingPage from '@/Components/LandingPage/FooterLandingPage';
 import BenefitsLandingPage from '@/Components/LandingPage/BenefitsLandingPage';
 import TravelPackageLandingPage from '@/Components/LandingPage/TravelPackageLandingPage';
+import MapBox from '@/Components/Utility/MapBox';
+
 
 export default function Welcome(props) {
   return (
