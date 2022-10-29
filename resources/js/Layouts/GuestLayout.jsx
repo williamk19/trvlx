@@ -1,12 +1,12 @@
 import React from "react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import { Link } from "@inertiajs/inertia-react";
-import NavbarLandingPage from '@/Components/NavbarLandingPage';
+import NavbarLandingPage from '@/Components/LandingPage/NavbarLandingPage';
 
-export default function Guest({ children }) {
+export default function Guest({auth, children }) {
   return (
     <div className="min-h-screen flex flex-col sm:justify-start items-center bg-gray-100">
-      <NavbarLandingPage />
+      <NavbarLandingPage auth={auth} />
       <div className="w-6/12 flex-1 flex flex-col justify-center items-center">
         <div>
           <Link href="/">
