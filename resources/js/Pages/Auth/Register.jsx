@@ -8,9 +8,10 @@ import { Head, Link, useForm } from '@inertiajs/inertia-react';
 
 export default function Register({auth}) {
   const { data, setData, post, processing, errors, reset } = useForm({
-    name: '',
-    email: '',
-    password: '',
+    nama_user: '',
+    email_user: '',
+    telepon_user: '',
+    password_user: '',
     password_confirmation: '',
   });
 
@@ -33,14 +34,12 @@ export default function Register({auth}) {
   return (
     <GuestLayout auth={auth}>
       <Head title="Register" />
-
       <form onSubmit={submit}>
         <div>
-          <InputLabel forInput="name" value="Nama" />
-
+          <InputLabel forInput="nama_user" value="Nama" />
           <TextInput
             type="text"
-            name="name"
+            name="nama_user"
             value={data.name}
             className="mt-1 block w-full text-black"
             autoComplete="name"
@@ -48,45 +47,49 @@ export default function Register({auth}) {
             handleChange={onHandleChange}
             required
           />
-
           <InputError message={errors.name} className="mt-2" />
         </div>
-
         <div className="mt-4">
-          <InputLabel forInput="email" value="Email" />
-
+          <InputLabel forInput="email_user" value="Email" />
           <TextInput
             type="email"
-            name="email"
+            name="email_user"
             value={data.email}
             className="mt-1 block w-full text-black"
             autoComplete="username"
             handleChange={onHandleChange}
             required
           />
-
           <InputError message={errors.email} className="mt-2" />
         </div>
-
         <div className="mt-4">
-          <InputLabel forInput="password" value="Password" />
-
+          <InputLabel forInput="telepon_user" value="Nomor Telepon" />
+          <TextInput
+            type="tel"
+            name="telepon_user"
+            value={data.telepon_user}
+            className="mt-1 block w-full text-black"
+            autoComplete="username"
+            handleChange={onHandleChange}
+            required
+          />
+          <InputError message={errors.email} className="mt-2" />
+        </div>
+        <div className="mt-4">
+          <InputLabel forInput="password_user" value="Password" />
           <TextInput
             type="password"
-            name="password"
+            name="password_user"
             value={data.password}
             className="mt-1 block w-full text-black"
             autoComplete="new-password"
             handleChange={onHandleChange}
             required
           />
-
           <InputError message={errors.password} className="mt-2" />
         </div>
-
         <div className="mt-4">
           <InputLabel forInput="password_confirmation" value="Konfirmasi Password" />
-
           <TextInput
             type="password"
             name="password_confirmation"
@@ -95,15 +98,12 @@ export default function Register({auth}) {
             handleChange={onHandleChange}
             required
           />
-
           <InputError message={errors.password_confirmation} className="mt-2" />
         </div>
-
         <div className="flex items-center justify-end mt-4">
           <Link href={route('login')} className="underline text-sm text-gray-600 hover:text-gray-900">
             Sudah Terdaftar?
           </Link>
-
           <PrimaryButton className="ml-4" processing={processing}>
             Daftar
           </PrimaryButton>
