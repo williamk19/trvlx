@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 .slick-prev:before {
-  color: rgb(53, 53, 53) !important;
+    color: rgb(53, 53, 53) !important;
 }
 .slick-next:before {
-  color: rgb(53, 53, 53) !important;
+    color: rgb(53, 53, 53) !important;
 }

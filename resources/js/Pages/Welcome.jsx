@@ -6,6 +6,7 @@ import FooterLandingPage from '@/Components/LandingPage/FooterLandingPage';
 import BenefitsLandingPage from '@/Components/LandingPage/BenefitsLandingPage';
 import TravelPackageLandingPage from '@/Components/LandingPage/TravelPackageLandingPage';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import TestimonialsLandingPage from '@/Components/LandingPage/TestimonialsLandingPage';
 
 
 export default function Welcome(props) {
@@ -16,6 +17,7 @@ export default function Welcome(props) {
       <HeroLandingPage />
       <BenefitsLandingPage />
       <TravelPackageLandingPage />
+      <TestimonialsLandingPage />
       <FooterLandingPage />
     </div>
   );

@@ -1,7 +1,7 @@
 const FooterLandingPage = () => {
   return (
     <div data-theme='dark' className='w-full flex items-center flex-col'>
-      <footer className="footer flex justify-between max-w-6xl py-10 w-11/12 text-base-content">
+      <footer className="footer flex flex-col lg:flex-row justify-between max-w-6xl py-10 w-11/12 text-base-content">
         <div>
           <span className="footer-title">Services</span>
           <a className="link link-hover">Branding</a>
