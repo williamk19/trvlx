@@ -15,7 +15,7 @@ const NavbarLandingPage = ({ auth }) => {
             <ul className="menu menu-horizontal p-0">
               <li>
                 <Link className='active:bg-[#a6adba1a]' href='/login'>
-                  {auth.user.name}
+                  {auth.user.nama_user}
                 </Link>
               </li>
             </ul>

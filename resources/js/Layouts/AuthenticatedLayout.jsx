@@ -6,6 +6,7 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/inertia-react";
 
 export default function Authenticated({ auth, header, children }) {
+  console.log(auth);
   const [showingNavigationDropdown, setShowingNavigationDropdown] =
     useState(false);
 
@@ -132,10 +133,10 @@ export default function Authenticated({ auth, header, children }) {
           <div className="pt-4 pb-1 border-t border-gray-200">
             <div className="px-4">
               <div className="font-medium text-base text-gray-800">
-                {auth.user.name}
+                {auth.user.nama_user}hhd
               </div>
               <div className="font-medium text-sm text-gray-500">
-                {auth.user.email}
+                {auth.user.email_user}
               </div>
             </div>
 

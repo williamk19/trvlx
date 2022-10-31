@@ -8,9 +8,8 @@ import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 
 export default function Login({ auth, status, canResetPassword }) {
-  console.log(auth)
   const { data, setData, post, processing, errors, reset } = useForm({
-    email: '',
+    email_user: '',
     password: '',
     remember: '',
   });
@@ -38,19 +37,19 @@ export default function Login({ auth, status, canResetPassword }) {
 
       <form onSubmit={submit}>
         <div>
-          <InputLabel forInput="email" value="Email" />
+          <InputLabel forInput="email_user" value="Email" />
 
           <TextInput
             type="text"
-            name="email"
-            value={data.email}
-            className="mt-1 block w-full"
-            autoComplete="username"
+            name="email_user"
+            value={data.email_user}
+            className="mt-1 block w-full text-black"
+            autoComplete="email"
             isFocused={true}
             handleChange={onHandleChange}
           />
 
-          <InputError message={errors.email} className="mt-2" />
+          <InputError message={errors.email_user} className="mt-2" />
         </div>
 
         <div className="mt-4">
@@ -60,7 +59,7 @@ export default function Login({ auth, status, canResetPassword }) {
             type="password"
             name="password"
             value={data.password}
-            className="mt-1 block w-full"
+            className="mt-1 block w-full text-black"
             autoComplete="current-password"
             handleChange={onHandleChange}
           />

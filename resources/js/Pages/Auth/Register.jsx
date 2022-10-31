@@ -4,6 +4,7 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
+import Input from 'react-phone-number-input/input';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 
 export default function Register({auth}) {
@@ -11,7 +12,7 @@ export default function Register({auth}) {
     nama_user: '',
     email_user: '',
     telepon_user: '',
-    password_user: '',
+    password: '',
     password_confirmation: '',
   });
 
@@ -27,7 +28,6 @@ export default function Register({auth}) {
 
   const submit = (e) => {
     e.preventDefault();
-
     post(route('register'));
   };
 
@@ -40,27 +40,27 @@ export default function Register({auth}) {
           <TextInput
             type="text"
             name="nama_user"
-            value={data.name}
+            value={data.nama_user}
             className="mt-1 block w-full text-black"
             autoComplete="name"
             isFocused={true}
             handleChange={onHandleChange}
             required
           />
-          <InputError message={errors.name} className="mt-2" />
+          <InputError message={errors.nama_user} className="mt-2" />
         </div>
         <div className="mt-4">
           <InputLabel forInput="email_user" value="Email" />
           <TextInput
             type="email"
             name="email_user"
-            value={data.email}
+            value={data.email_user}
             className="mt-1 block w-full text-black"
             autoComplete="username"
             handleChange={onHandleChange}
             required
           />
-          <InputError message={errors.email} className="mt-2" />
+          <InputError message={errors.email_user} className="mt-2" />
         </div>
         <div className="mt-4">
           <InputLabel forInput="telepon_user" value="Nomor Telepon" />
@@ -73,13 +73,21 @@ export default function Register({auth}) {
             handleChange={onHandleChange}
             required
           />
-          <InputError message={errors.email} className="mt-2" />
+          {/* <Input
+            country="ID"
+            international
+            withCountryCallingCode
+            type="tel"
+            name="telepon_user"
+            value={data.telepon_user}
+            onChange={onHandleChange} /> */}
+          <InputError message={errors.telepon_user} className="mt-2" />
         </div>
         <div className="mt-4">
-          <InputLabel forInput="password_user" value="Password" />
+          <InputLabel forInput="password" value="Password" />
           <TextInput
             type="password"
-            name="password_user"
+            name="password"
             value={data.password}
             className="mt-1 block w-full text-black"
             autoComplete="new-password"
