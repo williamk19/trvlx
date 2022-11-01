@@ -15,10 +15,15 @@ export default function Login({ auth, status, canResetPassword }) {
   });
 
   useEffect(() => {
+    console.log(errors);
     return () => {
       reset('password');
     };
   }, []);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   const onHandleChange = (event) => {
     setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
@@ -31,7 +36,6 @@ export default function Login({ auth, status, canResetPassword }) {
 
   return (
     <GuestLayout auth={auth}>
-      {/* <NavbarLandingPage /> */}
       <Head title="Log in" />
       {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
 
@@ -40,7 +44,7 @@ export default function Login({ auth, status, canResetPassword }) {
           <InputLabel forInput="email_user" value="Email" />
 
           <TextInput
-            type="text"
+            type="email"
             name="email_user"
             value={data.email_user}
             className="mt-1 block w-full text-black"
@@ -48,7 +52,6 @@ export default function Login({ auth, status, canResetPassword }) {
             isFocused={true}
             handleChange={onHandleChange}
           />
-
           <InputError message={errors.email_user} className="mt-2" />
         </div>
 
@@ -63,7 +66,6 @@ export default function Login({ auth, status, canResetPassword }) {
             autoComplete="current-password"
             handleChange={onHandleChange}
           />
-
           <InputError message={errors.password} className="mt-2" />
         </div>
 

@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
-use Barryvdh\Debugbar\Facades\Debugbar;
-
 class RegisteredUserController extends Controller
 {
   /**
@@ -46,8 +44,8 @@ class RegisteredUserController extends Controller
       'nama_user' => $request->nama_user,
       'id_kategori' => 4,
       'email_user' => $request->email_user,
-      'telepon_user' => $request->telepon_user,
-      'password' => Hash::make($request->password_user),
+      'telepon_user' => "+62" . $request->telepon_user,
+      'password' => Hash::make($request->password),
     ]);
 
     event(new Registered($user));

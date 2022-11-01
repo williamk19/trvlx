@@ -4,10 +4,10 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import Input from 'react-phone-number-input/input';
+import PhoneInput from 'react-phone-number-input/input';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 
-export default function Register({auth}) {
+export default function Register({ auth }) {
   const { data, setData, post, processing, errors, reset } = useForm({
     nama_user: '',
     email_user: '',
@@ -65,7 +65,8 @@ export default function Register({auth}) {
         <div className="mt-4">
           <InputLabel forInput="telepon_user" value="Nomor Telepon" />
           <TextInput
-            type="tel"
+            telp={`${true}`}
+            type="number"
             name="telepon_user"
             value={data.telepon_user}
             className="mt-1 block w-full text-black"
@@ -73,14 +74,6 @@ export default function Register({auth}) {
             handleChange={onHandleChange}
             required
           />
-          {/* <Input
-            country="ID"
-            international
-            withCountryCallingCode
-            type="tel"
-            name="telepon_user"
-            value={data.telepon_user}
-            onChange={onHandleChange} /> */}
           <InputError message={errors.telepon_user} className="mt-2" />
         </div>
         <div className="mt-4">
