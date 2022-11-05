@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Transition from '../../utils/Transition';
+import { Link } from '@inertiajs/inertia-react';
+import Transition from '../Transition';
 
-import UserAvatar from '../../images/user-avatar-32.png';
+import UserAvatar from '@/assets/images/user-avatar-32.png';
 
 function UserMenu() {
 
@@ -80,11 +80,12 @@ function UserMenu() {
             </li>
             <li>
               <Link
+                method="post"
+                href={route("logout")}
                 className="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
-                to="/"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
-                Sign Out
+                Log Out
               </Link>
             </li>
           </ul>

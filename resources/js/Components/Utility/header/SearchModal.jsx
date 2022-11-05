@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Transition from '../../utils/Transition';
+import { Link } from '@inertiajs/inertia-react';
+import Transition from '../Transition';
 
 function SearchModal({
   id,

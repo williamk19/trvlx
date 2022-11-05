@@ -25,7 +25,11 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-  return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+  return Inertia::render('Admin/Dashboard');
+})->middleware(['auth', 'verified', 'role:1,2'])->name('admin.dashboard');
+
+Route::get('/kendaraan', function () {
+  return Inertia::render('Admin/Kendaraan');
+})->middleware(['auth', 'verified', 'role:1,2'])->name('admin.kendaraan');
 
 require __DIR__ . '/auth.php';
