@@ -22,6 +22,10 @@ export default function Register({ auth }) {
     };
   }, []);
 
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
+
   const onHandleChange = (event) => {
     setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
   };
@@ -66,7 +70,7 @@ export default function Register({ auth }) {
           <InputLabel forInput="telepon_user" value="Nomor Telepon" />
           <TextInput
             telp={`${true}`}
-            type="number"
+            type="tel"
             name="telepon_user"
             value={data.telepon_user}
             className="mt-1 block w-full text-black"

@@ -10,12 +10,12 @@ const NavbarLandingPage = ({ auth }) => {
         </Link>
       </div>
       <div className="flex-none">
-        {auth.user
+        {auth?.user
           ? (
             <ul className="menu menu-horizontal p-0">
               <li>
                 <Link className='active:bg-[#a6adba1a]' href='/login'>
-                  {auth.user.nama_user}
+                  {auth?.user?.nama_user}
                 </Link>
               </li>
             </ul>
