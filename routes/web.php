@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KendaraanController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -24,12 +25,14 @@ Route::get('/', function () {
   ]);
 });
 
-Route::get('/dashboard', function () {
-  return Inertia::render('Admin/Dashboard');
-})->middleware(['auth', 'verified', 'role:1,2'])->name('admin.dashboard');
+Route::middleware(['auth', 'verified', 'role:1,2'])->group(function () {
+  Route::get('/dashboard', function () {
+    return Inertia::render('Admin/Dashboard');
+  })->name('admin.dashboard');
 
-Route::get('/kendaraan', function () {
-  return Inertia::render('Admin/Kendaraan');
-})->middleware(['auth', 'verified', 'role:1,2'])->name('admin.kendaraan');
+  Route::resources([
+    'kendaraan' => KendaraanController::class,
+  ]);
+});
 
 require __DIR__ . '/auth.php';

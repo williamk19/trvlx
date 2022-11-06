@@ -1,126 +1,93 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import PaginationKendaraan from './PaginationKendaraan';
 
-const TableKendaraan = () => {
+const TableKendaraan = ({ kendaraan }) => {
+  const [data, setData] = useState(kendaraan);
+  const [currPage, setCurrPage] = useState(1);
+  const [elementPerPage, setElementPerPage] = useState(5);
+
+  useEffect(() => {
+    
+  })
+
+  const lastIndexItem = currPage * elementPerPage;
+  const firstIndexItem = lastIndexItem - elementPerPage;
+  console.log(lastIndexItem, firstIndexItem);
+  const currentData = data.slice(firstIndexItem, lastIndexItem);
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(data.length / elementPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  const handleNextClick = () => {
+    if (currPage <= pageNumbers.length - 1) {
+      setCurrPage(currPage + 1);
+    }
+  };
+
+  const handlePrevClick = () => {
+    if (currPage >= 2) {
+      setCurrPage(currPage - 1);
+    }
+  };
+
+  const renderData = currentData.map((k) => {
+    return (
+      <tr key={k.id}>
+        <td>
+          <div className="flex items-center space-x-3">
+            <div>
+              <div className="font-bold">{k.merk_mobil}, {k.nama_mobil}</div>
+            </div>
+          </div>
+        </td>
+        <td>
+          {k.plat_nomor}
+        </td>
+        <td>{k.jumlah_seat} Penumpang</td>
+        <th>
+          <button className="btn btn-ghost btn-xs">details</button>
+        </th>
+      </tr>
+    );
+  });
+
   return (
-    <div data-theme="light" className="overflow-x-auto w-full">
-      <table className="table w-full">
-        <thead>
-          <tr>
-            <th>Nama Kendaraan</th>
-            <th>Plat Nomor</th>
-            <th>Jumlah Seat</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <div className="flex items-center space-x-3">
-                <div className="avatar">
-                  <div className="mask mask-squircle w-12 h-12">
-                    <img src="/tailwind-css-component-profile-2@56w.png" alt="Avatar Tailwind CSS Component" />
-                  </div>
-                </div>
-                <div>
-                  <div className="font-bold">Hart Hagerty</div>
-                  <div className="text-sm opacity-50">United States</div>
-                </div>
-              </div>
-            </td>
-            <td>
-              Zemlak, Daniel and Leannon
-              <br />
-              <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
-            </td>
-            <td>Purple</td>
-            <th>
-              <button className="btn btn-ghost btn-xs">details</button>
-            </th>
-          </tr>
-          <tr>
-            <td>
-              <div className="flex items-center space-x-3">
-                <div className="avatar">
-                  <div className="mask mask-squircle w-12 h-12">
-                    <img src="/tailwind-css-component-profile-3@56w.png" alt="Avatar Tailwind CSS Component" />
-                  </div>
-                </div>
-                <div>
-                  <div className="font-bold">Brice Swyre</div>
-                  <div className="text-sm opacity-50">China</div>
-                </div>
-              </div>
-            </td>
-            <td>
-              Carroll Group
-              <br />
-              <span className="badge badge-ghost badge-sm">Tax Accountant</span>
-            </td>
-            <td>Red</td>
-            <th>
-              <button className="btn btn-ghost btn-xs">details</button>
-            </th>
-          </tr>
-          <tr>
-            <td>
-              <div className="flex items-center space-x-3">
-                <div className="avatar">
-                  <div className="mask mask-squircle w-12 h-12">
-                    <img src="/tailwind-css-component-profile-4@56w.png" alt="Avatar Tailwind CSS Component" />
-                  </div>
-                </div>
-                <div>
-                  <div className="font-bold">Marjy Ferencz</div>
-                  <div className="text-sm opacity-50">Russia</div>
-                </div>
-              </div>
-            </td>
-            <td>
-              Rowe-Schoen
-              <br />
-              <span className="badge badge-ghost badge-sm">Office Assistant I</span>
-            </td>
-            <td>Crimson</td>
-            <th>
-              <button className="btn btn-ghost btn-xs">details</button>
-            </th>
-          </tr>
-          <tr>
-            <td>
-              <div className="flex items-center space-x-3">
-                <div className="avatar">
-                  <div className="mask mask-squircle w-12 h-12">
-                    <img src="/tailwind-css-component-profile-5@56w.png" alt="Avatar Tailwind CSS Component" />
-                  </div>
-                </div>
-                <div>
-                  <div className="font-bold">Yancy Tear</div>
-                  <div className="text-sm opacity-50">Brazil</div>
-                </div>
-              </div>
-            </td>
-            <td>
-              Wyman-Ledner
-              <br />
-              <span className="badge badge-ghost badge-sm">Community Outreach Specialist</span>
-            </td>
-            <td>Indigo</td>
-            <th>
-              <button className="btn btn-ghost btn-xs">details</button>
-            </th>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <th>Nama Kendaraan</th>
-            <th>Plat Nomor</th>
-            <th>Jumlah Seat</th>
-            <th></th>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-  )
-}
+    <>
+      <div data-theme="light" className="overflow-x-auto w-full">
+        <table className="table w-full">
+          <thead>
+            <tr>
+              <th>Nama Kendaraan</th>
+              <th>Plat Nomor</th>
+              <th>Jumlah Seat</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {renderData}
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Nama Kendaraan</th>
+              <th>Plat Nomor</th>
+              <th>Jumlah Seat</th>
+              <th></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div className="mt-8">
+        <PaginationKendaraan
+          firstIndex={firstIndexItem}
+          lastIndex={lastIndexItem}
+          dataLength={kendaraan.length}
+          handleNextClick={handleNextClick}
+          handlePrevClick={handlePrevClick}
+        />
+      </div>
+    </>
+  );
+};
 
 export default TableKendaraan;

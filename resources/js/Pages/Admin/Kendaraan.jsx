@@ -3,10 +3,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/inertia-react';
 import HeaderKendaraan from '@/Components/Kendaraan/HeaderKendaraan';
 import TableKendaraan from '@/Components/Kendaraan/TableKendaraan';
-import PaginationKendaraan from '@/Components/Kendaraan/PaginationKendaraan';
 
 const Kendaraan = (props) => {
-  console.log(props);
   return (
     <AuthenticatedLayout
       auth={props.auth}
@@ -15,10 +13,7 @@ const Kendaraan = (props) => {
     >
       <Head title="Kendaraan" />
       <HeaderKendaraan />
-      <TableKendaraan />
-      <div className="mt-8">
-        <PaginationKendaraan />
-      </div>
+      <TableKendaraan kendaraan={props.kendaraan}/>
     </AuthenticatedLayout>
   );
 };

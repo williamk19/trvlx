@@ -1,6 +1,4 @@
 import React from "react";
-import ApplicationLogo from "@/Components/ApplicationLogo";
-import { Link } from "@inertiajs/inertia-react";
 import NavbarLandingPage from '@/Components/LandingPage/NavbarLandingPage';
 
 export default function Guest({auth, children }) {

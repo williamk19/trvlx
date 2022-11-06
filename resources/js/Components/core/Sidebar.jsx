@@ -66,7 +66,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               <path d="M10.7 18.7l1.4-1.4L7.8 13H20v-2H7.8l4.3-4.3-1.4-1.4L4 12z" />
             </svg>
           </button>
-          <Link end to="/" className="block">
+          <Link to="/" className="block">
             <svg width="32" height="32" viewBox="0 0 32 32">
               <defs>
                 <linearGradient x1="28.538%" y1="20.229%" x2="100%" y2="108.156%" id="logo-a">
@@ -157,13 +157,13 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         Kendaraan
                       </span>
                     </div>
-                    
+
                   </div>
                 </Link>
               </li>
               <li className={`px-3 py-2 rounded-lg mb-0.5 last:mb-0 ${pathname.includes('inbox') && 'bg-slate-900'}`}>
                 <Link
-                  end
+
                   to="/"
                   className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('inbox') && 'hover:text-slate-200'
                     }`}
@@ -185,7 +185,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               </li>
               <li className={`px-3 py-2 rounded-lg mb-0.5 last:mb-0 ${pathname.includes('calendar') && 'bg-slate-900'}`}>
                 <Link
-                  end
+
                   to="/"
                   className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('calendar') && 'hover:text-slate-200'
                     }`}
@@ -206,7 +206,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               </li>
               <li className={`px-3 py-2 rounded-lg mb-0.5 last:mb-0 ${pathname.includes('campaigns') && 'bg-slate-900'}`}>
                 <Link
-                  end
+
                   to="/"
                   className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('campaigns') && 'hover:text-slate-200'
                     }`}
