@@ -3,21 +3,31 @@ import PaginationKendaraan from './PaginationKendaraan';
 
 const TableKendaraan = ({ kendaraan }) => {
   const [data, setData] = useState(kendaraan);
+  const [currData, setCurrData] = useState([]);
   const [currPage, setCurrPage] = useState(1);
   const [elementPerPage, setElementPerPage] = useState(5);
+  const [lastIndex, setLastIndex] = useState(currPage * elementPerPage);
+  const [firstIndex, setFirstIndex] = useState(lastIndex - elementPerPage);
+  const [pageNumbers, setPageNumbers] = useState([]);
 
   useEffect(() => {
-    
-  })
+    setData(kendaraan);
+    setCurrPage(1);
+  }, [kendaraan]);
 
-  const lastIndexItem = currPage * elementPerPage;
-  const firstIndexItem = lastIndexItem - elementPerPage;
-  console.log(lastIndexItem, firstIndexItem);
-  const currentData = data.slice(firstIndexItem, lastIndexItem);
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(data.length / elementPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  useEffect(() => {
+    setCurrData(data.slice(firstIndex, lastIndex));
+    let tempPageNumber = [];
+    for (let i = 1; i <= Math.ceil(data.length / elementPerPage); i++) {
+      tempPageNumber.push(i)
+    }
+    setPageNumbers(tempPageNumber);
+  }, [data, firstIndex, lastIndex]);
+
+  useEffect(() => {
+    setLastIndex(currPage * elementPerPage);
+    setFirstIndex(lastIndex - elementPerPage);
+  }, [pageNumbers, currPage])
 
   const handleNextClick = () => {
     if (currPage <= pageNumbers.length - 1) {
@@ -31,7 +41,7 @@ const TableKendaraan = ({ kendaraan }) => {
     }
   };
 
-  const renderData = currentData.map((k) => {
+  const renderData = currData.length > 0 ? currData.map((k) => {
     return (
       <tr key={k.id}>
         <td>
@@ -50,7 +60,13 @@ const TableKendaraan = ({ kendaraan }) => {
         </th>
       </tr>
     );
-  });
+  }) : (
+    <tr className='text-center'>
+      <td></td>
+      <td>Data Tidak Ditemukan</td>
+      <td></td>
+    </tr>
+  );
 
   return (
     <>
@@ -79,8 +95,8 @@ const TableKendaraan = ({ kendaraan }) => {
       </div>
       <div className="mt-8">
         <PaginationKendaraan
-          firstIndex={firstIndexItem}
-          lastIndex={lastIndexItem}
+          firstIndex={firstIndex}
+          lastIndex={lastIndex}
           dataLength={kendaraan.length}
           handleNextClick={handleNextClick}
           handlePrevClick={handlePrevClick}
