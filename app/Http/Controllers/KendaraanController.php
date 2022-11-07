@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kendaraan;
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Carbon;
+use Illuminate\Validation\Rule as ValidationRule;
 
 class KendaraanController extends Controller
 {
@@ -93,7 +95,33 @@ class KendaraanController extends Controller
    */
   public function update(Request $request, Kendaraan $kendaraan)
   {
-    //
+    $request->validate([
+      'nama_mobil' => 'required|string|max:255',
+      'merk_mobil' => 'required|string|max:255',
+      'jumlah_seat' => 'required|string',
+      'plat_nomor' => [
+        'required',
+        'string',
+        'max:255',
+        ValidationRule::unique('kendaraan', 'plat_nomor')->ignore($kendaraan->id)
+      ]
+    ]);
+    
+    $updateKendaraan = [
+      'nama_mobil' => $request->nama_mobil,
+      'merk_mobil' => $request->merk_mobil,
+      'plat_nomor' => $request->plat_nomor,
+      'jumlah_seat' => $request->jumlah_seat
+    ];
+
+    Kendaraan::where('id', $kendaraan->id)
+      ->first()
+      ->update($updateKendaraan);
+
+    $updateKendaraan['type'] = 'info';
+    return redirect()
+      ->route('kendaraan.index')
+      ->with('message', $updateKendaraan);
   }
 
   /**

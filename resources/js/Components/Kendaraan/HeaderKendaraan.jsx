@@ -3,14 +3,29 @@ import { Link } from '@inertiajs/inertia-react';
 import SearchForm from '../core/SearchForm';
 
 const HeaderKendaraan = ({ title = "Kendaraan", handleSearch, url }) => {
-  const arrOfPath = url
-    .split("/")
-    .map((arr, idx, array) => {
-      // console.log(arr)
-      return (arr === "" ? "" : "/" + arr) + (array[idx + 1] ? "/" + array[idx + 1] : "");
-    });
-  arrOfPath.pop();
-  // console.log(arrOfPath);
+  const toBreadcrumbs = (pathname, { rootName = "Home", nameTransform = s => s } = {}) =>
+    pathname
+      .split("/")
+      .filter(Boolean)
+      .reduce(
+        (acc, curr, idx, arr) => {
+          acc.path += `/${curr}`;
+          acc.crumbs.push({
+            path: acc.path,
+            name: nameTransform(curr),
+          });
+
+          if (idx === arr.length - 1) return acc.crumbs;
+          else return acc;
+        },
+        { path: "", crumbs: [{ path: "/", name: rootName }] },
+      );
+      
+  const arrOfPath = toBreadcrumbs(url).filter((p) => {
+    if (p.name !== "Home" && isNaN(p.name)) {
+      return p;
+    }
+  });
 
   const toCapitalize = (text) => {
     return text[0].toUpperCase() + text.slice(1).toLowerCase();
@@ -20,11 +35,10 @@ const HeaderKendaraan = ({ title = "Kendaraan", handleSearch, url }) => {
     <div className="py-3">
       <div className="text-sm text-gray-800 breadcrumbs">
         <ul>
-          {/* <li>Kendaraan</li> */}
-          {arrOfPath.map((path, idx) => (
+          {arrOfPath.map((p, idx) => (
             <li key={idx}>
-              <Link href={`${path}`} className="text-base">
-                {toCapitalize(path.split("/").slice(-1)[0])}
+              <Link href={`${p.path}`} className="text-base">
+                {toCapitalize(p.name.split("/").slice(-1)[0])}
               </Link>
             </li>
           ))}

@@ -6,7 +6,6 @@ import TableKendaraan from '@/Components/Kendaraan/TableKendaraan';
 import NotificationKendaraan from '@/Components/Kendaraan/NotificationKendaraan';
 
 const Kendaraan = (props) => {
-  console.log(props);
   const [searchQuery, setSearchQuery] = useState('');
   const [kendaraan, setKendaraan] = useState(props.kendaraan);
   const [notificationOpen, setNotificationOpen] = useState(true);

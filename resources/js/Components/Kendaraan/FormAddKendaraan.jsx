@@ -22,7 +22,14 @@ const FormAddKendaraan = ({ itemKendaraan }) => {
 
   const submit = (e) => {
     e.preventDefault();
-    post(route('kendaraan.store'));
+    if (!itemKendaraan) {
+      post(route('kendaraan.store'));
+    } else {
+      Inertia.put(route('kendaraan.update', {
+        kendaraan: itemKendaraan,
+        ...data
+      }));
+    }
   };
 
   return (
