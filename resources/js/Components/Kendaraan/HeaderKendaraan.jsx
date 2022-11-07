@@ -20,8 +20,8 @@ const HeaderKendaraan = ({ title = "Kendaraan", handleSearch, url }) => {
       <div className="text-sm text-gray-800 breadcrumbs">
         <ul>
           {/* <li>Kendaraan</li> */}
-          {arrOfPath.map((path) => (
-            <li>
+          {arrOfPath.map((path, idx) => (
+            <li key={idx}>
               <Link href={`${path}`} className="text-base">
                 {toCapitalize(path.split("/").slice(-1)[0])}
               </Link>

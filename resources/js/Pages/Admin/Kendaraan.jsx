@@ -3,10 +3,12 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
 import HeaderKendaraan from '@/Components/Kendaraan/HeaderKendaraan';
 import TableKendaraan from '@/Components/Kendaraan/TableKendaraan';
+import NotificationKendaraan from '@/Components/Kendaraan/NotificationKendaraan';
 
 const Kendaraan = (props) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [kendaraan, setKendaraan] = useState(props.kendaraan);
+  const [notificationOpen, setNotificationOpen] = useState(true);
   let { url } = usePage();
 
   useEffect(() => {
@@ -16,6 +18,14 @@ const Kendaraan = (props) => {
     ));
     setKendaraan(temp);
   }, [searchQuery]);
+
+  useEffect(() => {
+    if (notificationOpen === true) {
+      setTimeout(() => {
+        setNotificationOpen(false);
+      }, 5000);
+    }
+  }, [notificationOpen])
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -34,6 +44,11 @@ const Kendaraan = (props) => {
         handleSearch={handleSearch}
       />
       <TableKendaraan kendaraan={kendaraan} />
+      {props.flash?.message && (
+        <NotificationKendaraan type={'success'} className={'absolute font-bold top-20 right-8'} open={notificationOpen} setOpen={setNotificationOpen}>
+          {`${props.flash?.message.plat_nomor} ${props.flash?.message.merk_mobil}, ${props.flash?.message.nama_mobil} Telah Dimasukkan`}
+        </NotificationKendaraan>
+      )}
     </AuthenticatedLayout>
   );
 };

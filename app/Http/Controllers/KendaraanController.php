@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kendaraan;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Carbon;
 
 class KendaraanController extends Controller
 {
@@ -38,7 +39,24 @@ class KendaraanController extends Controller
    */
   public function store(Request $request)
   {
-    //
+    $request->validate([
+      'nama_mobil' => 'required|string|max:255',
+      'merk_mobil' => 'required|string|max:255',
+      'plat_nomor' => 'required|unique:kendaraan|string|max:255',
+      'jumlah_seat' => 'required|string',
+    ]);
+
+    $createKendaraan = Kendaraan::create([
+      'nama_mobil' => $request->nama_mobil,
+      'merk_mobil' => $request->merk_mobil,
+      'plat_nomor' => $request->plat_nomor,
+      'jumlah_seat' => $request->jumlah_seat,
+      'created_at' => Carbon::now()->setTimezone('Asia/Jakarta')->toDateTimeString()
+    ]);
+
+    return redirect()
+      ->route('kendaraan.index')
+      ->with('message', $createKendaraan);
   }
 
   /**
