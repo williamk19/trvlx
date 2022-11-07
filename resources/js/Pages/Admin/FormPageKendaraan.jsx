@@ -5,7 +5,7 @@ import HeaderKendaraan from '@/Components/Kendaraan/HeaderKendaraan';
 import { usePage } from '@inertiajs/inertia-react'
 import FormAddKendaraan from '@/Components/Kendaraan/FormAddKendaraan';
 
-const AddKendaraan = (props) => {
+const FormPageKendaraan = (props) => {
   let { url } = usePage();
 
   return (
@@ -16,9 +16,9 @@ const AddKendaraan = (props) => {
     >
       <Head title="Tambah Kendaraan" />
       <HeaderKendaraan title={'Tambah Kendaraan'} url={url} />
-      <FormAddKendaraan />
+      <FormAddKendaraan itemKendaraan={props.itemKendaraan} />
     </AuthenticatedLayout>
   );
 };
 
-export default AddKendaraan;
+export default FormPageKendaraan;

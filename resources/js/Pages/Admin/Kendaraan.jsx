@@ -6,6 +6,7 @@ import TableKendaraan from '@/Components/Kendaraan/TableKendaraan';
 import NotificationKendaraan from '@/Components/Kendaraan/NotificationKendaraan';
 
 const Kendaraan = (props) => {
+  console.log(props);
   const [searchQuery, setSearchQuery] = useState('');
   const [kendaraan, setKendaraan] = useState(props.kendaraan);
   const [notificationOpen, setNotificationOpen] = useState(true);
@@ -32,6 +33,20 @@ const Kendaraan = (props) => {
     setSearchQuery(e.target.value);
   };
 
+  const messageNotification = (type) => {
+    if (type === undefined) {
+      return 'telah dimasukkan';
+    }
+    switch(type) {
+      case 'error':
+        return 'telah dihapus';
+      case 'info':
+        return 'telah diubah';
+      default:
+        return 'telah dimasukkan';
+    }
+  }
+
   return (
     <AuthenticatedLayout
       auth={props.auth}
@@ -45,8 +60,8 @@ const Kendaraan = (props) => {
       />
       <TableKendaraan kendaraan={kendaraan} />
       {props.flash?.message && (
-        <NotificationKendaraan type={'success'} className={'absolute font-bold top-20 right-8'} open={notificationOpen} setOpen={setNotificationOpen}>
-          {`${props.flash?.message.plat_nomor} ${props.flash?.message.merk_mobil}, ${props.flash?.message.nama_mobil} Telah Dimasukkan`}
+        <NotificationKendaraan type={props.flash?.message.type} className={'absolute font-bold top-20 right-8'} open={notificationOpen} setOpen={setNotificationOpen}>
+          {`${props.flash?.message.plat_nomor} ${props.flash?.message.merk_mobil}, ${props.flash?.message.nama_mobil} ${messageNotification(props.flash?.message.type)}`}
         </NotificationKendaraan>
       )}
     </AuthenticatedLayout>

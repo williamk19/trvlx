@@ -4,7 +4,7 @@ import React from 'react';
 function NotificationKendaraan({
   children,
   className,
-  type = success,
+  type = 'success',
   open,
   setOpen
 }) {

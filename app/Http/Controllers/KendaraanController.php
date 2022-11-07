@@ -28,7 +28,7 @@ class KendaraanController extends Controller
    */
   public function create()
   {
-    return Inertia::render('Admin/AddKendaraan');
+    return Inertia::render('Admin/FormPageKendaraan');
   }
 
   /**
@@ -78,7 +78,10 @@ class KendaraanController extends Controller
    */
   public function edit(Kendaraan $kendaraan)
   {
-    //
+    $itemKendaraan = Kendaraan::where('id', $kendaraan->id)->first();
+    return Inertia::render('Admin/FormPageKendaraan', [
+      'itemKendaraan' => $itemKendaraan
+    ]);
   }
 
   /**
@@ -101,6 +104,11 @@ class KendaraanController extends Controller
    */
   public function destroy(Kendaraan $kendaraan)
   {
-    //
+    $deletedKendaraan = clone $kendaraan;
+    $deletedKendaraan->type = "error";
+    $itemKendaraan = Kendaraan::where('id', $kendaraan->id)->first()->delete();
+    return redirect()
+      ->route('kendaraan.index')
+      ->with('message', $deletedKendaraan);
   }
 }

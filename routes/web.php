@@ -30,9 +30,7 @@ Route::middleware(['auth', 'verified', 'role:1,2'])->group(function () {
     return Inertia::render('Admin/Dashboard');
   })->name('admin.dashboard');
 
-  Route::resources([
-    'kendaraan' => KendaraanController::class,
-  ]);
+  Route::resource('kendaraan', KendaraanController::class);
 });
 
 require __DIR__ . '/auth.php';

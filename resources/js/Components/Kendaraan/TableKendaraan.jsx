@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from '@inertiajs/inertia-react';
 import PaginationKendaraan from './PaginationKendaraan';
 
 const TableKendaraan = ({ kendaraan }) => {
@@ -56,7 +57,11 @@ const TableKendaraan = ({ kendaraan }) => {
         </td>
         <td>{k.jumlah_seat} Penumpang</td>
         <th>
-          <button className="btn btn-ghost btn-xs">details</button>
+          <Link
+            href={`/kendaraan/${k.id}/edit`}
+            className="btn bg-indigo-400 border-none hover:bg-indigo-500 btn-xs">
+            Edit
+          </Link>
         </th>
       </tr>
     );

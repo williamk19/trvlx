@@ -6,10 +6,11 @@ const HeaderKendaraan = ({ title = "Kendaraan", handleSearch, url }) => {
   const arrOfPath = url
     .split("/")
     .map((arr, idx, array) => {
+      // console.log(arr)
       return (arr === "" ? "" : "/" + arr) + (array[idx + 1] ? "/" + array[idx + 1] : "");
     });
-    
   arrOfPath.pop();
+  // console.log(arrOfPath);
 
   const toCapitalize = (text) => {
     return text[0].toUpperCase() + text.slice(1).toLowerCase();
