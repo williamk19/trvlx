@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
-import HeaderAdmin from '@/Components/core/HeaderAdmin';
+import HeaderAdmin from '@/Components/User/HeaderAdmin';
 import TableKendaraan from '@/Components/Kendaraan/TableKendaraan';
 import NotificationKendaraan from '@/Components/Kendaraan/NotificationKendaraan';
 
@@ -25,7 +25,7 @@ const Kendaraan = (props) => {
         setNotificationOpen(false);
       }, 5000);
     }
-  }, [notificationOpen])
+  }, [notificationOpen]);
 
   const handleSearch = (e) => {
     e.preventDefault();

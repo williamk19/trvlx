@@ -1,12 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
-import TableUser from '@/Components/User/TableUser';
 import CardUser from '@/Components/User/CardUser';
-import HeaderAdmin from '@/Components/core/HeaderAdmin';
+import HeaderAdmin from '@/Components/User/HeaderAdmin';
+import NotificationKendaraan from '@/Components/Kendaraan/NotificationKendaraan';
 
 export default function Pengguna(props) {
   let { url } = usePage();
+  const [notificationOpen, setNotificationOpen] = useState(true);
+
+  useEffect(() => {
+    if (notificationOpen === true) {
+      setTimeout(() => {
+        setNotificationOpen(false);
+      }, 5000);
+    }
+  }, [notificationOpen]);
+
+  const messageNotification = (type) => {
+    if (type === undefined) {
+      return 'telah dimasukkan';
+    }
+    switch (type) {
+      case 'error':
+        return 'telah dihapus';
+      case 'info':
+        return 'telah diubah';
+      default:
+        return 'telah dimasukkan';
+    }
+  }
 
   const items = [
     {
@@ -53,8 +76,14 @@ export default function Pengguna(props) {
       />
       <div className="py-8">
         <div className="mx-auto">
-          {/* <TableUser user={props.user} /> */}
           <div className="grid grid-cols-12 gap-6">
+            {props.flash?.message && (
+              <NotificationKendaraan type={props.flash?.message.type} className={'absolute font-bold top-20 right-8'} open={notificationOpen} setOpen={setNotificationOpen}>
+                {props.flash.message.id 
+                  ? `${props.flash?.message.nama_user} telah dihapus` 
+                  : `${props.flash?.message}`}
+              </NotificationKendaraan>
+            )}
             {items.map((item) => (
               <CardUser
                 key={item.id}

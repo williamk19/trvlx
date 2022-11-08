@@ -2,8 +2,8 @@ import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/inertia-react';
 import HeaderKendaraan from '@/Components/User/HeaderAdmin';
-import { usePage } from '@inertiajs/inertia-react'
-import FormAddKendaraan from '@/Components/Kendaraan/FormAddKendaraan';
+import { usePage } from '@inertiajs/inertia-react';
+import FormAddUser from '@/Components/User/FormAddUser';
 
 const FormPageKendaraan = (props) => {
   let { url } = usePage();
@@ -16,7 +16,7 @@ const FormPageKendaraan = (props) => {
     >
       <Head title="Tambah Kendaraan" />
       <HeaderKendaraan title={'Tambah Kendaraan'} url={url} />
-      <FormAddKendaraan itemKendaraan={props.itemKendaraan} />
+      <FormAddUser itemUser={props.itemUser} />
     </AuthenticatedLayout>
   );
 };

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -93,6 +94,30 @@ class UserController extends Controller
     //
   }
 
+  public function adminEdit(User $user)
+  {
+    $itemUser = User::where('id', $user->id)->first();
+    return Inertia::render('Admin/FormPageUser', [
+      'itemUser' => $itemUser
+    ]);
+  }
+
+  public function sopirEdit(User $user)
+  {
+    $itemUser = User::where('id', $user->id)->first();
+    return Inertia::render('Admin/FormPageUser', [
+      'itemUser' => $itemUser
+    ]);
+  }
+
+  public function penggunaEdit(User $user)
+  {
+    $itemUser = User::where('id', $user->id)->first();
+    return Inertia::render('Admin/FormPageUser', [
+      'itemUser' => $itemUser
+    ]);
+  }
+
   /**
    * Update the specified resource in storage.
    *
@@ -113,6 +138,17 @@ class UserController extends Controller
    */
   public function destroy(User $user)
   {
-    //
+    if ($user->id == Auth::id()) {
+      return redirect()
+        ->route('user.index')
+        ->with('message', 'Akun sedang dipakai saat ini');
+    }
+
+    $deletedUser = clone $user;
+    $deletedUser->type = "error";
+    User::where('id', $user->id)->first()->delete();
+    return redirect()
+      ->route('user.index')
+      ->with('message', $deletedUser);
   }
 }

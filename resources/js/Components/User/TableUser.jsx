@@ -25,6 +25,33 @@ const TableUser = ({ user }) => {
     setPageNumbers(tempPageNumber);
   }, [data, firstIndex, lastIndex]);
 
+  const handleNextClick = () => {
+    if (currPage <= pageNumbers.length - 1) {
+      setCurrPage(currPage + 1);
+    }
+  };
+
+  const handlePrevClick = () => {
+    if (currPage >= 2) {
+      setCurrPage(currPage - 1);
+    }
+  };
+
+  const pathMapping = (id) => {
+    switch (id) {
+      case 1:
+        return '/admin';
+      case 2:
+        return '/admin';
+      case 3:
+        return '/sopir';
+      case 4:
+        return '/pengguna';
+      default:
+        return '/pengguna';
+    }
+  }
+
   const renderData = currData.length > 0 ? currData.map((k) => {
     return (
       <tr key={k.id}>
@@ -41,7 +68,7 @@ const TableUser = ({ user }) => {
         <td>{k.telepon_user}</td>
         <th>
           <Link
-            href={`/kendaraan/${k.id}/edit`}
+            href={`/user${pathMapping(k.id_kategori)}/${k.id}/edit`}
             className="btn bg-indigo-400 border-none hover:bg-indigo-500 btn-xs">
             Edit
           </Link>
@@ -83,11 +110,11 @@ const TableUser = ({ user }) => {
       </div>
       <div className="mt-8">
         <PaginationKendaraan
-        // firstIndex={firstIndex}
-        // lastIndex={lastIndex}
-        // dataLength={kendaraan.length}
-        // handleNextClick={handleNextClick}
-        // handlePrevClick={handlePrevClick}
+          firstIndex={firstIndex}
+          lastIndex={lastIndex}
+          dataLength={user.length}
+          handleNextClick={handleNextClick}
+          handlePrevClick={handlePrevClick}
         />
       </div>
     </>

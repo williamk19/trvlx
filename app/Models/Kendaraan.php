@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Kendaraan extends Model
 {
   use HasFactory;
+  // use SoftDeletes;
 
   protected $table = 'kendaraan';
   protected $primaryKey = 'id';

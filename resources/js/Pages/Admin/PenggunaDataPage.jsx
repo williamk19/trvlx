@@ -1,11 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
 import TableUser from '@/Components/User/TableUser';
-import HeaderAdmin from '@/Components/core/HeaderAdmin';
+import HeaderAdmin from '@/Components/User/HeaderAdmin';
 
 export default function Pengguna(props) {
   let { url } = usePage();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [user, setUser] = useState(props.user);
+  const [notificationOpen, setNotificationOpen] = useState(true);
+
+  useEffect(() => {
+    const temp = props.user.filter((k) => (
+      k.nama_user.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      k.email_user.toLowerCase().includes(searchQuery.toLowerCase())
+    ));
+    setUser(temp);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    if (notificationOpen === true) {
+      setTimeout(() => {
+        setNotificationOpen(false);
+      }, 5000);
+    }
+  }, [notificationOpen]);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearchQuery(e.target.value);
+  };
+
+  const messageNotification = (type) => {
+    if (type === undefined) {
+      return 'telah dimasukkan';
+    }
+    switch (type) {
+      case 'error':
+        return 'telah dihapus';
+      case 'info':
+        return 'telah diubah';
+      default:
+        return 'telah dimasukkan';
+    }
+  }
 
   return (
     <AuthenticatedLayout
@@ -21,11 +59,11 @@ export default function Pengguna(props) {
       <HeaderAdmin
         title='Pengguna Travel 👤'
         url={url}
-        showSide={false}
+        handleSearch={handleSearch}
       />
       <div className="py-8">
         <div className="mx-auto">
-          <TableUser user={props.user} />
+          <TableUser user={user} />
         </div>
       </div>
     </AuthenticatedLayout>

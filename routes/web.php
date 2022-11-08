@@ -38,6 +38,13 @@ Route::middleware(['auth', 'verified', 'role:1,2'])->group(function () {
   Route::get('/user/admin', [UserController::class, 'admin'])->name('user.admin');
   Route::get('/user/sopir', [UserController::class, 'sopir'])->name('user.sopir');
   Route::get('/user/pengguna', [UserController::class, 'pengguna'])->name('user.pengguna');
+  Route::get('/user/admin/{user}/edit', [UserController::class, 'adminEdit'])
+    ->name('user.adminEdit');
+  Route::get('/user/sopir/{user}/edit', [UserController::class, 'sopirEdit'])
+    ->name('user.sopirEdit');
+  Route::get('/user/pengguna/{user}/edit', [UserController::class, 'penggunaEdit'])
+    ->name('user.penggunaEdit');
+  
   Route::resource('user', UserController::class);
 });
 
