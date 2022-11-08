@@ -1,7 +1,7 @@
 import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/inertia-react';
-import HeaderKendaraan from '@/Components/Kendaraan/HeaderKendaraan';
+import HeaderKendaraan from '@/Components/core/HeaderAdmin';
 import { usePage } from '@inertiajs/inertia-react'
 import FormAddKendaraan from '@/Components/Kendaraan/FormAddKendaraan';
 

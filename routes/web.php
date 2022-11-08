@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\KendaraanController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,7 +31,14 @@ Route::middleware(['auth', 'verified', 'role:1,2'])->group(function () {
     return Inertia::render('Admin/Dashboard');
   })->name('admin.dashboard');
 
+  // Kendaraan
   Route::resource('kendaraan', KendaraanController::class);
+
+  // User
+  Route::get('/user/admin', [UserController::class, 'admin'])->name('user.admin');
+  Route::get('/user/sopir', [UserController::class, 'sopir'])->name('user.sopir');
+  Route::get('/user/pengguna', [UserController::class, 'pengguna'])->name('user.pengguna');
+  Route::resource('user', UserController::class);
 });
 
 require __DIR__ . '/auth.php';

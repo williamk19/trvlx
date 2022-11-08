@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
-import HeaderKendaraan from '@/Components/Kendaraan/HeaderKendaraan';
+import HeaderAdmin from '@/Components/core/HeaderAdmin';
 import TableKendaraan from '@/Components/Kendaraan/TableKendaraan';
 import NotificationKendaraan from '@/Components/Kendaraan/NotificationKendaraan';
 
@@ -53,7 +53,8 @@ const Kendaraan = (props) => {
       header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Kendaraan</h2>}
     >
       <Head title="Kendaraan" />
-      <HeaderKendaraan
+      <HeaderAdmin
+        title='Kendaraan 🚗'
         url={url}
         handleSearch={handleSearch}
       />

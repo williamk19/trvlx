@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from '@inertiajs/inertia-react';
-import SearchForm from '../core/SearchForm';
+import SearchForm from './SearchForm';
 
-const HeaderKendaraan = ({ title = "Kendaraan", handleSearch, url }) => {
+const HeaderAdmin = ({ title, handleSearch, url }) => {
   const toBreadcrumbs = (pathname, { rootName = "Home", nameTransform = s => s } = {}) =>
     pathname
       .split("/")
@@ -47,10 +47,10 @@ const HeaderKendaraan = ({ title = "Kendaraan", handleSearch, url }) => {
       <div className="sm:flex sm:justify-between sm:items-center mb-8">
         <div className="mb-4 sm:mb-0">
           <h1 className="text-2xl md:text-3xl text-slate-800 font-bold">
-            {title} 🚗
+            {title}
           </h1>
         </div>
-        {handleSearch && (
+        {handleSearch ? (
           <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end items-center gap-2">
             <SearchForm handleSearch={handleSearch} placeholder="Cari nama mobil..." />
             <Link href="/kendaraan/create" className="btn rounded-md border-none bg-indigo-500 hover:bg-indigo-600 text-white">
@@ -60,10 +60,10 @@ const HeaderKendaraan = ({ title = "Kendaraan", handleSearch, url }) => {
               <span className="hidden xs:block ml-2">Tambah Kendaraan</span>
             </Link>
           </div>
-        )}
+        ) : (<div></div>)}
       </div>
     </div>
   );
 };
 
-export default HeaderKendaraan;
+export default HeaderAdmin;
