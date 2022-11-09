@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
-import { Link, useForm } from '@inertiajs/inertia-react';
+import { Link, useForm, usePage } from '@inertiajs/inertia-react';
 import InputError from '../InputError';
 import { Inertia } from '@inertiajs/inertia';
 
-const FormAddUser = ({ itemUser }) => {
-  console.log(itemUser)
+const FormAddUser = ({ itemUser, auth }) => {
+  let { url } = usePage();
+  let idUrl = +url.split("/")[3];
+
   const { data, setData, post, processing, errors, reset } = useForm({
     nama_user: itemUser?.nama_user.length > 0 ? itemUser.nama_user : '',
     email_user: itemUser?.email_user.length > 0 ? itemUser.email_user : '',
     telepon_user: itemUser?.telepon_user.length > 0 ? itemUser.telepon_user : '',
+    id_kategori: itemUser?.id_kategori ? itemUser.id_kategori : '',
   });
 
   const onHandleChange = (event) => {
@@ -18,7 +21,7 @@ const FormAddUser = ({ itemUser }) => {
   const handleDelete = (e) => {
     e.preventDefault();
     Inertia.delete(route("user.destroy", itemUser.id));
-  }
+  };
 
   const submit = (e) => {
     e.preventDefault();
@@ -84,6 +87,30 @@ const FormAddUser = ({ itemUser }) => {
                   placeholder='M129DC' />
                 <InputError message={errors.telepon_user} className="mt-2" />
               </div>
+              {idUrl !== data.id_kategori ? (
+                <div className="flex-1">
+                  <label className="block text-sm font-bold mb-1" htmlFor="id_kategori">
+                    Kategori Pengguna
+                  </label>
+                  <div>
+                    <select
+                      name='id_kategori'
+                      id="id_kategori"
+                      value={data.id_kategori}
+                      onChange={(e) => onHandleChange(e)}
+                      className="rounded-md form-select">
+                      <option value={1}>Super Admin</option>
+                      <option value={2}>Admin</option>
+                      <option value={3}>Sopir</option>
+                      <option value={4}>Pengguna</option>
+                    </select>
+                  </div>
+                  <InputError message={errors.id_kategori} className="mt-2" />
+                </div>
+              ) : (
+                  <div className="flex-1">
+                  </div>
+              )}
             </div>
             <div className="flex justify-between">
               {itemUser ? (

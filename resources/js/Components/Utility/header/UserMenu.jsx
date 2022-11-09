@@ -4,14 +4,26 @@ import Transition from '../Transition';
 
 import UserAvatar from '@/assets/images/user-avatar-32.png';
 
-function UserMenu() {
-
+function UserMenu({ auth }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
   const trigger = useRef(null);
   const dropdown = useRef(null);
 
-  // close on click outside
+  const getCategory = (id_kategori) => {
+    switch (id_kategori) {
+      case 1:
+        return "Super Admin Travel";
+      case 2:
+        return "Admin Travel";
+      case 3:
+        return "Sopir Travel";
+      case 4:
+        return "Pengguna Travel";
+      default:
+        return "Pengguna Travel";
+    }
+  }
+
   useEffect(() => {
     const clickHandler = ({ target }) => {
       if (!dropdownOpen || dropdown.current.contains(target) || trigger.current.contains(target)) return;
@@ -21,7 +33,6 @@ function UserMenu() {
     return () => document.removeEventListener('click', clickHandler);
   });
 
-  // close if the esc key is pressed
   useEffect(() => {
     const keyHandler = ({ keyCode }) => {
       if (!dropdownOpen || keyCode !== 27) return;
@@ -42,7 +53,9 @@ function UserMenu() {
       >
         <img className="w-8 h-8 rounded-full" src={UserAvatar} width="32" height="32" alt="User" />
         <div className="flex items-center truncate">
-          <span className="truncate ml-2 text-sm font-medium group-hover:text-slate-800">Acme Inc.</span>
+          <span className="truncate ml-2 text-sm font-semibold text-gray-700 group-hover:text-slate-800">
+            { auth.user.nama_user }
+          </span>
           <svg className="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400" viewBox="0 0 12 12">
             <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
           </svg>
@@ -65,8 +78,10 @@ function UserMenu() {
           onBlur={() => setDropdownOpen(false)}
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200">
-            <div className="font-medium text-slate-800">Acme Inc.</div>
-            <div className="text-xs text-slate-500 italic">Administrator</div>
+            <div className="font-medium text-slate-800">{auth.user.nama_user}</div>
+            <div className="text-xs text-slate-500 italic">
+              {getCategory(auth.user.id_kategori)}
+            </div>
           </div>
           <ul>
             <li>
@@ -93,7 +108,7 @@ function UserMenu() {
         </div>
       </Transition>
     </div>
-  )
+  );
 }
 
 export default UserMenu;

@@ -16,7 +16,7 @@ const FormPageKendaraan = (props) => {
     >
       <Head title="Tambah Kendaraan" />
       <HeaderKendaraan title={'Tambah Kendaraan'} url={url} />
-      <FormAddUser itemUser={props.itemUser} />
+      <FormAddUser itemUser={props.itemUser} auth={props.auth} />
     </AuthenticatedLayout>
   );
 };

@@ -5,7 +5,8 @@ import UserMenu from '@/Components/Utility/header/UserMenu';
 
 function Header({
   sidebarOpen,
-  setSidebarOpen
+  setSidebarOpen,
+  auth
 }) {
 
   const [searchModalOpen, setSearchModalOpen] = useState(false);
@@ -52,7 +53,7 @@ function Header({
             <SearchModal id="search-modal" searchId="search" modalOpen={searchModalOpen} setModalOpen={setSearchModalOpen} />
             <Help />
             <hr className="w-px h-6 bg-slate-200 mx-3" />
-            <UserMenu />
+            <UserMenu auth={auth} />
           </div>
         </div>
       </div>

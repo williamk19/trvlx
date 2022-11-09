@@ -148,7 +148,8 @@ class UserController extends Controller
     $updateUser = [
       'nama_user' => $request->nama_user,
       'email_user' => $request->email_user,
-      'telepon_user' => $request->telepon_user
+      'telepon_user' => $request->telepon_user,
+      'id_kategori' => $request->id_kategori
     ];
 
     User::where('id', $user->id)
