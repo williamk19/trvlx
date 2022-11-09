@@ -3,13 +3,14 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
 import TableUser from '@/Components/User/TableUser';
 import HeaderAdmin from '@/Components/User/HeaderAdmin';
+import NotificationKendaraan from '@/Components/Kendaraan/NotificationKendaraan';
 
 export default function Pengguna(props) {
   let { url } = usePage();
   const [searchQuery, setSearchQuery] = useState('');
   const [user, setUser] = useState(props.user);
   const [notificationOpen, setNotificationOpen] = useState(true);
-
+  
   useEffect(() => {
     const temp = props.user.filter((k) => (
       k.nama_user.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -63,6 +64,13 @@ export default function Pengguna(props) {
       />
       <div className="py-8">
         <div className="mx-auto">
+          {props.flash?.message && (
+            <NotificationKendaraan type={props.flash?.message.type} className={'absolute font-bold top-20 right-8'} open={notificationOpen} setOpen={setNotificationOpen}>
+              {props.flash.message.id
+                ? `${props.flash?.message.nama_user} telah dihapus`
+                : `${props.flash?.message}`}
+            </NotificationKendaraan>
+          )}
           <TableUser user={user} />
         </div>
       </div>

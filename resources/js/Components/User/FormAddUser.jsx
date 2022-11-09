@@ -23,10 +23,10 @@ const FormAddUser = ({ itemUser }) => {
   const submit = (e) => {
     e.preventDefault();
     if (!itemUser) {
-      post(route('kendaraan.store'));
+      post(route('user.store'));
     } else {
-      Inertia.put(route('kendaraan.update', {
-        kendaraan: itemUser,
+      Inertia.put(route('user.update', {
+        user: itemUser,
         ...data
       }));
     }

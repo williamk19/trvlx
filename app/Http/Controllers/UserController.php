@@ -6,9 +6,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Illuminate\Validation\Rule as ValidationRule;
 
 class UserController extends Controller
 {
+  
   /**
    * Display a listing of the resource.
    *
@@ -127,7 +129,38 @@ class UserController extends Controller
    */
   public function update(Request $request, User $user)
   {
-    //
+    $request->validate([
+      'nama_user' => 'required|string|max:255',
+      'email_user' => [
+        'required',
+        'string',
+        'max:255',
+        ValidationRule::unique('users', 'email_user')->ignore($user->id)
+      ],
+      'telepon_user' => [
+        'required',
+        'string',
+        'max:255',
+        ValidationRule::unique('users', 'telepon_user')->ignore($user->id)
+      ]
+    ]);
+
+    $updateUser = [
+      'nama_user' => $request->nama_user,
+      'email_user' => $request->email_user,
+      'telepon_user' => $request->telepon_user
+    ];
+
+    User::where('id', $user->id)
+      ->first()
+      ->update($updateUser);
+
+    $updateUser['type'] = 'info';
+    $userObject = (object) $updateUser;
+    $category = $this->getCategory($user->id_kategori);
+    return redirect()
+      ->route("user.$category")
+      ->with('message', "$userObject->nama_user telah diubah");
   }
 
   /**
@@ -144,11 +177,31 @@ class UserController extends Controller
         ->with('message', 'Akun sedang dipakai saat ini');
     }
 
+    
+
     $deletedUser = clone $user;
     $deletedUser->type = "error";
     User::where('id', $user->id)->first()->delete();
+    
+    $category = $this->getCategory($user->id_kategori);
     return redirect()
-      ->route('user.index')
+      ->route("user.$category")
       ->with('message', $deletedUser);
+  }
+
+  public function getCategory($categoryId)
+  {
+    switch ($categoryId) {
+      case '1':
+        return 'admin';
+      case '2':
+        return 'admin';
+      case '3':
+        return 'sopir';
+      case '4':
+        return 'pengguna';
+      default:
+        return 'index';
+    }
   }
 }
