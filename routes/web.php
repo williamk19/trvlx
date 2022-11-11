@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\KendaraanController;
+use App\Http\Controllers\LayananController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -44,8 +45,10 @@ Route::middleware(['auth', 'verified', 'role:1,2'])->group(function () {
     ->name('user.sopirEdit');
   Route::get('/user/pengguna/{user}/edit', [UserController::class, 'penggunaEdit'])
     ->name('user.penggunaEdit');
-  
   Route::resource('user', UserController::class);
+
+  // Layanan
+  Route::resource('layanan', LayananController::class);
 });
 
 require __DIR__ . '/auth.php';

@@ -2,7 +2,15 @@ import React from 'react';
 import { Link } from '@inertiajs/inertia-react';
 import SearchForm from '../core/SearchForm';
 
-const HeaderAdmin = ({ title, handleSearch, url }) => {
+const HeaderAdmin = ({
+  title,
+  handleSearch,
+  url,
+  placeholder = "Cari sesuatu...",
+  type,
+  buttonLink,
+  addButton = false
+}) => {
   const toBreadcrumbs = (pathname, { rootName = "Home", nameTransform = s => s } = {}) =>
     pathname
       .split("/")
@@ -20,7 +28,7 @@ const HeaderAdmin = ({ title, handleSearch, url }) => {
         },
         { path: "", crumbs: [{ path: "/", name: rootName }] },
       );
-      
+
   const arrOfPath = toBreadcrumbs(url).filter((p) => {
     if (p.name !== "Home" && isNaN(p.name)) {
       return p;
@@ -50,11 +58,21 @@ const HeaderAdmin = ({ title, handleSearch, url }) => {
             {title}
           </h1>
         </div>
-        {handleSearch ? (
-          <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end items-center gap-2">
-            <SearchForm handleSearch={handleSearch} placeholder="Cari nama atau email user..." />
-          </div>
-        ) : (<div></div>)}
+        <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end items-center gap-2">
+          {handleSearch && (
+            <SearchForm handleSearch={handleSearch} placeholder={placeholder} />
+          )}
+          {addButton && (
+            <Link href={buttonLink}>
+              <button className="btn bg-indigo-500 hover:bg-indigo-600 border-none text-white">
+                <svg className="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
+                  <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
+                </svg>
+                <span className="hidden xs:block ml-2">Tambahkan</span>
+              </button>
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );

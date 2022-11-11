@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useForm, usePage } from '@inertiajs/inertia-react';
-import InputError from '../InputError';
+import InputError from '../../InputError';
 import { Inertia } from '@inertiajs/inertia';
 
 const FormAddUser = ({ itemUser, auth }) => {

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
-import HeaderAdmin from '@/Components/User/HeaderAdmin';
-import TableKendaraan from '@/Components/Kendaraan/TableKendaraan';
-import NotificationKendaraan from '@/Components/Kendaraan/NotificationKendaraan';
+import HeaderAdmin from '@/Components/admin/HeaderAdmin';
+import TableKendaraan from '@/Components/admin/Kendaraan/TableKendaraan';
+import NotificationKendaraan from '@/Components/admin/Kendaraan/NotificationKendaraan';
 
 const Kendaraan = (props) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -57,6 +57,8 @@ const Kendaraan = (props) => {
         title='Kendaraan 🚗'
         url={url}
         handleSearch={handleSearch}
+        addButton={true}
+        buttonLink={route('kendaraan.create')}
       />
       <TableKendaraan kendaraan={kendaraan} />
       {props.flash?.message && (

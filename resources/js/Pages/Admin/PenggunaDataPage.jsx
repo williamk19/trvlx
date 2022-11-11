@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
-import TableUser from '@/Components/User/TableUser';
-import HeaderAdmin from '@/Components/User/HeaderAdmin';
-import NotificationKendaraan from '@/Components/Kendaraan/NotificationKendaraan';
+import TableUser from '@/Components/admin/User/TableUser';
+import HeaderAdmin from '@/Components/admin/HeaderAdmin';
+import NotificationKendaraan from '@/Components/admin/Kendaraan/NotificationKendaraan';
 
 export default function Pengguna(props) {
   let { url } = usePage();

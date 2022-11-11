@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, usePage } from '@inertiajs/inertia-react';
+import Logo from '@/assets/images/logo.png'
 
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const { url } = usePage();
@@ -65,29 +66,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               <path d="M10.7 18.7l1.4-1.4L7.8 13H20v-2H7.8l4.3-4.3-1.4-1.4L4 12z" />
             </svg>
           </button>
-          <Link to="/" className="block">
-            <svg width="32" height="32" viewBox="0 0 32 32">
-              <defs>
-                <linearGradient x1="28.538%" y1="20.229%" x2="100%" y2="108.156%" id="logo-a">
-                  <stop stopColor="#A5B4FC" stopOpacity="0" offset="0%" />
-                  <stop stopColor="#A5B4FC" offset="100%" />
-                </linearGradient>
-                <linearGradient x1="88.638%" y1="29.267%" x2="22.42%" y2="100%" id="logo-b">
-                  <stop stopColor="#38BDF8" stopOpacity="0" offset="0%" />
-                  <stop stopColor="#38BDF8" offset="100%" />
-                </linearGradient>
-              </defs>
-              <rect fill="#6366F1" width="32" height="32" rx="16" />
-              <path d="M18.277.16C26.035 1.267 32 7.938 32 16c0 8.837-7.163 16-16 16a15.937 15.937 0 01-10.426-3.863L18.277.161z" fill="#4F46E5" />
-              <path
-                d="M7.404 2.503l18.339 26.19A15.93 15.93 0 0116 32C7.163 32 0 24.837 0 16 0 10.327 2.952 5.344 7.404 2.503z"
-                fill="url(#logo-a)"
-              />
-              <path
-                d="M2.223 24.14L29.777 7.86A15.926 15.926 0 0132 16c0 8.837-7.163 16-16 16-5.864 0-10.991-3.154-13.777-7.86z"
-                fill="url(#logo-b)"
-              />
-            </svg>
+          <Link to="/" className="btn btn-ghost btn-md px-1 normal-case text-xl">
+            <img src={Logo} className='w-28' />
           </Link>
         </div>
 
@@ -100,7 +80,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">Pages</span>
             </h3>
             <ul className="mt-3">
-              <li className={`px-3 py-2 rounded-lg mb-0.5 last:mb-0 ${pathname.includes('dashboard') && 'bg-slate-900'}`}>
+              <li className={`px-3 py-2 rounded-lg mb-2 last:mb-0 ${pathname.includes('dashboard') && 'bg-slate-900'}`}>
                 <Link
                   href='/dashboard'
                   className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('dashboard') && 'hover:text-slate-200'
@@ -129,7 +109,49 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                   </div>
                 </Link>
               </li>
-              <li className={`px-3 py-2 rounded-lg mb-0.5 last:mb-0 ${pathname.includes('kendaraan') && 'bg-slate-900'}`}>
+              <li className={`px-3 py-2 rounded-lg mb-2 last:mb-0 ${pathname.includes('inbox') && 'bg-slate-900'}`}>
+                <Link
+
+                  to="/"
+                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('inbox') && 'hover:text-slate-200'
+                    }`}
+                >
+                  <div className="flex items-center">
+                    <svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24">
+                      <path
+                        className={`fill-current text-slate-600 ${pathname.includes('inbox') && 'text-indigo-500'}`}
+                        d="M16 13v4H8v-4H0l3-9h18l3 9h-8Z"
+                      />
+                      <path
+                        className={`fill-current text-slate-400 ${pathname.includes('inbox') && 'text-indigo-300'}`}
+                        d="m23.72 12 .229.686A.984.984 0 0 1 24 13v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1v-8c0-.107.017-.213.051-.314L.28 12H8v4h8v-4H23.72ZM13 0v7h3l-4 5-4-5h3V0h2Z"
+                      />
+                    </svg>
+                    <span className="text-sm font-bold ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Inbox</span>
+                  </div>
+                </Link>
+              </li>
+              <li className={`px-3 py-2 rounded-lg mb-2 last:mb-0 ${pathname.includes('layanan') && 'bg-slate-900'}`}>
+                <Link
+                  href='/layanan'
+                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('layanan') && 'hover:text-slate-200'
+                    }`}
+                >
+                  <div className="flex items-center">
+                    <svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24">
+                      <path className={`fill-current text-slate-600 ${pathname.includes('layanan') && 'text-indigo-500'}`} d="M1 3h22v20H1z" />
+                      <path
+                        className={`fill-current text-slate-400 ${pathname.includes('layanan') && 'text-indigo-300'}`}
+                        d="M21 3h2v4H1V3h2V1h4v2h10V1h4v2Z"
+                      />
+                    </svg>
+                    <span className="text-sm font-bold ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                      Layanan Travel
+                    </span>
+                  </div>
+                </Link>
+              </li>
+              <li className={`px-3 py-2 rounded-lg mb-2 last:mb-0 ${pathname.includes('kendaraan') && 'bg-slate-900'}`}>
                 <Link
                   href='/kendaraan'
                   className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('kendaraan') && 'hover:text-slate-200'
@@ -160,50 +182,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                   </div>
                 </Link>
               </li>
-              <li className={`px-3 py-2 rounded-lg mb-0.5 last:mb-0 ${pathname.includes('inbox') && 'bg-slate-900'}`}>
-                <Link
-
-                  to="/"
-                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('inbox') && 'hover:text-slate-200'
-                    }`}
-                >
-                  <div className="flex items-center">
-                    <svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24">
-                      <path
-                        className={`fill-current text-slate-600 ${pathname.includes('inbox') && 'text-indigo-500'}`}
-                        d="M16 13v4H8v-4H0l3-9h18l3 9h-8Z"
-                      />
-                      <path
-                        className={`fill-current text-slate-400 ${pathname.includes('inbox') && 'text-indigo-300'}`}
-                        d="m23.72 12 .229.686A.984.984 0 0 1 24 13v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1v-8c0-.107.017-.213.051-.314L.28 12H8v4h8v-4H23.72ZM13 0v7h3l-4 5-4-5h3V0h2Z"
-                      />
-                    </svg>
-                    <span className="text-sm font-bold ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Inbox</span>
-                  </div>
-                </Link>
-              </li>
-              <li className={`px-3 py-2 rounded-lg mb-0.5 last:mb-0 ${pathname.includes('calendar') && 'bg-slate-900'}`}>
-                <Link
-
-                  to="/"
-                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('calendar') && 'hover:text-slate-200'
-                    }`}
-                >
-                  <div className="flex items-center">
-                    <svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24">
-                      <path className={`fill-current text-slate-600 ${pathname.includes('calendar') && 'text-indigo-500'}`} d="M1 3h22v20H1z" />
-                      <path
-                        className={`fill-current text-slate-400 ${pathname.includes('calendar') && 'text-indigo-300'}`}
-                        d="M21 3h2v4H1V3h2V1h4v2h10V1h4v2Z"
-                      />
-                    </svg>
-                    <span className="text-sm font-bold ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                      Calendar
-                    </span>
-                  </div>
-                </Link>
-              </li>
-              <li className={`px-3 py-2 rounded-lg mb-0.5 last:mb-0 ${pathname.includes('user') && 'bg-slate-900'}`}>
+              <li className={`px-3 py-2 rounded-lg mb-2 last:mb-0 ${pathname.includes('user') && 'bg-slate-900'}`}>
                 <Link
                   href="/user"
                   className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('user') && 'hover:text-slate-200'
@@ -213,11 +192,11 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24">
                       <path
                         className={`fill-current text-slate-600 ${pathname.includes('user') && 'text-indigo-500'}`}
-                        d="M20 7a.75.75 0 01-.75-.75 1.5 1.5 0 00-1.5-1.5.75.75 0 110-1.5 1.5 1.5 0 001.5-1.5.75.75 0 111.5 0 1.5 1.5 0 001.5 1.5.75.75 0 110 1.5 1.5 1.5 0 00-1.5 1.5A.75.75 0 0120 7zM4 23a.75.75 0 01-.75-.75 1.5 1.5 0 00-1.5-1.5.75.75 0 110-1.5 1.5 1.5 0 001.5-1.5.75.75 0 111.5 0 1.5 1.5 0 001.5 1.5.75.75 0 110 1.5 1.5 1.5 0 00-1.5 1.5A.75.75 0 014 23z"
+                        d="M18.974 8H22a2 2 0 012 2v6h-2v5a1 1 0 01-1 1h-2a1 1 0 01-1-1v-5h-2v-6a2 2 0 012-2h.974zM20 7a2 2 0 11-.001-3.999A2 2 0 0120 7zM2.974 8H6a2 2 0 012 2v6H6v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5H0v-6a2 2 0 012-2h.974zM4 7a2 2 0 11-.001-3.999A2 2 0 014 7z"
                       />
                       <path
                         className={`fill-current text-slate-400 ${pathname.includes('user') && 'text-indigo-300'}`}
-                        d="M17 23a1 1 0 01-1-1 4 4 0 00-4-4 1 1 0 010-2 4 4 0 004-4 1 1 0 012 0 4 4 0 004 4 1 1 0 010 2 4 4 0 00-4 4 1 1 0 01-1 1zM7 13a1 1 0 01-1-1 4 4 0 00-4-4 1 1 0 110-2 4 4 0 004-4 1 1 0 112 0 4 4 0 004 4 1 1 0 010 2 4 4 0 00-4 4 1 1 0 01-1 1z"
+                        d="M12 6a3 3 0 110-6 3 3 0 010 6zm2 18h-4a1 1 0 01-1-1v-6H6v-6a3 3 0 013-3h6a3 3 0 013 3v6h-3v6a1 1 0 01-1 1z"
                       />
                     </svg>
                     <span className="text-sm font-bold ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
