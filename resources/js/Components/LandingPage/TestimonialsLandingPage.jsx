@@ -1,6 +1,6 @@
 import React from 'react';
 import Slider from 'react-slick';
-import TestimonialCard from '../core/TestimonialCard';
+import TestimonialCard from '../Core/TestimonialCard';
 
 const TestimonialsLandingPage = () => {
   const settings = {

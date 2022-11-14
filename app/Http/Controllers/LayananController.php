@@ -15,7 +15,9 @@ class LayananController extends Controller
    */
   public function index()
   {
-    return Inertia::render('Admin/Layanan');
+    return Inertia::render('Admin/Layanan', [
+      'layanan' => Layanan::all()
+    ]);
   }
 
   /**

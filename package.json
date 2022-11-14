@@ -26,6 +26,7 @@
         "daisyui": "^2.27.0",
         "leaflet": "^1.9.2",
         "leaflet-routing-machine": "^3.2.12",
+        "react-currency-format": "^1.1.0",
         "react-datepicker": "^4.8.0",
         "react-leaflet": "^4.1.0",
         "react-phone-number-input": "^3.2.12",

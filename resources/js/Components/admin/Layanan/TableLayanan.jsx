@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from '@inertiajs/inertia-react';
-import PaginationKendaraan from './PaginationKendaraan';
+import CurrencyFormat from 'react-currency-format';
+import PaginationKendaraan from '../Kendaraan/PaginationKendaraan';
 
-const TableKendaraan = ({ kendaraan }) => {
-  const [data, setData] = useState(kendaraan);
+const TableLayanan = ({ layanan }) => {
+  const [data, setData] = useState(layanan);
   const [currData, setCurrData] = useState([]);
   const [currPage, setCurrPage] = useState(1);
   const [elementPerPage, setElementPerPage] = useState(5);
@@ -12,15 +13,15 @@ const TableKendaraan = ({ kendaraan }) => {
   const [pageNumbers, setPageNumbers] = useState([]);
 
   useEffect(() => {
-    setData(kendaraan);
+    setData(layanan);
     setCurrPage(1);
-  }, [kendaraan]);
+  }, [layanan]);
 
   useEffect(() => {
     setCurrData(data.slice(firstIndex, lastIndex));
     let tempPageNumber = [];
     for (let i = 1; i <= Math.ceil(data.length / elementPerPage); i++) {
-      tempPageNumber.push(i)
+      tempPageNumber.push(i);
     }
     setPageNumbers(tempPageNumber);
   }, [data, firstIndex, lastIndex]);
@@ -28,7 +29,7 @@ const TableKendaraan = ({ kendaraan }) => {
   useEffect(() => {
     setLastIndex(currPage * elementPerPage);
     setFirstIndex(lastIndex - elementPerPage);
-  }, [pageNumbers, currPage])
+  }, [pageNumbers, currPage]);
 
   const handleNextClick = () => {
     if (currPage <= pageNumbers.length - 1) {
@@ -42,23 +43,29 @@ const TableKendaraan = ({ kendaraan }) => {
     }
   };
 
-  const renderData = currData.length > 0 ? currData.map((k) => {
+  const renderData = currData.length > 0 ? currData.map((l) => {
     return (
-      <tr key={k.id}>
+      <tr key={l.id}>
         <td>
           <div className="flex items-center space-x-3">
             <div>
-              <div className="font-bold">{k.merk_mobil}, {k.nama_mobil}</div>
+              <div className="font-bold">{l.kota_asal}</div>
             </div>
           </div>
         </td>
         <td>
-          {k.plat_nomor}
+          {l.kota_tujuan}
         </td>
-        <td>{k.jumlah_seat} Penumpang</td>
+        <td>
+          <CurrencyFormat 
+            value={l.biaya_jasa}
+            displayType={'text'} 
+            thousandSeparator={true}
+            prefix={'Rp. '} />
+        </td>
         <th>
           <Link
-            href={`/kendaraan/${k.id}/edit`}
+            href={`/kendaraan/${l.id}/edit`}
             className="btn bg-indigo-400 border-none hover:bg-indigo-500 btn-xs">
             Edit
           </Link>
@@ -79,9 +86,9 @@ const TableKendaraan = ({ kendaraan }) => {
         <table className="table w-full">
           <thead>
             <tr>
-              <th>Nama Kendaraan</th>
-              <th>Plat Nomor</th>
-              <th>Jumlah Seat</th>
+              <th>Kota Asal Travel</th>
+              <th>Kota Tujuan Travel</th>
+              <th>Harga</th>
               <th></th>
             </tr>
           </thead>
@@ -94,7 +101,7 @@ const TableKendaraan = ({ kendaraan }) => {
         <PaginationKendaraan
           firstIndex={firstIndex}
           lastIndex={lastIndex}
-          dataLength={kendaraan.length}
+          dataLength={layanan.length}
           handleNextClick={handleNextClick}
           handlePrevClick={handlePrevClick}
         />
@@ -103,4 +110,4 @@ const TableKendaraan = ({ kendaraan }) => {
   );
 };
 
-export default TableKendaraan;
+export default TableLayanan;

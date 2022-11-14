@@ -25,6 +25,11 @@ const TableUser = ({ user }) => {
     setPageNumbers(tempPageNumber);
   }, [data, firstIndex, lastIndex]);
 
+  useEffect(() => {
+    setLastIndex(currPage * elementPerPage);
+    setFirstIndex(lastIndex - elementPerPage);
+  }, [pageNumbers, currPage]);
+
   const handleNextClick = () => {
     if (currPage <= pageNumbers.length - 1) {
       setCurrPage(currPage + 1);
@@ -50,7 +55,7 @@ const TableUser = ({ user }) => {
       default:
         return '/pengguna';
     }
-  }
+  };
 
   const renderData = currData.length > 0 ? currData.map((k) => {
     return (
@@ -98,14 +103,6 @@ const TableUser = ({ user }) => {
           <tbody>
             {renderData}
           </tbody>
-          <tfoot>
-            <tr>
-              <th>Nama User</th>
-              <th>Email User</th>
-              <th>Telepon User</th>
-              <th></th>
-            </tr>
-          </tfoot>
         </table>
       </div>
       <div className="mt-8">

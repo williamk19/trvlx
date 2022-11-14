@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from '@inertiajs/inertia-react';
-import SearchForm from '../core/SearchForm';
+import SearchForm from '../Core/SearchForm';
 
 const HeaderAdmin = ({
   title,

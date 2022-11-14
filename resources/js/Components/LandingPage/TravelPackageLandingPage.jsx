@@ -8,7 +8,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ArrowSmallRightIcon } from '@heroicons/react/24/solid';
-import TravelPackageCard from '../core/TravelPackageCard';
+import TravelPackageCard from '../Core/TravelPackageCard';
 
 const TravelPackageLandingPage = () => {
   const settings = {

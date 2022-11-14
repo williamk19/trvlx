@@ -3,7 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
 import HeaderAdmin from '@/Components/admin/HeaderAdmin';
 import TableKendaraan from '@/Components/admin/Kendaraan/TableKendaraan';
-import NotificationKendaraan from '@/Components/admin/Kendaraan/NotificationKendaraan';
+import NotificationKendaraan from '@/Components/admin/NotificationAdmin';
 
 const Kendaraan = (props) => {
   const [searchQuery, setSearchQuery] = useState('');

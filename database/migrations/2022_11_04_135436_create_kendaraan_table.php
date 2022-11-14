@@ -21,15 +21,6 @@ return new class extends Migration
       $table->unsignedInteger('jumlah_seat');
       $table->timestamps();
     });
-
-    DB::table('kendaraan')->insert([
-      [
-        'plat_nomor' => 'M150DD',
-        'merk_mobil' => 'Toyota',
-        'nama_mobil' => 'Xenia 2022',
-        'jumlah_seat' => 5
-      ]
-    ]);
   }
 
   /**

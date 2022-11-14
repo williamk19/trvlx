@@ -3,7 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
 import TableUser from '@/Components/admin/User/TableUser';
 import HeaderAdmin from '@/Components/admin/HeaderAdmin';
-import NotificationKendaraan from '@/Components/admin/Kendaraan/NotificationKendaraan';
+import NotificationKendaraan from '@/Components/admin/NotificationAdmin';
 
 export default function Pengguna(props) {
   let { url } = usePage();

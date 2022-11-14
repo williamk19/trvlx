@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
 import HeaderAdmin from '@/Components/admin/HeaderAdmin';
+import TableLayanan from '@/Components/admin/Layanan/TableLayanan';
 
 export default function Dashboard(props) {
   let { url } = usePage();
@@ -25,6 +26,7 @@ export default function Dashboard(props) {
         handleSearch={handleSearch}
         addButton={true}
       />
+      <TableLayanan layanan={props.layanan} />
     </AuthenticatedLayout>
   );
 }
