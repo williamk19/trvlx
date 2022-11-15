@@ -43,16 +43,19 @@ class LayananController extends Controller
       'kota_tujuan' => 'required|string|max:255',
       'biaya_jasa' => 'required|numeric',
     ]);
-    
+
     $createLayanan = Layanan::create([
-      'kota_asal' => 'required|string|max:255',
-      'kota_tujuan' => 'required|string|max:255',
-      'biaya_jasa' => 'required|numeric',
+      'kota_asal' => $request->kota_asal,
+      'kota_tujuan' => $request->kota_tujuan,
+      'biaya_jasa' => $request->biaya_jasa,
     ]);
 
     return redirect()
-      ->route('kendaraan.index')
-      ->with('message', $createLayanan);
+      ->route('layanan.index')
+      ->with(
+        'message',
+        $createLayanan->kota_asal . " - " . $createLayanan->kota_tujuan . " Telah dibuat"
+      );
   }
 
   /**

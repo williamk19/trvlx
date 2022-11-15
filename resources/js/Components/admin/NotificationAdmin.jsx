@@ -1,7 +1,7 @@
 import { success } from 'daisyui/src/colors';
 import React from 'react';
 
-function NotificationKendaraan({
+function NotificationAdmin({
   children,
   className,
   type = 'success',
@@ -70,4 +70,4 @@ function NotificationKendaraan({
   );
 }
 
-export default NotificationKendaraan;
+export default NotificationAdmin;

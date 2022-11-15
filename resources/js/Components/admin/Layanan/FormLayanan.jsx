@@ -11,11 +11,6 @@ const FormLayanan = ({ itemLayanan }) => {
     biaya_jasa: 0,
   });
 
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   const onHandleChange = (event) => {
     setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
   };
@@ -82,9 +77,9 @@ const FormLayanan = ({ itemLayanan }) => {
                   type="text"
                   value={data.biaya_jasa}
                   name='biaya_jasa'
-                  onChange={(values) => {
+                  onValueChange={(values) => {
                     const { formattedValue, value } = values;
-                    return setData(biaya_jasa, value);
+                    setData("biaya_jasa", +value);
                   }}
                   placeholder='Rp. 250,000' />
                 <InputError message={errors.biaya_jasa} className="mt-2" />
