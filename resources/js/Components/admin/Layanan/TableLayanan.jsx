@@ -45,16 +45,20 @@ const TableLayanan = ({ layanan }) => {
 
   const renderData = currData.length > 0 ? currData.map((l) => {
     return (
-      <tr key={l.id}>
+      <tr key={l.id_layanan}>
         <td>
           <div className="flex items-center space-x-3">
             <div>
-              <div className="font-bold">{l.kota_asal}</div>
+              <div className="font-semibold">
+                {l.kota_asal}
+              </div>
             </div>
           </div>
         </td>
         <td>
-          {l.kota_tujuan}
+          <div className="font-semibold">
+            {l.kota_tujuan}
+          </div>
         </td>
         <td>
           <CurrencyFormat 
@@ -65,7 +69,7 @@ const TableLayanan = ({ layanan }) => {
         </td>
         <th>
           <Link
-            href={`/kendaraan/${l.id}/edit`}
+            href={`/kendaraan/${l.id_layanan}/edit`}
             className="btn bg-indigo-400 border-none hover:bg-indigo-500 btn-xs">
             Edit
           </Link>
@@ -86,10 +90,10 @@ const TableLayanan = ({ layanan }) => {
         <table className="table w-full">
           <thead>
             <tr>
-              <th>Kota Asal Travel</th>
-              <th>Kota Tujuan Travel</th>
-              <th>Harga</th>
-              <th></th>
+              <th className='text-base'>Kota Asal Travel</th>
+              <th className='text-base'>Kota Tujuan Travel</th>
+              <th className='text-base'>Harga</th>
+              <th className='text-base'></th>
             </tr>
           </thead>
           <tbody>

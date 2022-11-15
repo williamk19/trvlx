@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
-import HeaderAdmin from '@/Components/admin/HeaderAdmin';
-import TableKendaraan from '@/Components/admin/Kendaraan/TableKendaraan';
-import NotificationKendaraan from '@/Components/admin/NotificationAdmin';
+import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
+import TableKendaraan from '@/Components/Admin/Kendaraan/TableKendaraan';
+import NotificationKendaraan from '@/Components/Admin/NotificationAdmin';
 
 const Kendaraan = (props) => {
   const [searchQuery, setSearchQuery] = useState('');

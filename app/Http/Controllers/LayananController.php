@@ -27,7 +27,7 @@ class LayananController extends Controller
    */
   public function create()
   {
-    //
+    return Inertia::render('Admin/FormPageLayanan');
   }
 
   /**
@@ -38,7 +38,21 @@ class LayananController extends Controller
    */
   public function store(Request $request)
   {
-    //
+    $request->validate([
+      'kota_asal' => 'required|string|max:255',
+      'kota_tujuan' => 'required|string|max:255',
+      'biaya_jasa' => 'required|numeric',
+    ]);
+    
+    $createLayanan = Layanan::create([
+      'kota_asal' => 'required|string|max:255',
+      'kota_tujuan' => 'required|string|max:255',
+      'biaya_jasa' => 'required|numeric',
+    ]);
+
+    return redirect()
+      ->route('kendaraan.index')
+      ->with('message', $createLayanan);
   }
 
   /**

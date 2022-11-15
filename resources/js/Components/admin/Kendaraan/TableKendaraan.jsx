@@ -79,9 +79,9 @@ const TableKendaraan = ({ kendaraan }) => {
         <table className="table w-full">
           <thead>
             <tr>
-              <th>Nama Kendaraan</th>
-              <th>Plat Nomor</th>
-              <th>Jumlah Seat</th>
+              <th className='text-base'>Nama Kendaraan</th>
+              <th className='text-base'>Plat Nomor</th>
+              <th className='text-base'>Jumlah Seat</th>
               <th></th>
             </tr>
           </thead>
