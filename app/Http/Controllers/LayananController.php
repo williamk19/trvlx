@@ -77,7 +77,9 @@ class LayananController extends Controller
    */
   public function edit(Layanan $layanan)
   {
-    //
+    return Inertia::render('Admin/FormPageLayanan', [
+      'layanan' => $layanan
+    ]);
   }
 
   /**
@@ -89,7 +91,26 @@ class LayananController extends Controller
    */
   public function update(Request $request, Layanan $layanan)
   {
-    //
+    $request->validate([
+      'kota_asal' => 'required|string|max:255',
+      'kota_tujuan' => 'required|string|max:255',
+      'biaya_jasa' => 'required|numeric',
+    ]);
+
+    Layanan::where('id_layanan', $layanan->id)
+      ->first()
+      ->update([
+        'kota_asal' => $request->kota_asal,
+        'kota_tujuan' => $request->kota_tujuan,
+        'biaya_jasa' => $request->biaya_jasa
+      ]);
+
+    return redirect()
+      ->route('layanan.index')
+      ->with(
+        'message',
+        $request->kota_asal . " - " . $request->kota_tujuan . " Telah diubah"
+      );
   }
 
   /**
@@ -100,6 +121,14 @@ class LayananController extends Controller
    */
   public function destroy(Layanan $layanan)
   {
-    //
+    $deletedLayanan = clone $layanan;
+    Layanan::destroy($layanan->id_layanan);
+    $deletedLayanan->type = "error";
+    return redirect()
+      ->route('layanan.index')
+      ->with(
+        'message',
+        $deletedLayanan->kota_asal . " - " . $deletedLayanan->kota_tujuan . " Telah Dihapus"
+      );
   }
 }

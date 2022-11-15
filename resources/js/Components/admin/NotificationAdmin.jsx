@@ -46,8 +46,7 @@ function NotificationAdmin({
 
   return (
     <>
-      {open &&
-        <div className={className}>
+      {<div className={`${className} ${open ? 'block' : 'hidden' }`}>
           <div className="inline-flex flex-col max-w-lg px-4 py-2 rounded-sm text-sm bg-white shadow-lg border border-slate-200 text-slate-600">
             <div className="flex w-full justify-between items-start">
               <div className="flex">

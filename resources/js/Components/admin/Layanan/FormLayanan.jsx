@@ -6,21 +6,26 @@ import { useEffect } from 'react';
 
 const FormLayanan = ({ itemLayanan }) => {
   const { data, setData, post, processing, errors, reset } = useForm({
-    kota_asal: '',
-    kota_tujuan: '',
-    biaya_jasa: 0,
+    kota_asal: itemLayanan?.kota_asal.length > 0 ? itemLayanan.kota_asal : '',
+    kota_tujuan: itemLayanan?.kota_tujuan.length > 0 ? itemLayanan.kota_tujuan : '',
+    biaya_jasa: itemLayanan?.biaya_jasa > 0 ? itemLayanan.biaya_jasa : 0,
   });
 
   const onHandleChange = (event) => {
     setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
   };
 
+  const handleDelete = (e) => {
+    e.preventDefault();
+    Inertia.delete(route("layanan.destroy", itemLayanan.id_layanan));
+  }
+
   const submit = (e) => {
     e.preventDefault();
     if (!itemLayanan) {
       post(route('layanan.store'));
     } else {
-      Inertia.put(route('kendaraan.update', {
+      Inertia.put(route('layanan.update', {
         layanan: itemLayanan,
         ...data
       }));
@@ -87,10 +92,9 @@ const FormLayanan = ({ itemLayanan }) => {
             </div>
             <div className="flex justify-between">
               {itemLayanan ? (
-                <Link onClick={handleDelete} data-theme="light" className="btn btn-error hover:border-slate-300">
-                  Hapus Mobil
-                </Link>
-
+                <button onClick={(e) => handleDelete(e)} data-theme="light" className="btn btn-error hover:border-slate-300">
+                  Hapus Layanan
+                </button>
               ) : (<div></div>)}
               <button type="submit" className="btn bg-white border-slate-200 hover:border-slate-300 text-indigo-500 hover:bg-slate-200">
                 {itemLayanan ? "Edit" : "Tambahkan"} Layanan

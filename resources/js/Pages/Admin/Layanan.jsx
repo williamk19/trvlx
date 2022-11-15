@@ -44,7 +44,11 @@ export default function Dashboard(props) {
         addButton={true}
       />
       {props.flash?.message && (
-        <NotificationAdmin type={props.flash?.message.type} className={'absolute font-bold top-20 right-8'} open={notificationOpen} setOpen={setNotificationOpen}>
+        <NotificationAdmin
+          type={props.flash?.message.type}
+          className={'transition-all delay-1000 absolute font-bold top-20 right-8'}
+          open={notificationOpen}
+          setOpen={setNotificationOpen}>
           {`${props.flash?.message}`}
         </NotificationAdmin>
       )}

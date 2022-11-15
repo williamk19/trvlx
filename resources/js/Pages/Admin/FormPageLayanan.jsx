@@ -19,7 +19,9 @@ const FormPageLayanan = (props) => {
         buttonLink={route('layanan.create')}
         addButton={false}
       />
-      <FormLayanan />
+      <FormLayanan
+        itemLayanan={props.layanan}
+      />
     </AuthenticatedLayout>
   );
 };
