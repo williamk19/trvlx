@@ -20,7 +20,7 @@ export default function TextInput({
   }, []);
 
   return (
-    <div className="flex flex-row items-start items-center gap-4">
+    <div className="flex flex-row items-start items-center mt-2 gap-4">
       {telp ? (<p className='text-black'>+62</p>) : ("")}
       <input
         type={type}

@@ -5,10 +5,10 @@ export default function Guest({auth, children }) {
   return (
     <div className="min-h-screen flex flex-col sm:justify-start items-center bg-gray-100">
       <NavbarLandingPage auth={auth} />
-      <div className="w-6/12 flex-1 flex flex-col justify-center items-center">
-        <div className="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+      <div className="w-11/12 max-w-6xl flex-1 flex flex-col justify-center items-center">
+        {/* <div className="w-full mt-6 bg-white shadow-2xl overflow-hidden rounded-xl"> */}
           {children}
-        </div>
+        {/* </div> */}
       </div>
     </div>
   );
