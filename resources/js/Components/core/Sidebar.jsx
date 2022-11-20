@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, usePage } from '@inertiajs/inertia-react';
-import Logo from '@/assets/images/logo.png'
+import Logo from '@/assets/images/logo.png';
+import LogoSmall from '@/assets/images/logo-small.png';
 
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const { url } = usePage();
@@ -53,7 +54,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
         className={`flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 shrink-0 bg-slate-800 p-4 transition-all duration-200 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-64'
           }`}
       >
-        <div className="flex justify-between mb-24 pr-3 sm:px-2">
+        <div className={`flex justify-between mb-24 ${sidebarExpanded && ("pr-3 sm:px-2")}`}>
           <button
             ref={trigger}
             className="lg:hidden text-slate-500 hover:text-slate-400"
@@ -67,7 +68,11 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
             </svg>
           </button>
           <Link to="/" className="btn btn-ghost btn-md px-1 normal-case text-xl">
-            <img src={Logo} className='w-28' />
+            {sidebarExpanded ? (
+              <img src={Logo} className='w-28' />
+            ) : (
+              <img src={LogoSmall} className='w-8' />
+            )}
           </Link>
         </div>
 

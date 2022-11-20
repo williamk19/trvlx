@@ -10,7 +10,7 @@ use Illuminate\Validation\Rule as ValidationRule;
 
 class UserController extends Controller
 {
-  
+
   /**
    * Display a listing of the resource.
    *
@@ -29,7 +29,8 @@ class UserController extends Controller
     ]);
   }
 
-  public function admin() {
+  public function admin()
+  {
     $adminData = User::where('id_kategori', 1)->orWhere('id_kategori', 2)->get();
     return Inertia::render('Admin/PenggunaDataPage', [
       'title' => 'Data Admin',
@@ -37,7 +38,8 @@ class UserController extends Controller
     ]);
   }
 
-  public function sopir() {
+  public function sopir()
+  {
     $sopirData = User::where('id_kategori', 3)->get();
     return Inertia::render('Admin/PenggunaDataPage', [
       'title' => 'Data Sopir',
@@ -45,8 +47,20 @@ class UserController extends Controller
     ]);
   }
 
-  public function pengguna() {
-    $penggunaData = User::where('id_kategori', 4)->get();
+  public function pengguna()
+  {
+    $penggunaData = User::paginate(5)->through(function ($item) {
+      return [
+        'id' => $item->id,
+        'nama_user' => $item->nama_user,
+        'email_user' => $item->email_user,
+        'telepon_user' => $item->telepon_user
+      ];
+    });
+    // $penggunaData = User::where('id_kategori', 4)->get();
+
+
+    // dd($penggunaData);
     return Inertia::render('Admin/PenggunaDataPage', [
       'title' => 'Data Pengguna',
       'user' => $penggunaData
@@ -178,12 +192,12 @@ class UserController extends Controller
         ->with('message', 'Akun sedang dipakai saat ini');
     }
 
-    
+
 
     $deletedUser = clone $user;
     $deletedUser->type = "error";
     User::where('id', $user->id)->first()->delete();
-    
+
     $category = $this->getCategory($user->id_kategori);
     return redirect()
       ->route("user.$category")

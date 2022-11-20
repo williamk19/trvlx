@@ -8,7 +8,7 @@ const TableKendaraan = ({ kendaraan }) => {
   const [currPage, setCurrPage] = useState(1);
   const [elementPerPage, setElementPerPage] = useState(5);
   const [lastIndex, setLastIndex] = useState(currPage * elementPerPage);
-  const [firstIndex, setFirstIndex] = useState(lastIndex - elementPerPage);
+  const [firstIndex, setFirstIndex] = useState(lastIndex - elementPerPage + 1);
   const [pageNumbers, setPageNumbers] = useState([]);
 
   useEffect(() => {

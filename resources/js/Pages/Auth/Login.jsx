@@ -90,7 +90,8 @@ export default function Login({ auth, status, canResetPassword }) {
                         </Link>
                       </div>
                       <button
-                        processing={processing}
+                        type='submit'
+                        disabled={processing}
                         className="btn border-none bg-blue-600 hover:bg-blue-700 text-white ml-3">
                         Sign In
                       </button>

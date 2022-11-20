@@ -1,45 +1,54 @@
 import React, { useState, useEffect } from 'react';
+import { Inertia } from '@inertiajs/inertia';
 import { Link } from '@inertiajs/inertia-react';
 import PaginationKendaraan from '../Kendaraan/PaginationKendaraan';
+import { replace } from 'lodash';
 
 const TableUser = ({ user }) => {
-  const [data, setData] = useState(user);
-  const [currData, setCurrData] = useState([]);
-  const [currPage, setCurrPage] = useState(1);
-  const [elementPerPage, setElementPerPage] = useState(5);
-  const [lastIndex, setLastIndex] = useState(currPage * elementPerPage);
-  const [firstIndex, setFirstIndex] = useState(lastIndex - elementPerPage);
-  const [pageNumbers, setPageNumbers] = useState([]);
+  // console.log(user);
+  const [data, setData] = useState(user.data);
+  const [links, setLinks] = useState(user.links);
+  const [prevUrl, setPrevUrl] = useState(user.prev_page_url);
+  const [nextUrl, setNextUrl] = useState(user.next_page_url);
+  // const [currPage, setCurrPage] = useState(1);
+  // const [elementPerPage, setElementPerPage] = useState(5);
+  // const [lastIndex, setLastIndex] = useState(currPage * elementPerPage);
+  // const [firstIndex, setFirstIndex] = useState(lastIndex - elementPerPage);
+  // const [pageNumbers, setPageNumbers] = useState([]);
 
   useEffect(() => {
-    setData(user);
-    setCurrPage(1);
-  }, [user]);
+    setData(user.data);
+    // setCurrPage(1);
+    // console.log(data);
+  }, [user.data]);
 
-  useEffect(() => {
-    setCurrData(data.slice(firstIndex, lastIndex));
-    let tempPageNumber = [];
-    for (let i = 1; i <= Math.ceil(data.length / elementPerPage); i++) {
-      tempPageNumber.push(i);
-    }
-    setPageNumbers(tempPageNumber);
-  }, [data, firstIndex, lastIndex]);
+  // useEffect(() => {
+  //   setCurrData(data);
+    // console.log(currData);
+    // let tempPageNumber = [];
+    // for (let i = 1; i <= Math.ceil(data.length / elementPerPage); i++) {
+    //   tempPageNumber.push(i);
+    // }
+    // setPageNumbers(tempPageNumber);
+  // }, [data]);
 
-  useEffect(() => {
-    setLastIndex(currPage * elementPerPage);
-    setFirstIndex(lastIndex - elementPerPage);
-  }, [pageNumbers, currPage]);
 
   const handleNextClick = () => {
-    if (currPage <= pageNumbers.length - 1) {
-      setCurrPage(currPage + 1);
-    }
+    // if (currPage <= pageNumbers.length - 1) {
+    //   setCurrPage(currPage + 1);
+    // }
+    Inertia.get(nextUrl, {}, {
+      replace: true
+    });
   };
 
   const handlePrevClick = () => {
-    if (currPage >= 2) {
-      setCurrPage(currPage - 1);
-    }
+    // if (currPage >= 2) {
+    //   setCurrPage(currPage - 1);
+    // }
+    Inertia.get(prevUrl, {}, {
+      replace: true
+    });
   };
 
   const pathMapping = (id) => {
@@ -57,7 +66,7 @@ const TableUser = ({ user }) => {
     }
   };
 
-  const renderData = currData.length > 0 ? currData.map((k) => {
+  const renderData = data ? data.map((k) => {
     return (
       <tr key={k.id}>
         <td>
@@ -107,9 +116,9 @@ const TableUser = ({ user }) => {
       </div>
       <div className="mt-8">
         <PaginationKendaraan
-          firstIndex={firstIndex}
-          lastIndex={lastIndex}
-          dataLength={user.length}
+          firstIndex={user.from}
+          lastIndex={user.to}
+          dataLength={user.total}
           handleNextClick={handleNextClick}
           handlePrevClick={handlePrevClick}
         />

@@ -23,10 +23,6 @@ export default function Register({ auth }) {
     };
   }, []);
 
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
-
   const onHandleChange = (event) => {
     setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
   };
@@ -123,7 +119,7 @@ export default function Register({ auth }) {
                     </div>
                     <div className="flex items-center justify-end mt-4">
                       <button
-                        processing={processing}
+                        disabled={processing}
                         className="btn border-none bg-blue-600 hover:bg-blue-700 text-white ml-3">
                         Daftar
                       </button>

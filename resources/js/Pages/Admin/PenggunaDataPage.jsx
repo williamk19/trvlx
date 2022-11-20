@@ -11,13 +11,13 @@ export default function Pengguna(props) {
   const [user, setUser] = useState(props.user);
   const [notificationOpen, setNotificationOpen] = useState(true);
   
-  useEffect(() => {
-    const temp = props.user.filter((k) => (
-      k.nama_user.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      k.email_user.toLowerCase().includes(searchQuery.toLowerCase())
-    ));
-    setUser(temp);
-  }, [searchQuery]);
+  // useEffect(() => {
+  //   const temp = props.user.data.filter((k) => (
+  //     k.nama_user.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //     k.email_user.toLowerCase().includes(searchQuery.toLowerCase())
+  //   ));
+  //   setUser(temp);
+  // }, [searchQuery]);
 
   useEffect(() => {
     if (notificationOpen === true) {

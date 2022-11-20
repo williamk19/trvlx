@@ -33,7 +33,7 @@ const PaginationKendaraan = ({ firstIndex, lastIndex, dataLength, handleNextClic
         </ul>
       </nav>
       <div className="text-sm text-slate-500 text-center sm:text-left">
-        Showing <span className="font-medium text-slate-600">{firstIndex + 1}</span> to <span className="font-medium text-slate-600">{lastIndex}</span> of <span className="font-medium text-slate-600">{dataLength}</span> results
+        Showing <span className="font-medium text-slate-600">{firstIndex}</span> to <span className="font-medium text-slate-600">{lastIndex}</span> of <span className="font-medium text-slate-600">{dataLength}</span> results
       </div>
     </div>
   );
