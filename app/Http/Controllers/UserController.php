@@ -29,20 +29,44 @@ class UserController extends Controller
     ]);
   }
 
-  public function admin()
+  public function admin(Request $request)
   {
-    $adminData = User::where('id_kategori', 1)->orWhere('id_kategori', 2)->get();
+    $adminData = User::where('id_kategori', 1)
+      ->orWhere('id_kategori', 2)
+      ->where('nama_user', 'like', '%' . $request->search . '%')
+      ->paginate(5)
+      ->through(function ($item) {
+        return [
+          'id' => $item->id,
+          'nama_user' => $item->nama_user,
+          'email_user' => $item->email_user,
+          'telepon_user' => $item->telepon_user
+        ];
+      });
     return Inertia::render('Admin/PenggunaDataPage', [
       'title' => 'Data Admin',
+      'query' => $request->search,
       'user' => $adminData
     ]);
   }
 
-  public function sopir()
+  public function sopir(Request $request)
   {
-    $sopirData = User::where('id_kategori', 3)->get();
+    $sopirData = User::where('id_kategori', 3)
+    ->where('nama_user', 'like', '%' . $request->search . '%')
+      ->paginate(5)
+      ->through(function ($item) {
+        return [
+          'id' => $item->id,
+          'nama_user' => $item->nama_user,
+          'email_user' => $item->email_user,
+          'telepon_user' => $item->telepon_user
+        ];
+      });
+
     return Inertia::render('Admin/PenggunaDataPage', [
       'title' => 'Data Sopir',
+      'query' => $request->search,
       'user' => $sopirData
     ]);
   }
