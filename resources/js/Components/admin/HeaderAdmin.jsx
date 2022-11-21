@@ -5,13 +5,19 @@ import SearchForm from '../Core/SearchForm';
 const HeaderAdmin = ({
   title,
   handleSearch,
+  searchQuery,
   url,
   placeholder = "Cari sesuatu...",
   type,
   buttonLink,
   addButton = false
 }) => {
-  const toBreadcrumbs = (pathname, { rootName = "Home", nameTransform = s => s } = {}) =>
+
+  const nameTransform = (url) => {
+    return url.split("?").slice(0, 1).join('');
+  };
+
+  const toBreadcrumbs = (pathname, nameTransform, { rootName = "Home" } = {}) =>
     pathname
       .split("/")
       .filter(Boolean)
@@ -29,7 +35,7 @@ const HeaderAdmin = ({
         { path: "", crumbs: [{ path: "/", name: rootName }] },
       );
 
-  const arrOfPath = toBreadcrumbs(url).filter((p) => {
+  const arrOfPath = toBreadcrumbs(url, nameTransform).filter((p) => {
     if (p.name !== "Home" && isNaN(p.name)) {
       return p;
     }
@@ -60,7 +66,7 @@ const HeaderAdmin = ({
         </div>
         <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end items-center gap-2">
           {handleSearch && (
-            <SearchForm handleSearch={handleSearch} placeholder={placeholder} />
+            <SearchForm handleSearch={handleSearch} placeholder={placeholder} searchQuery={searchQuery} />
           )}
           {addButton && (
             <Link href={buttonLink}>

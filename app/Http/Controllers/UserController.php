@@ -47,22 +47,23 @@ class UserController extends Controller
     ]);
   }
 
-  public function pengguna()
+  public function pengguna(Request $request)
   {
-    $penggunaData = User::paginate(5)->through(function ($item) {
-      return [
-        'id' => $item->id,
-        'nama_user' => $item->nama_user,
-        'email_user' => $item->email_user,
-        'telepon_user' => $item->telepon_user
-      ];
-    });
-    // $penggunaData = User::where('id_kategori', 4)->get();
+    $penggunaData = User::where('id_kategori', 4)
+      ->where('nama_user', 'like', '%'.$request->search.'%')
+      ->paginate(5)
+      ->through(function ($item) {
+        return [
+          'id' => $item->id,
+          'nama_user' => $item->nama_user,
+          'email_user' => $item->email_user,
+          'telepon_user' => $item->telepon_user
+        ];
+      });
 
-
-    // dd($penggunaData);
     return Inertia::render('Admin/PenggunaDataPage', [
       'title' => 'Data Pengguna',
+      'query' => $request->search,
       'user' => $penggunaData
     ]);
   }

@@ -4,20 +4,14 @@ import { Head, usePage } from '@inertiajs/inertia-react';
 import TableUser from '@/Components/Admin/User/TableUser';
 import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
 import NotificationKendaraan from '@/Components/Admin/NotificationAdmin';
+import { Inertia } from '@inertiajs/inertia';
 
 export default function Pengguna(props) {
-  let { url } = usePage();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [user, setUser] = useState(props.user);
+  const [searchQuery, setSearchQuery] = useState(props.query);
   const [notificationOpen, setNotificationOpen] = useState(true);
-  
-  // useEffect(() => {
-  //   const temp = props.user.data.filter((k) => (
-  //     k.nama_user.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //     k.email_user.toLowerCase().includes(searchQuery.toLowerCase())
-  //   ));
-  //   setUser(temp);
-  // }, [searchQuery]);
+
+  let { url } = usePage();
+  const base_url = url.split("?").slice(0, 1).join();
 
   useEffect(() => {
     if (notificationOpen === true) {
@@ -29,22 +23,27 @@ export default function Pengguna(props) {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setSearchQuery(e.target.value);
+    setSearchQuery(e.target.value.toLowerCase());
   };
 
-  const messageNotification = (type) => {
-    if (type === undefined) {
-      return 'telah dimasukkan';
+  useEffect(() => {
+    if (searchQuery !== props.query) {
+      Inertia.get(route(route().current()),
+        { search: searchQuery },
+        { 
+          replace: true,
+          preserveState: true,
+          preserveScroll: true
+        }
+      );
+    } else if (searchQuery === "") {
+      Inertia.visit(`${base_url}`, {
+        replace: true,
+        preserveState: true,
+        preserveScroll: true
+      });
     }
-    switch (type) {
-      case 'error':
-        return 'telah dihapus';
-      case 'info':
-        return 'telah diubah';
-      default:
-        return 'telah dimasukkan';
-    }
-  }
+  }, [searchQuery]);
 
   return (
     <AuthenticatedLayout
@@ -60,6 +59,7 @@ export default function Pengguna(props) {
       <HeaderAdmin
         title='Pengguna Travel 👤'
         url={url}
+        searchQuery={searchQuery}
         handleSearch={handleSearch}
       />
       <div className="py-8">
@@ -71,7 +71,7 @@ export default function Pengguna(props) {
                 : `${props.flash?.message}`}
             </NotificationKendaraan>
           )}
-          <TableUser user={user} />
+          <TableUser query={searchQuery} user={props.user} />
         </div>
       </div>
     </AuthenticatedLayout>
