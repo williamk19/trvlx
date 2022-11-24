@@ -23,8 +23,9 @@
     },
     "dependencies": {
         "@heroicons/react": "^2.0.12",
+        "@react-leaflet/core": "^2.1.0",
         "daisyui": "^2.27.0",
-        "leaflet": "^1.9.2",
+        "leaflet": "^1.9.3",
         "leaflet-routing-machine": "^3.2.12",
         "react-currency-format": "^1.1.0",
         "react-datepicker": "^4.8.0",
@@ -32,7 +33,6 @@
         "react-phone-number-input": "^3.2.12",
         "react-slick": "^0.29.0",
         "react-transition-group": "^4.4.5",
-        "react-use": "^17.4.0",
         "slick-carousel": "^1.8.1"
     }
 }

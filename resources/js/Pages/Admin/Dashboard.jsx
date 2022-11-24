@@ -1,7 +1,6 @@
 import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/inertia-react';
-import MapBox from '@/Components/Core/MapBox';
 
 export default function Dashboard(props) {
   return (

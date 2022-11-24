@@ -10,14 +10,18 @@
 }
 
 .no-scrollbar::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
 
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
 
 body {
-  margin-bottom: 0!important;
+    margin-bottom: 0 !important;
+}
+
+.leaflet-control-container .leaflet-routing-container-hide {
+    display: none !important;
 }

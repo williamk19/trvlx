@@ -4,7 +4,8 @@ import { Head, usePage } from '@inertiajs/inertia-react';
 import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
 import TableKendaraan from '@/Components/Admin/Kendaraan/TableKendaraan';
 import NotificationKendaraan from '@/Components/Admin/NotificationAdmin';
-import MapBox from '@/Components/Core/MapBox';
+import BoxMap from '@/Components/MapBox/BoxMap';
+import BoxRouteMap from '@/Components/MapBox/BoxRouteMap';
 
 const Order = (props) => {
   let { url } = usePage();
@@ -23,7 +24,10 @@ const Order = (props) => {
         addButton={true}
         buttonLink={route('kendaraan.create')}
       />
-      <MapBox />
+      <div className='flex gap-10'>
+        <BoxMap type="route" />
+        {/* <BoxRouteMap /> */}
+      </div>
     </AuthenticatedLayout>
   );
 };

@@ -11,7 +11,6 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^2.8",
         "laravel/tinker": "^2.7",
-        "laravel/vapor-cli": "^1.45",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
@@ -58,6 +57,7 @@
         }
     },
     "config": {
+      "COMPOSER_MIRROR_PATH_REPOS": true,
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
