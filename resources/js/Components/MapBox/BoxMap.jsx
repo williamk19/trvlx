@@ -3,7 +3,7 @@ import DragMarkerMap from './DragMarkerMap';
 import BoxRouteMap from './BoxRouteMap';
 import "leaflet/dist/leaflet.css";
 
-const BoxMap = ({ type }) => {
+const BoxMap = ({ type = 'pick' }) => {
   return (
     <div className="w-2/5 h-96" >
       <MapContainer 

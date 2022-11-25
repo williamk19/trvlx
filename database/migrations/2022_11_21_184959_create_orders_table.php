@@ -6,26 +6,44 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('orders', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('orders', function (Blueprint $table) {
+      $table->id('id_order');
+      $table->unsignedBigInteger('id_user');
+      $table->unsignedBigInteger('id_layanan');
+      $table->unsignedBigInteger('id_lokasi');
+      $table->unsignedBigInteger('id_kendaraan');
+      $table->string('nama_penumpang');
+      $table->date('tanggal_pemberangkatan');
+      $table->enum('status_pembayaran', [
+        'pending',
+        'rejected',
+        'done'
+      ]);
+      $table->integer('total_seat');
+      $table->string('total_harga');
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('orders');
-    }
+      $table->foreign('id_kendaraan')->references('id_kendaraan')->on('kendaraan');
+      $table->foreign('id_user')->references('id_user')->on('users');
+      $table->foreign('id_layanan')->references('id_layanan')->on('layanan');
+      $table->foreign('id_lokasi')->references('id_lokasi')->on('lokasi');
+      $table->timestamps();
+    });
+  }
+
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('orders');
+  }
 };

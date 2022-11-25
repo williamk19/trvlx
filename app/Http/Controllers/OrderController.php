@@ -16,6 +16,7 @@ class OrderController extends Controller
    */
   public function index()
   {
+    
     return Inertia::render('Admin/Order');
   }
 

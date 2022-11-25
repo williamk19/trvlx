@@ -14,16 +14,15 @@ return new class extends Migration
   public function up()
   {
     Schema::create('users', function (Blueprint $table) {
-      $table->id();
+      $table->id('id_user');
       $table->string('nama_user');
-      $table->unsignedBigInteger('id_kategori');
+      $table->foreignId('id_kategori')->constrained('users_role');
       $table->string('email_user')->unique();
       $table->string('telepon_user')->unique();
       $table->timestamp('email_verified_at')->nullable();
       $table->string('password');
       $table->rememberToken();
       $table->timestamps();
-      $table->foreign('id_kategori')->references('id')->on('users_role');
     });
   }
 
@@ -35,10 +34,10 @@ return new class extends Migration
   public function down()
   {
     Schema::dropIfExists('users');
-    Schema::table('users', function (Blueprint $table) {
-      $table->dropForeign('users_id_kategori_foreign');
-      $table->dropIndex('users_id_kategori_index');
-      $table->dropColumn('id_kategori');
-    });
+    // Schema::table('users', function (Blueprint $table) {
+    //   $table->dropForeign('users_id_kategori_foreign');
+    //   $table->dropIndex('users_id_kategori_index');
+    //   $table->dropColumn('id_kategori');
+    // });
   }
 };

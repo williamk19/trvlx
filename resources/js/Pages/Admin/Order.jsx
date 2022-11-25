@@ -5,7 +5,6 @@ import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
 import TableKendaraan from '@/Components/Admin/Kendaraan/TableKendaraan';
 import NotificationKendaraan from '@/Components/Admin/NotificationAdmin';
 import BoxMap from '@/Components/MapBox/BoxMap';
-import BoxRouteMap from '@/Components/MapBox/BoxRouteMap';
 
 const Order = (props) => {
   let { url } = usePage();
@@ -25,8 +24,7 @@ const Order = (props) => {
         buttonLink={route('kendaraan.create')}
       />
       <div className='flex gap-10'>
-        <BoxMap type="route" />
-        {/* <BoxRouteMap /> */}
+        <BoxMap />
       </div>
     </AuthenticatedLayout>
   );
