@@ -6,15 +6,15 @@ const HeroLandingPage = () => {
   const [startDate, setStartDate] = useState(new Date());
 
   return (
-    <div className="hero min-h-screen max-w-6xl w-11/12 mt-32 sm:mt-24 lg:mt-0">
+    <div className="hero min-h-screen max-w-6xl w-11/12 mt-12 md:mt-32 sm:mt-24 lg:mt-0">
       <div className="hero-content flex-col gap-x-24 p-0 lg:flex-row-reverse">
         <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Sewa Mobil Hiace, Elf, Bus, Tour Travel Wisata Jawa Bali
+          <h1 className="text-3xl md:text-5xl font-bold">Sewa Mobil Hiace, Elf, Bus, Tour Travel Wisata Jawa Bali
           </h1>
-          <p className="py-6">Dengan Armada Transportasi yang Sehat, Bersih, Harum, pelayanan yang maksimal dan didukung oleh Driver Ramah Profesional serta Customer Service yang fast respon selama 24 jam akan membuat Anda semakin nyaman di perjalanan.</p>
+          <p className="py-6 text-sm md:text-lg">Dengan Armada Transportasi yang Sehat, Bersih, Harum, pelayanan yang maksimal dan didukung oleh Driver Ramah Profesional serta Customer Service yang fast respon selama 24 jam akan membuat Anda semakin nyaman di perjalanan.</p>
         </div>
-        <div className="card border border-cyan-500 overflow-visible flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-          <div className="card-body">
+        <div className="card border border-cyan-500 overflow-visible flex-shrink-0 w-full max-w-sm w-10/12 md:w-full shadow-2xl bg-base-100">
+          <div className="card-body p-4 md:p-8">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Kota Tujuan</span>

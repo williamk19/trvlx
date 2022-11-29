@@ -1,17 +1,20 @@
-import { 
-  useState, 
-  useRef, 
-  useMemo, 
-  useCallback, 
-  useEffect 
+import {
+  useState,
+  useRef,
+  useMemo,
+  useCallback,
+  useEffect
 } from 'react';
 import { Marker, Popup, useMap } from 'react-leaflet';
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import { Icon } from 'leaflet';
+import "leaflet/dist/leaflet.css";
 
 const DragMarkerMap = () => {
   const center = {
     lat: -7.967394,
     lng: 112.633363,
-  }
+  };
 
   const [draggable, setDraggable] = useState(true);
   const [position, setPosition] = useState(center);
@@ -19,10 +22,15 @@ const DragMarkerMap = () => {
   const map = useMap();
 
   useEffect(() => {
-    map.locate().on("locationfound", function (e) {
-      setPosition(e.latlng);
-      map.flyTo(e.latlng, map.getZoom());
-    });
+    map
+      .locate({ 
+        enableHighAccuracy: true,
+        watch: true
+      })
+      .on("locationfound", function (e) {
+        setPosition(e.latlng);
+        map.flyTo(e.latlng, map.getZoom());
+      });
   }, [map]);
 
   const eventHandlers = useMemo(
@@ -42,6 +50,7 @@ const DragMarkerMap = () => {
 
   return (
     <Marker
+      icon={new Icon({ iconUrl: markerIcon, iconSize: [25, 41], iconAnchor: [12, 41] })}
       draggable={draggable}
       eventHandlers={eventHandlers}
       position={position}
@@ -55,6 +64,6 @@ const DragMarkerMap = () => {
       </Popup>
     </Marker>
   );
-}
+};
 
 export default DragMarkerMap;

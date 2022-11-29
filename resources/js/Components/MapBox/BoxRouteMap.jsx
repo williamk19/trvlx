@@ -1,7 +1,7 @@
 import { useMap } from 'react-leaflet';
 import { useEffect, useState, useRef } from 'react';
-import "leaflet/dist/leaflet.css";
 import RoutingMap from './RoutingMap';
+import "leaflet/dist/leaflet.css";
 
 const tempDestination = [-7.4323535, 112.7205893];
 
@@ -14,7 +14,9 @@ const BoxRouteMap = ({ destination = tempDestination }) => {
   useEffect(() => {
     map.locate().on("locationfound", function (e) {
       map.flyTo(e.latlng);
-      setHost([e.latlng.lat, e.latlng.lng]);
+      map.on('zoomend', () => {
+        setHost([e.latlng.lat, e.latlng.lng]);
+      });
     });
   }, [map]);
 
@@ -22,7 +24,7 @@ const BoxRouteMap = ({ destination = tempDestination }) => {
     if (routingMachine.current) {
       let waypoints = [
         host, destination
-      ]
+      ];
       routingMachine.current.setWaypoints(waypoints);
     }
   }, [host, destination]);

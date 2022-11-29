@@ -1,6 +1,6 @@
-import leaflet from "leaflet";
-import React, { useState } from 'react';
+import leaflet, { Icon } from "leaflet";
 import { createControlComponent } from "@react-leaflet/core";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine";
 
@@ -14,7 +14,15 @@ const createRoutingMachineLayer = ({ waypoints }) => {
     draggableWaypoints: false,
     collapsible: true,
     show: false,
-    showAlternatives: false
+    showAlternatives: false,
+    createMarker: (i, waypoint, n) => {
+      return leaflet.marker(
+        waypoint.latLng, {
+        icon: new Icon({
+          iconUrl: markerIcon, iconSize: [25, 41], iconAnchor: [12, 41]
+        })
+      });
+    }
   });
 
   return instance;

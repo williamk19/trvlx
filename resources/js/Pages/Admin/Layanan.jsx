@@ -3,18 +3,14 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
 import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
 import TableLayanan from '@/Components/Admin/Layanan/TableLayanan';
-import NotificationAdmin from '@/Components/Admin/NotificationAdmin';
+import NotificationAdmin from '@/Components/Admin/NotificationAdmin'; 
+import { Inertia } from '@inertiajs/inertia';
 
 export default function Dashboard(props) {
   let { url } = usePage();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [layanan, setLayanan] = useState(props.layanan);
   const [notificationOpen, setNotificationOpen] = useState(true);
-
-  useEffect(() => {
-    const temp = props.layanan.filter((l) => (l.kota_asal.toLowerCase().includes(searchQuery) || l.kota_tujuan.toLowerCase().includes(searchQuery)));
-    setLayanan(temp);
-  }, [searchQuery]);
+  const [searchQuery, setSearchQuery] = useState(props.query);
+  const base_url = url.split("?").slice(0, 1).join();
 
   useEffect(() => {
     if (notificationOpen === true) {
@@ -26,8 +22,27 @@ export default function Dashboard(props) {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setSearchQuery(e.target.value);
+    setSearchQuery(e.target.value.toLowerCase());
   };
+
+  useEffect(() => {
+    if (searchQuery !== props.query) {
+      Inertia.get(route(route().current()),
+        { search: searchQuery },
+        {
+          replace: true,
+          preserveState: true,
+          preserveScroll: true
+        }
+      );
+    } else if (searchQuery === "") {
+      Inertia.visit(`${base_url}`, {
+        replace: true,
+        preserveState: true,
+        preserveScroll: true
+      });
+    }
+  }, [searchQuery]);
 
   return (
     <AuthenticatedLayout
@@ -40,6 +55,7 @@ export default function Dashboard(props) {
         title={'Layanan 🧑‍💻'}
         url={url}
         buttonLink={route('layanan.create')}
+        searchQuery={searchQuery}
         handleSearch={handleSearch}
         addButton={true}
       />
@@ -52,7 +68,7 @@ export default function Dashboard(props) {
           {`${props.flash?.message}`}
         </NotificationAdmin>
       )}
-      <TableLayanan layanan={layanan} />
+      <TableLayanan layanan={props.layanan} />
     </AuthenticatedLayout>
   );
 }

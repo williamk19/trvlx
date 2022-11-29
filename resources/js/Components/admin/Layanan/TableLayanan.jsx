@@ -1,51 +1,52 @@
 import { useState, useEffect } from 'react';
 import { Link } from '@inertiajs/inertia-react';
+import { Inertia } from '@inertiajs/inertia';
 import CurrencyFormat from 'react-currency-format';
 import PaginationKendaraan from '../Kendaraan/PaginationKendaraan';
 
-const TableLayanan = ({ layanan }) => {
+const TableLayanan = ({ layanan, query }) => {
   const [data, setData] = useState(layanan);
-  const [currData, setCurrData] = useState([]);
-  const [currPage, setCurrPage] = useState(1);
-  const [elementPerPage, setElementPerPage] = useState(5);
-  const [lastIndex, setLastIndex] = useState(currPage * elementPerPage);
-  const [firstIndex, setFirstIndex] = useState(lastIndex - elementPerPage);
-  const [pageNumbers, setPageNumbers] = useState([]);
+  const [prevUrl, setPrevUrl] = useState(layanan.prev_page_url);
+  const [nextUrl, setNextUrl] = useState(layanan.next_page_url);
 
   useEffect(() => {
-    setData(layanan);
-    setCurrPage(1);
-  }, [layanan]);
-
-  useEffect(() => {
-    setCurrData(data.slice(firstIndex, lastIndex));
-    let tempPageNumber = [];
-    for (let i = 1; i <= Math.ceil(data.length / elementPerPage); i++) {
-      tempPageNumber.push(i);
-    }
-    setPageNumbers(tempPageNumber);
-  }, [data, firstIndex, lastIndex]);
-
-  useEffect(() => {
-    setLastIndex(currPage * elementPerPage);
-    setFirstIndex(lastIndex - elementPerPage);
-  }, [pageNumbers, currPage]);
+    setData(layanan.data);
+    console.log(layanan);
+  }, [layanan.data]);
 
   const handleNextClick = () => {
-    if (currPage <= pageNumbers.length - 1) {
-      setCurrPage(currPage + 1);
+    if (nextUrl === null)
+      return;
+
+    if (query) {
+      Inertia.get(`${nextUrl}&search=${query}`, {}, {
+        replace: true
+      });
+    } else if (nextUrl !== null) {
+      Inertia.get(nextUrl, {}, {
+        replace: true
+      });
     }
   };
 
   const handlePrevClick = () => {
-    if (currPage >= 2) {
-      setCurrPage(currPage - 1);
+    if (prevUrl === null)
+      return;
+
+    if (query) {
+      Inertia.get(`${prevUrl}&search=${query}`, {}, {
+        replace: true
+      });
+    } else if (prevUrl !== null) {
+      Inertia.get(prevUrl, {}, {
+        replace: true
+      });
     }
   };
 
-  const renderData = currData.length > 0 ? currData.map((l) => {
+  const renderData = data.length > 0 ? data.map((l) => {
     return (
-      <tr key={l.id_layanan}>
+      <tr key={l.id}>
         <td>
           <div className="flex items-center space-x-3">
             <div>
@@ -103,9 +104,9 @@ const TableLayanan = ({ layanan }) => {
       </div>
       <div className="mt-8">
         <PaginationKendaraan
-          firstIndex={firstIndex}
-          lastIndex={lastIndex}
-          dataLength={layanan.length}
+          firstIndex={layanan.from}
+          lastIndex={layanan.to}
+          dataLength={layanan.total}
           handleNextClick={handleNextClick}
           handlePrevClick={handlePrevClick}
         />

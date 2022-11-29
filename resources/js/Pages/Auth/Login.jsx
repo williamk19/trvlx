@@ -40,11 +40,11 @@ export default function Login({ auth, status, canResetPassword }) {
             <div className="md:w-1/2">
               <div className="py-8 flex flex-col after:flex-1">
                 <div className="flex-1">
-                  <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
+                  <div className="flex items-center justify-between md:h-16 px-4 sm:px-6 lg:px-8">
                   </div>
                 </div>
-                <div className="w-9/12 mx-auto px-4 py-8">
-                  <h1 className="text-3xl text-slate-800 font-bold mb-6">Login</h1>
+                <div className="w-10/12 md:w-9/12 mx-auto px-0 md:px-4 md:py-8">
+                  <h1 className="text-center md:text-left text-3xl text-slate-800 font-bold mb-6">Login</h1>
                   <form onSubmit={submit}>
                     <div className="space-y-4">
                       <div>

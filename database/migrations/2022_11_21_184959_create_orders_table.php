@@ -15,7 +15,7 @@ return new class extends Migration
   {
     Schema::create('orders', function (Blueprint $table) {
       $table->id('id_order');
-      $table->unsignedBigInteger('id_user');
+      $table->foreignId('id_user')->constrained('users');
       $table->unsignedBigInteger('id_layanan');
       $table->unsignedBigInteger('id_lokasi');
       $table->unsignedBigInteger('id_kendaraan');
@@ -30,7 +30,7 @@ return new class extends Migration
       $table->string('total_harga');
 
       $table->foreign('id_kendaraan')->references('id_kendaraan')->on('kendaraan');
-      $table->foreign('id_user')->references('id_user')->on('users');
+      
       $table->foreign('id_layanan')->references('id_layanan')->on('layanan');
       $table->foreign('id_lokasi')->references('id_lokasi')->on('lokasi');
       $table->timestamps();

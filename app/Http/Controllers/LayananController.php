@@ -13,10 +13,24 @@ class LayananController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
+  public function index(Request $request)
   {
+    $dataLayanan = Layanan::where('kota_asal', 'like', '%' . $request->search . '%')
+      ->orWhere('kota_tujuan', 'like', '%' . $request->search . '%')
+      ->paginate(5)
+      ->through(function ($item) {
+        return [
+          'id' => $item->id_layanan,
+          'kota_asal' => $item->kota_asal,
+          'kota_tujuan' => $item->kota_tujuan,
+          'biaya_jasa' => $item->biaya_jasa
+        ];
+      });
+
     return Inertia::render('Admin/Layanan', [
-      'layanan' => Layanan::all()
+      'title' => 'Layanan',
+      'query' => $request->search,
+      'layanan' => $dataLayanan
     ]);
   }
 

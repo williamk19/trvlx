@@ -57,7 +57,7 @@ const TableUser = ({ user, query }) => {
     }
   };
 
-  const renderData = data ? data.map((k) => {
+  const renderData = data.length > 0 ? data.map((k) => {
     return (
       <tr key={k.id}>
         <td>
