@@ -4,7 +4,6 @@ import RoutingMap from './RoutingMap';
 import "leaflet/dist/leaflet.css";
 
 const tempDestination = [-7.4323535, 112.7205893];
-
 const BoxRouteMap = ({ destination = tempDestination }) => {
   const routingMachine = useRef();
   const [host, setHost] = useState([]);
@@ -12,12 +11,17 @@ const BoxRouteMap = ({ destination = tempDestination }) => {
 
   const map = useMap();
   useEffect(() => {
-    map.locate().on("locationfound", function (e) {
-      map.flyTo(e.latlng);
-      map.on('zoomend', () => {
-        setHost([e.latlng.lat, e.latlng.lng]);
+    map
+      .locate({
+        enableHighAccuracy: true,
+        watch: true
+      })
+      .on("locationfound", function (e) {
+        map.flyTo(e.latlng, 15);
+        map.on('zoomend', () => {
+          setHost([e.latlng.lat, e.latlng.lng]);
+        });
       });
-    });
   }, [map]);
 
   useEffect(() => {

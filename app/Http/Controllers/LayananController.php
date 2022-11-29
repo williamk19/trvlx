@@ -18,14 +18,14 @@ class LayananController extends Controller
     $dataLayanan = Layanan::where('kota_asal', 'like', '%' . $request->search . '%')
       ->orWhere('kota_tujuan', 'like', '%' . $request->search . '%')
       ->paginate(5)
-      ->through(function ($item) {
-        return [
+      ->through(fn($item) =>
+        [
           'id' => $item->id_layanan,
           'kota_asal' => $item->kota_asal,
           'kota_tujuan' => $item->kota_tujuan,
           'biaya_jasa' => $item->biaya_jasa
-        ];
-      });
+        ]
+      );
 
     return Inertia::render('Admin/Layanan', [
       'title' => 'Layanan',

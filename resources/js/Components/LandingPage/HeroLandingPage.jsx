@@ -13,7 +13,7 @@ const HeroLandingPage = () => {
           </h1>
           <p className="py-6 text-sm md:text-lg">Dengan Armada Transportasi yang Sehat, Bersih, Harum, pelayanan yang maksimal dan didukung oleh Driver Ramah Profesional serta Customer Service yang fast respon selama 24 jam akan membuat Anda semakin nyaman di perjalanan.</p>
         </div>
-        <div className="card border border-cyan-500 overflow-visible flex-shrink-0 w-full max-w-sm w-10/12 md:w-full shadow-2xl bg-base-100">
+        <div className="card border border-cyan-500 overflow-visible flex-shrink-0 max-w-sm w-10/12 md:w-full shadow-2xl bg-base-100">
           <div className="card-body p-4 md:p-8">
             <div className="form-control">
               <label className="label">

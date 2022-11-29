@@ -66,8 +66,7 @@ module.exports = {
 
   plugins: [
     require('@tailwindcss/forms'), 
-    require("daisyui"), 
-    require('@tailwindcss/forms'),
+    require("daisyui"),
     plugin(({ addVariant, e }) => {
       addVariant('sidebar-expanded', ({ modifySelectors, separator }) => {
         modifySelectors(({ className }) => `.sidebar-expanded .${e(`sidebar-expanded${separator}${className}`)}`);

@@ -16,10 +16,25 @@ class KendaraanController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
+  public function index(Request $request)
   {
+    $dataKendaraan = Kendaraan::where('merk_mobil', 'like', '%' . $request->search . '%')
+      ->orWhere('nama_mobil', 'like', '%' . $request->search . '%')
+      ->paginate(5)
+      ->through(fn($item) =>
+        [
+          'id' => $item->id_kendaraan,
+          'plat_nomor' => $item->plat_nomor,
+          'merk_mobil' => $item->merk_mobil,
+          'nama_mobil' => $item->nama_mobil,
+          'jumlah_seat' => $item->jumlah_seat
+        ]
+      );
+
     return Inertia::render('Admin/Kendaraan', [
-      'kendaraan' => Kendaraan::all()
+      'title' => 'Kendaraan',
+      'query' => $request->search,
+      'kendaraan' => $dataKendaraan
     ]);
   }
 
@@ -106,7 +121,7 @@ class KendaraanController extends Controller
         ValidationRule::unique('kendaraan', 'plat_nomor')->ignore($kendaraan->id)
       ]
     ]);
-    
+
     $updateKendaraan = [
       'nama_mobil' => $request->nama_mobil,
       'merk_mobil' => $request->merk_mobil,

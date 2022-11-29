@@ -17,13 +17,6 @@ return new class extends Migration
       $table->id();
       $table->string('nama_kategori');
     });
-
-    DB::table('users_role')->insert([
-      ['nama_kategori' => 'Super Admin'],
-      ['nama_kategori' => 'Admin'],
-      ['nama_kategori' => 'Sopir Travel'],
-      ['nama_kategori' => 'Pelanggan']
-    ]);
   }
 
   /**

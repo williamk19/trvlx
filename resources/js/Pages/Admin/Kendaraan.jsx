@@ -1,23 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
+import { Inertia } from '@inertiajs/inertia';
 import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
 import TableKendaraan from '@/Components/Admin/Kendaraan/TableKendaraan';
 import NotificationKendaraan from '@/Components/Admin/NotificationAdmin';
 
 const Kendaraan = (props) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [kendaraan, setKendaraan] = useState(props.kendaraan);
+  const [searchQuery, setSearchQuery] = useState(props.query);
   const [notificationOpen, setNotificationOpen] = useState(true);
   let { url } = usePage();
-
-  useEffect(() => {
-    const temp = props.kendaraan.filter((k) => (
-      k.nama_mobil.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      k.merk_mobil.toLowerCase().includes(searchQuery.toLowerCase())
-    ));
-    setKendaraan(temp);
-  }, [searchQuery]);
 
   useEffect(() => {
     if (notificationOpen === true) {
@@ -29,8 +21,27 @@ const Kendaraan = (props) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setSearchQuery(e.target.value);
+    setSearchQuery(e.target.value.toLowerCase());
   };
+
+  useEffect(() => {
+    if (searchQuery !== props.query) {
+      Inertia.get(route(route().current()),
+        { search: searchQuery },
+        {
+          replace: true,
+          preserveState: true,
+          preserveScroll: true
+        }
+      );
+    } else if (searchQuery === "") {
+      Inertia.visit(route(route().current()), {
+        replace: true,
+        preserveState: true,
+        preserveScroll: true
+      });
+    }
+  }, [searchQuery]);
 
   const messageNotification = (type) => {
     if (type === undefined) {
@@ -56,11 +67,12 @@ const Kendaraan = (props) => {
       <HeaderAdmin
         title='Kendaraan 🚗'
         url={url}
+        searchQuery={searchQuery}
         handleSearch={handleSearch}
         addButton={true}
         buttonLink={route('kendaraan.create')}
       />
-      <TableKendaraan kendaraan={kendaraan} />
+      <TableKendaraan kendaraan={props.kendaraan} />
       {props.flash?.message && (
         <NotificationKendaraan type={props.flash?.message.type} className={'absolute font-bold top-20 right-8'} open={notificationOpen} setOpen={setNotificationOpen}>
           {`${props.flash?.message.plat_nomor} ${props.flash?.message.merk_mobil}, ${props.flash?.message.nama_mobil} ${messageNotification(props.flash?.message.type)}`}

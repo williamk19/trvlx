@@ -24,6 +24,7 @@ const Order = (props) => {
         buttonLink={route('kendaraan.create')}
       />
       <div className='flex gap-10 flex-col'>
+        <BoxMap type='route'/>
       </div>
     </AuthenticatedLayout>
   );

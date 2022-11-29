@@ -1,48 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from '@inertiajs/inertia-react';
+import { Inertia } from '@inertiajs/inertia';
 import PaginationKendaraan from './PaginationKendaraan';
 
-const TableKendaraan = ({ kendaraan }) => {
-  const [data, setData] = useState(kendaraan);
-  const [currData, setCurrData] = useState([]);
-  const [currPage, setCurrPage] = useState(1);
-  const [elementPerPage, setElementPerPage] = useState(5);
-  const [lastIndex, setLastIndex] = useState(currPage * elementPerPage);
-  const [firstIndex, setFirstIndex] = useState(lastIndex - elementPerPage + 1);
-  const [pageNumbers, setPageNumbers] = useState([]);
+const TableKendaraan = ({ kendaraan, query }) => {
+  const [data, setData] = useState(kendaraan.data);
+  const [prevUrl, setPrevUrl] = useState(kendaraan.prev_page_url);
+  const [nextUrl, setNextUrl] = useState(kendaraan.next_page_url);
 
   useEffect(() => {
-    setData(kendaraan);
-    setCurrPage(1);
-  }, [kendaraan]);
-
-  useEffect(() => {
-    setCurrData(data.slice(firstIndex, lastIndex));
-    let tempPageNumber = [];
-    for (let i = 1; i <= Math.ceil(data.length / elementPerPage); i++) {
-      tempPageNumber.push(i)
-    }
-    setPageNumbers(tempPageNumber);
-  }, [data, firstIndex, lastIndex]);
-
-  useEffect(() => {
-    setLastIndex(currPage * elementPerPage);
-    setFirstIndex(lastIndex - elementPerPage);
-  }, [pageNumbers, currPage])
+    setData(kendaraan.data);
+  }, [kendaraan.data]);
 
   const handleNextClick = () => {
-    if (currPage <= pageNumbers.length - 1) {
-      setCurrPage(currPage + 1);
+    if (nextUrl === null)
+      return;
+
+    if (query) {
+      Inertia.get(`${nextUrl}&search=${query}`, {}, {
+        replace: true
+      });
+    } else if (nextUrl !== null) {
+      Inertia.get(nextUrl, {}, {
+        replace: true
+      });
     }
   };
 
   const handlePrevClick = () => {
-    if (currPage >= 2) {
-      setCurrPage(currPage - 1);
+    if (prevUrl === null)
+      return;
+
+    if (query) {
+      Inertia.get(`${prevUrl}&search=${query}`, {}, {
+        replace: true
+      });
+    } else if (prevUrl !== null) {
+      Inertia.get(prevUrl, {}, {
+        replace: true
+      });
     }
   };
 
-  const renderData = currData.length > 0 ? currData.map((k) => {
+  const renderData = data.length > 0 ? data.map((k) => {
     return (
       <tr key={k.id}>
         <td>
@@ -92,9 +92,9 @@ const TableKendaraan = ({ kendaraan }) => {
       </div>
       <div className="mt-8">
         <PaginationKendaraan
-          firstIndex={firstIndex}
-          lastIndex={lastIndex}
-          dataLength={kendaraan.length}
+          firstIndex={kendaraan.from}
+          lastIndex={kendaraan.to}
+          dataLength={kendaraan.total}
           handleNextClick={handleNextClick}
           handlePrevClick={handlePrevClick}
         />

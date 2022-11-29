@@ -5,13 +5,12 @@ import CurrencyFormat from 'react-currency-format';
 import PaginationKendaraan from '../Kendaraan/PaginationKendaraan';
 
 const TableLayanan = ({ layanan, query }) => {
-  const [data, setData] = useState(layanan);
+  const [data, setData] = useState(layanan.data);
   const [prevUrl, setPrevUrl] = useState(layanan.prev_page_url);
   const [nextUrl, setNextUrl] = useState(layanan.next_page_url);
 
   useEffect(() => {
     setData(layanan.data);
-    console.log(layanan);
   }, [layanan.data]);
 
   const handleNextClick = () => {

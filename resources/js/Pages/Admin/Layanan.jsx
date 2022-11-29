@@ -6,7 +6,7 @@ import TableLayanan from '@/Components/Admin/Layanan/TableLayanan';
 import NotificationAdmin from '@/Components/Admin/NotificationAdmin'; 
 import { Inertia } from '@inertiajs/inertia';
 
-export default function Dashboard(props) {
+const Layanan = (props) => {
   let { url } = usePage();
   const [notificationOpen, setNotificationOpen] = useState(true);
   const [searchQuery, setSearchQuery] = useState(props.query);
@@ -72,3 +72,5 @@ export default function Dashboard(props) {
     </AuthenticatedLayout>
   );
 }
+
+export default Layanan;

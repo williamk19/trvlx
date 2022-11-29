@@ -8,6 +8,7 @@ use App\Models\Kendaraan;
 use App\Models\Layanan;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,6 +21,13 @@ class DatabaseSeeder extends Seeder
    */
   public function run()
   {
+
+    UserRole::insert([
+      ['nama_kategori' => 'Super Admin'],
+      ['nama_kategori' => 'Admin'],
+      ['nama_kategori' => 'Sopir Travel'],
+      ['nama_kategori' => 'Pelanggan']
+    ]);
 
     User::create([
       'nama_user' => 'Admin Travel',
@@ -71,11 +79,23 @@ class DatabaseSeeder extends Seeder
         'jumlah_seat' => 14
       ],
       [
+        'plat_nomor' => 'D223PL',
+        'merk_mobil' => 'Suzuki',
+        'nama_mobil' => 'Ertiga Black',
+        'jumlah_seat' => 6
+      ],
+      [
+        'plat_nomor' => 'CN102DC',
+        'merk_mobil' => 'Toyota',
+        'nama_mobil' => 'Inova',
+        'jumlah_seat' => 7
+      ],
+      [
         'plat_nomor' => 'S924IP',
         'merk_mobil' => 'Suzuki',
         'nama_mobil' => 'APV Deluxe 2017',
         'jumlah_seat' => 7
-      ],
+      ]
     ]);
 
     Layanan::insert([
