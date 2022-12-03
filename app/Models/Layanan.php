@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Layanan extends Model
 {
-    use HasFactory;
+  use HasFactory;
   protected $table = 'layanan';
   protected $primaryKey = 'id_layanan';
 
@@ -15,5 +15,7 @@ class Layanan extends Model
     'kota_asal',
     'kota_tujuan',
     'biaya_jasa',
+    'created_at',
+    'updated_at'
   ];
 }

@@ -117,7 +117,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               <li className={`px-3 py-2 rounded-lg mb-2 last:mb-0 ${pathname.includes('order') && 'bg-slate-900'}`}>
                 <Link
 
-                  href='order'
+                  href='/order'
                   className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('order') && 'hover:text-slate-200'
                     }`}
                 >

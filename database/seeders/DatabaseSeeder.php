@@ -9,7 +9,7 @@ use App\Models\Layanan;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\UserRole;
-use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
    */
   public function run()
   {
+    $now = Carbon::now('utc')->toDateTimeString();
 
     UserRole::insert([
       ['nama_kategori' => 'Super Admin'],
@@ -58,43 +59,57 @@ class DatabaseSeeder extends Seeder
         'plat_nomor' => 'M150DD',
         'merk_mobil' => 'Daihatsu',
         'nama_mobil' => 'Xenia 2022',
-        'jumlah_seat' => 5
+        'jumlah_seat' => 5,
+        'created_at' => $now,
+        'updated_at' => $now
       ],
       [
         'plat_nomor' => 'L472XD',
         'merk_mobil' => 'Toyota',
         'nama_mobil' => 'Hiace 2019',
-        'jumlah_seat' => 14
+        'jumlah_seat' => 14,
+        'created_at' => $now,
+        'updated_at' => $now
       ],
       [
         'plat_nomor' => 'M293XT',
         'merk_mobil' => 'Daihatsu',
         'nama_mobil' => 'Terios 2022',
-        'jumlah_seat' => 6
+        'jumlah_seat' => 6,
+        'created_at' => $now,
+        'updated_at' => $now
       ],
       [
         'plat_nomor' => 'M517BD',
         'merk_mobil' => 'Toyota',
         'nama_mobil' => 'Hiace 2020',
-        'jumlah_seat' => 14
+        'jumlah_seat' => 14,
+        'created_at' => $now,
+        'updated_at' => $now
       ],
       [
         'plat_nomor' => 'D223PL',
         'merk_mobil' => 'Suzuki',
         'nama_mobil' => 'Ertiga Black',
-        'jumlah_seat' => 6
+        'jumlah_seat' => 6,
+        'created_at' => $now,
+        'updated_at' => $now
       ],
       [
         'plat_nomor' => 'CN102DC',
         'merk_mobil' => 'Toyota',
         'nama_mobil' => 'Inova',
-        'jumlah_seat' => 7
+        'jumlah_seat' => 7,
+        'created_at' => $now,
+        'updated_at' => $now
       ],
       [
         'plat_nomor' => 'S924IP',
         'merk_mobil' => 'Suzuki',
         'nama_mobil' => 'APV Deluxe 2017',
-        'jumlah_seat' => 7
+        'jumlah_seat' => 7,
+        'created_at' => $now,
+        'updated_at' => $now
       ]
     ]);
 
@@ -102,27 +117,37 @@ class DatabaseSeeder extends Seeder
       [
         'kota_asal' => 'Surabaya',
         'kota_tujuan' => 'Malang',
-        'biaya_jasa' => '100000'
+        'biaya_jasa' => '100000',
+        'created_at' => $now,
+        'updated_at' => $now
       ],
       [
         'kota_asal' => 'Malang',
         'kota_tujuan' => 'Madura',
-        'biaya_jasa' => '200000'
+        'biaya_jasa' => '200000',
+        'created_at' => $now,
+        'updated_at' => $now
       ],
       [
         'kota_asal' => 'Jakarta',
         'kota_tujuan' => 'Malang',
-        'biaya_jasa' => '700000'
+        'biaya_jasa' => '700000',
+        'created_at' => $now,
+        'updated_at' => $now
       ],
       [
         'kota_asal' => 'Surabaya',
         'kota_tujuan' => 'Semarang',
-        'biaya_jasa' => '450000'
+        'biaya_jasa' => '450000',
+        'created_at' => $now,
+        'updated_at' => $now
       ],
       [
         'kota_asal' => 'Yogyakarta',
         'kota_tujuan' => 'Malang',
-        'biaya_jasa' => '500000'
+        'biaya_jasa' => '500000',
+        'created_at' => $now,
+        'updated_at' => $now
       ],
     ]);
 

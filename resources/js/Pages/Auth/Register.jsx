@@ -24,7 +24,17 @@ export default function Register({ auth }) {
   }, []);
 
   const onHandleChange = (event) => {
-    setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
+    if (event.target.name === 'telepon_user') {
+      const re = /^[0-9\b]+$/;
+      let number = event.target.value.replace(/^0+/, '');
+      if (event.target.value === '' || re.test(event.target.value)) {
+        setData(event.target.name, number);
+      }
+    } else if (event.target.type === 'checkbox') {
+      setData(event.target.name, event.target.checked);
+    } else {
+      setData(event.target.name, event.target.value);
+    }
   };
 
   const submit = (e) => {
@@ -69,7 +79,7 @@ export default function Register({ auth }) {
                           name="email_user"
                           value={data.email_user}
                           className="mt-1 block w-full text-black"
-                          autoComplete="username"
+                          autoComplete="email"
                           handleChange={onHandleChange}
                           required
                         />
@@ -83,7 +93,7 @@ export default function Register({ auth }) {
                           name="telepon_user"
                           value={data.telepon_user}
                           className="mt-1 block w-full text-black"
-                          autoComplete="username"
+                          autoComplete="tel-national"
                           handleChange={onHandleChange}
                           required
                         />
@@ -120,7 +130,7 @@ export default function Register({ auth }) {
                     <div className="flex items-center justify-end mt-4">
                       <button
                         disabled={processing}
-                        className="btn border-none bg-blue-600 hover:bg-blue-700 text-white ml-3">
+                        className="btn border-none bg-blue-600 hover:bg-blue-700 text-white ml-3 disabled:text-zinc-800">
                         Daftar
                       </button>
                     </div>

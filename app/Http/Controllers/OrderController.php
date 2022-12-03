@@ -16,8 +16,17 @@ class OrderController extends Controller
    */
   public function index()
   {
-    
     return Inertia::render('Admin/Order');
+  }
+
+  public function orderList()
+  {
+    dd("H3h3");
+  }
+
+  public function orderInput()
+  {
+    dd("H3h3h3");
   }
 
   /**

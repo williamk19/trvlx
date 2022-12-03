@@ -2,12 +2,27 @@ import React, { useEffect, useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
 import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
-import TableKendaraan from '@/Components/Admin/Kendaraan/TableKendaraan';
-import NotificationKendaraan from '@/Components/Admin/NotificationAdmin';
-import BoxMap from '@/Components/MapBox/BoxMap';
+import CardOrder from '@/Components/Admin/Order/CardOrder';
 
 const Order = (props) => {
   let { url } = usePage();
+
+  const items = [
+    {
+      id: 0,
+      category: '1',
+      title: 'Input Order Travel',
+      link: 'order.list',
+      content: 'Memasukan data order travel pengguna ke dalam database',
+    },
+    {
+      id: 1,
+      category: '2',
+      title: 'Daftar Order Travel',
+      link: 'order.input',
+      content: 'Melihat semua orderan yang diterima oleh penyedia jasa travel',
+    }
+  ];
 
   return (
     <AuthenticatedLayout
@@ -17,14 +32,21 @@ const Order = (props) => {
     >
       <Head title="Travel Order" />
       <HeaderAdmin
-        title='Travel Order 🚗'
+        title='Travel Order ⏩'
         url={url}
-        // handleSearch={handleSearch}
-        addButton={true}
-        buttonLink={route('kendaraan.create')}
+        buttonLink={route('order.create')}
       />
-      <div className='flex gap-10 flex-col'>
-        <BoxMap type='route'/>
+      <div className="grid grid-cols-12 gap-6">
+        {items.map((item) => (
+          <CardOrder
+            key={item.id}
+            id={item.id}
+            category={item.category}
+            title={item.title}
+            link={item.link}
+            content={item.content}
+          />
+        ))}
       </div>
     </AuthenticatedLayout>
   );

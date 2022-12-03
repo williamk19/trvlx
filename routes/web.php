@@ -51,7 +51,9 @@ Route::middleware(['auth', 'verified', 'role:1,2'])->group(function () {
   // Layanan
   Route::resource('layanan', LayananController::class);
 
-  // Orderan Travel
+  // Order Travel
+  Route::get('/order/list', [OrderController::class, 'orderList'])->name('order.list');
+  Route::get('/order/input', [OrderController::class, 'orderInput'])->name('order.input');
   Route::resource('order', OrderController::class);
 });
 

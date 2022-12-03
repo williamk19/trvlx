@@ -14,11 +14,13 @@ export default function Welcome(props) {
     <div data-theme='light' className='min-h-screen flex flex-col justify-top items-center'>
       <Head title="Travel Booking System" />
       <NavbarLandingPage auth={props.auth} />
-      <HeroLandingPage />
-      <BenefitsLandingPage />
-      <TravelPackageLandingPage />
-      <TestimonialsLandingPage />
-      <FooterLandingPage />
+      <div className="w-full flex-1 flex flex-col justify-center items-center">
+        <HeroLandingPage />
+        <BenefitsLandingPage />
+        <TravelPackageLandingPage />
+        <TestimonialsLandingPage />
+        <FooterLandingPage />
+      </div>
     </div>
   );
 }

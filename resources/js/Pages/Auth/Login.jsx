@@ -92,7 +92,7 @@ export default function Login({ auth, status, canResetPassword }) {
                       <button
                         type='submit'
                         disabled={processing}
-                        className="btn border-none bg-blue-600 hover:bg-blue-700 text-white ml-3">
+                        className="btn border-none bg-blue-600 hover:bg-blue-700 text-white ml-3 disabled:text-zinc-800">
                         Sign In
                       </button>
                     </div>
