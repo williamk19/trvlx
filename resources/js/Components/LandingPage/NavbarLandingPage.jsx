@@ -2,6 +2,7 @@ import { Link } from "@inertiajs/inertia-react";
 import logo from '@/assets/images/logo.png';
 
 const NavbarLandingPage = ({ auth }) => {
+
   return (
     <div data-theme='dark' className="navbar z-10 fixed bg-base-200 max-w-6xl sm:rounded-box shadow-xl sm:mt-3 ml-3 mr-3 w-full sm:w-11/12">
       <div className="flex-1">

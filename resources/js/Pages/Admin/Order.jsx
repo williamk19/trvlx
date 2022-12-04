@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
 import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
@@ -12,14 +11,14 @@ const Order = (props) => {
       id: 0,
       category: '1',
       title: 'Input Order Travel',
-      link: 'order.list',
+      link: 'order.create',
       content: 'Memasukan data order travel pengguna ke dalam database',
     },
     {
       id: 1,
       category: '2',
       title: 'Daftar Order Travel',
-      link: 'order.input',
+      link: 'order.list',
       content: 'Melihat semua orderan yang diterima oleh penyedia jasa travel',
     }
   ];
@@ -35,6 +34,7 @@ const Order = (props) => {
         title='Travel Order ⏩'
         url={url}
         buttonLink={route('order.create')}
+        addButton={true}
       />
       <div className="grid grid-cols-12 gap-6">
         {items.map((item) => (

@@ -29,6 +29,9 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'verified', 'role:1,2'])->group(function () {
+  //=====================================================================================
+  // Laravel Routing
+
   Route::get('/dashboard', function () {
     return Inertia::render('Admin/Dashboard');
   })->name('admin.dashboard');
@@ -53,8 +56,13 @@ Route::middleware(['auth', 'verified', 'role:1,2'])->group(function () {
 
   // Order Travel
   Route::get('/order/list', [OrderController::class, 'orderList'])->name('order.list');
-  Route::get('/order/input', [OrderController::class, 'orderInput'])->name('order.input');
   Route::resource('order', OrderController::class);
+
+
+  //=====================================================================================
+  // Inertia Routing
+
+  Route::inertia('/settings/account', 'DataOrder');
 });
 
 require __DIR__ . '/auth.php';

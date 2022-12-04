@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from '@/Components/Core/Sidebar';
 import Header from '@/Components/Core/Header';
 
-const Authenticated = ({ auth, header, children }) => {
+const AuthenticatedLayout = ({ auth, header, children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <div className="flex h-screen overflow-hidden">
@@ -20,4 +20,4 @@ const Authenticated = ({ auth, header, children }) => {
   );
 }
 
-export default Authenticated;
+export default AuthenticatedLayout;

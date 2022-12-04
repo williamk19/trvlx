@@ -23,12 +23,6 @@ class OrderController extends Controller
   {
     dd("H3h3");
   }
-
-  public function orderInput()
-  {
-    dd("H3h3h3");
-  }
-
   /**
    * Show the form for creating a new resource.
    *
@@ -36,7 +30,7 @@ class OrderController extends Controller
    */
   public function create()
   {
-    //
+    return Inertia::render('Admin/FormPageOrder');
   }
 
   /**
@@ -58,7 +52,7 @@ class OrderController extends Controller
    */
   public function show(Order $order)
   {
-    //
+    
   }
 
   /**
