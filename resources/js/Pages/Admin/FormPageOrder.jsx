@@ -18,7 +18,7 @@ const FormPageOrder = (props) => {
         url={url}
       />
       <FormOrder
-        itemLayanan={props.layanan}
+        type={props.type}
       />
     </AuthenticatedLayout>
   );

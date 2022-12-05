@@ -2,9 +2,7 @@ import React, { useEffect } from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import PhoneInput from 'react-phone-number-input/input';
 import AuthImage from '@/assets/images/image-login.png';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 

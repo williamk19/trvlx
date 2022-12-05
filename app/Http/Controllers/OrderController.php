@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+
+use function PHPSTORM_META\type;
 
 class OrderController extends Controller
 {
@@ -30,7 +33,7 @@ class OrderController extends Controller
    */
   public function create()
   {
-    return Inertia::render('Admin/FormPageOrder');
+    return redirect('/order/data');
   }
 
   /**

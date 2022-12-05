@@ -56,13 +56,10 @@ Route::middleware(['auth', 'verified', 'role:1,2'])->group(function () {
 
   // Order Travel
   Route::get('/order/list', [OrderController::class, 'orderList'])->name('order.list');
+  Route::inertia('/order/data', 'Admin/FormPageOrder', ['type' => 'data']);
+  Route::inertia('/order/jemput', 'Admin/FormPageOrder', ['type' => 'jemput']);
+  Route::inertia('/order/tujuan', 'Admin/FormPageOrder', ['type' => 'tujuan']);
   Route::resource('order', OrderController::class);
-
-
-  //=====================================================================================
-  // Inertia Routing
-
-  Route::inertia('/settings/account', 'DataOrder');
 });
 
 require __DIR__ . '/auth.php';

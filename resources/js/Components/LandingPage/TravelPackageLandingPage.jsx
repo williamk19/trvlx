@@ -7,7 +7,7 @@ import malang from '@/assets/images/malang.jpg';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { ArrowSmallRightIcon } from '@heroicons/react/24/solid';
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
 import TravelPackageCard from '../Core/TravelPackageCard';
 
 const TravelPackageLandingPage = () => {
@@ -73,16 +73,16 @@ const TravelPackageLandingPage = () => {
   ]
 
   return (
-    <div className='mb-14 bg-slate-100 text-center w-full p-20'>
+    <div className='mb-14 bg-sky-100 text-center w-full py-20 px-10 md:p-20'>
       <div className='max-w-6xl m-auto'>
         <div className='flex w-full justify-center'>
-          <div className='flex w-full justify-between mb-11'>
-            <h1 className='mb-4 leading-8 text-2xl font-bold'>Destinasi Favorit</h1>
-            <div>
+          <div className='flex gap-2 w-full justify-between items-center mb-11 flex-col md:flex-row'>
+            <h1 className='mb-4 leading-8 text-3xl font-bold'>Destinasi Favorit</h1>
+            <div className='flex'>
               <a className='link leading-8 text-lg inline font-bold'>
                 Lihat Tujuan Lainnya
               </a>
-              <ArrowSmallRightIcon className='w-6 inline' />
+              <ArrowTopRightOnSquareIcon className='ml-2 w-5 inline' />
             </div>
           </div>
         </div>
@@ -90,7 +90,6 @@ const TravelPackageLandingPage = () => {
           {travelData.map((data, idx) => (
             <TravelPackageCard key={idx} data={data} />
           ))}
-          
         </Slider>
       </div>
     </div>
