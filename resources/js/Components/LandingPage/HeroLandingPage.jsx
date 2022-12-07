@@ -10,9 +10,9 @@ const HeroLandingPage = () => {
       <div className="max-w-6xl w-11/12 mt-24 md:mt-30 sm:mt-24 lg:mt-32">
         <div className="hero-content flex-col gap-x-24 p-0 lg:flex-row-reverse">
           <div className="text-center lg:text-left">
-            <h1 className="text-3xl md:text-5xl font-bold drop-shadow-xl text-white">Sewa Mobil Hiace, Elf, Bus, Tour Travel Wisata Jawa Bali
+            <h1 className="text-3xl md:text-5xl font-bold text-shadow-lg text-white">Sewa Mobil Hiace, Elf, Bus, Tour Travel Wisata Jawa Bali
             </h1>
-            <p className="py-6 text-sm md:text-lg text-white drop-shadow-xl">Dengan Armada Transportasi yang Sehat, Bersih, Harum, pelayanan yang maksimal dan didukung oleh Driver Ramah Profesional serta Customer Service yang fast respon selama 24 jam akan membuat Anda semakin nyaman di perjalanan.</p>
+            <p className="py-6 text-sm md:text-lg text-white text-shadow-lg">Dengan Armada Transportasi yang Sehat, Bersih, Harum, pelayanan yang maksimal dan didukung oleh Driver Ramah Profesional serta Customer Service yang fast respon selama 24 jam akan membuat Anda semakin nyaman di perjalanan.</p>
           </div>
           <div className="card border border-cyan-500 overflow-visible flex-shrink-0 w-10/12 md:w-full shadow-2xl bg-base-100 max-w-sm lg:ml-5">
             <div className="card-body p-4 md:p-8">

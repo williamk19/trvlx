@@ -7,12 +7,12 @@ const SidebarOrder = () => {
   const pathname = url;
 
   return (
-    <div className="flex flex-nowrap overflow-x-scroll no-scrollbar md:block md:overflow-auto px-5 py-6 border-b md:border-b-0 md:border-r border-slate-200 min-w-60 md:space-y-3">
+    <div className="flex flex-nowrap overflow-x-scroll no-scrollbar md:overflow-auto px-5 py-6 border-b md:border-b-0 md:border-r border-slate-200 min-w-60 md:space-y-3">
       <div>
         <div className="text-sm font-semibold text-slate-700 uppercase mb-3">
           Form Pemesanan Order Travel
         </div>
-        <ul className="flex flex-nowrap md:block mr-3 md:mr-0">
+        <ul className="flex flex-nowrap mr-3 md:mr-0">
           <li className="mr-0.5 md:mr-0 md:mb-0.5">
             <Link preserveState href="/order/data" className={`flex items-center px-2.5 py-2 rounded whitespace-nowrap ${pathname.includes('/order/data') && 'bg-gray-300'}`}>
               <span className={`text-sm font-medium ${pathname.includes('/order/data') ? 'text-slate-800' : 'text-slate-600 hover:text-slate-900'}`}>

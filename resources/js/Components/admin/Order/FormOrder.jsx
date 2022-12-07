@@ -10,6 +10,8 @@ const FormOrder = ({ type }) => {
     nama_penumpang: '',
     tanggal_pemberangkatan: new Date(),
     jumlah_seat: 1,
+    alamat_jemput: '',
+    latlng_jemput: [],
   });
 
   const onHandleChange = (event) => {
@@ -28,11 +30,11 @@ const FormOrder = ({ type }) => {
 
   const onDateChange = (date) => {
     setData('tanggal_pemberangkatan', date);
-  }
+  };
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  const onLocationChange = () => {
+
+  };
 
   const submit = (e) => {
     e.preventDefault();
@@ -46,6 +48,7 @@ const FormOrder = ({ type }) => {
           <DataOrder
             data={data}
             errors={errors}
+            onReset={reset}
             onDateChange={onDateChange}
             onHandleChange={onHandleChange} />
         );
@@ -53,9 +56,18 @@ const FormOrder = ({ type }) => {
         return (
           <DataJemput
             data={data}
+            errors={errors}
+            onReset={reset}
+            onLocationChange={onLocationChange}
             onHandleChange={onHandleChange} />);
       case "tujuan":
-        return (<DataTujuan />);
+        return (
+          <DataTujuan
+            data={data}
+            errors={errors}
+            onReset={reset}
+            onLocationChange={onLocationChange}
+            onHandleChange={onHandleChange} />);
       default:
         return (<DataOrder />);
     }
@@ -64,7 +76,7 @@ const FormOrder = ({ type }) => {
   return (
     <div>
       <div className="bg-white shadow-lg rounded-lg mb-8">
-        <div className="flex flex-col md:flex-row md:-mr-px">
+        <div className="flex flex-col md:-mr-px">
           <SidebarOrder />
           {formType()}
         </div>

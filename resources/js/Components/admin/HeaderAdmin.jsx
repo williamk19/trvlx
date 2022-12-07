@@ -58,13 +58,13 @@ const HeaderAdmin = ({
           ))}
         </ul>
       </div>
-      <div className="flex justify-between sm:items-center mb-8">
+      <div className="flex justify-start md:justify-between flex-col md:flex-row mb-8">
         <div className="flex items-center md:items-start">
           <h1 className="text-2xl md:text-3xl text-slate-800 font-bold">
             {title}
           </h1>
         </div>
-        <div className="grid grid-flow-col sm:auto-cols-max justify-end items-center gap-2">
+        <div className="grid grid-flow-col mt-8 md:mt-0 sm:auto-cols-max justify-start md:justify-end items-center gap-2">
           {handleSearch && (
             <SearchForm handleSearch={handleSearch} placeholder={placeholder} searchQuery={searchQuery} />
           )}

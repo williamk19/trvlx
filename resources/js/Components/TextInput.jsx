@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 export default function TextInput({
   type = 'text',
   telp = false,
+  placeholder = '',
   name,
   value,
   className,
@@ -31,6 +32,7 @@ export default function TextInput({
           className
         }
         ref={input}
+        placeholder={placeholder}
         autoComplete={autoComplete}
         required={required}
         onChange={(e) => handleChange(e)}

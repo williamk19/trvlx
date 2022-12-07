@@ -70,16 +70,23 @@ const TravelPackageLandingPage = () => {
       cityTo: 'Surabaya',
       picUrl: surabaya
     },
-  ]
+  ];
 
   return (
-    <div className='mb-14 bg-sky-100 text-center w-full py-20 px-10 md:p-20'>
+    <div className='mb-14 bg-sky-100 text-center w-full py-20 px-10 md:px-20 md:py-32'>
       <div className='max-w-6xl m-auto'>
         <div className='flex w-full justify-center'>
-          <div className='flex gap-2 w-full justify-between items-center mb-11 flex-col md:flex-row'>
-            <h1 className='mb-4 leading-8 text-3xl font-bold'>Destinasi Favorit</h1>
+          <div className='flex gap-2 w-full justify-between items-center md:items-end mb-14 p-0 md:p-2 flex-col md:flex-row'>
+            <div className='flex flex-col items-center md:items-start max-w-xl'>
+              <h1 className='mb-4 leading-8 text-3xl font-bold text-shadow-md'>
+                Destinasi Favorit
+              </h1>
+              <p className='text-lg text-shadow-md text-center md:text-start'>
+                Beberapa destinasi travel yang kami sediakan
+              </p>
+            </div>
             <div className='flex'>
-              <a className='link leading-8 text-lg inline font-bold'>
+              <a className='link leading-8 text-lg inline font-bold text-shadow-md'>
                 Lihat Tujuan Lainnya
               </a>
               <ArrowTopRightOnSquareIcon className='ml-2 w-5 inline' />

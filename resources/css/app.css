@@ -3,15 +3,41 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply text-body;
-  }
-
-  @screen lg {
     body {
-      @apply text-body-lg;
+        @apply text-body;
     }
-  }
+
+    @screen lg {
+        body {
+            @apply text-body-lg;
+        }
+    }
+}
+
+@layer components {
+    @responsive {
+        .text-shadow {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .text-shadow-md {
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2),
+                0 2px 4px rgba(0, 0, 0, 0.09);
+        }
+
+        .text-shadow-lg {
+            text-shadow: 0 15px 30px rgba(0, 0, 0, 0.3),
+                0 5px 15px rgba(0, 0, 0, 0.18);
+        }
+
+        .text-shadow-none {
+            text-shadow: none;
+        }
+    }
+}
+
+body {
+    margin-bottom: 0 !important;
 }
 
 .slick-prev:before {
@@ -28,10 +54,6 @@
 .no-scrollbar {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
-}
-
-body {
-    margin-bottom: 0 !important;
 }
 
 .leaflet-control-container .leaflet-routing-container-hide {

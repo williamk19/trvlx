@@ -25,11 +25,10 @@ const DragMarkerMap = () => {
     map
       .locate({ 
         enableHighAccuracy: true,
-        watch: true
       })
       .on("locationfound", function (e) {
         setPosition(e.latlng);
-        map.flyTo(e.latlng, map.getZoom());
+        map.flyTo(e.latlng, 15);
       });
   }, [map]);
 
@@ -55,13 +54,6 @@ const DragMarkerMap = () => {
       eventHandlers={eventHandlers}
       position={position}
       ref={markerRef}>
-      <Popup minWidth={90}>
-        <span onClick={toggleDraggable}>
-          {draggable
-            ? 'Marker is draggable'
-            : 'Click here to make marker draggable'}
-        </span>
-      </Popup>
     </Marker>
   );
 };
