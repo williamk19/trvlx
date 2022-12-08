@@ -47,13 +47,13 @@ export default function Register({ auth }) {
         <main className="w-full shadow-xl">
           <div className=" bg-white relative md:flex rounded-2xl">
             <div className="md:w-2/3">
-              <div className="py-8 flex flex-col after:flex-1">
+              <div className="py-2 md:py-8 flex flex-col after:flex-1">
                 <div className="flex-1">
-                  <div className="flex items-center justify-between h-6  px-4 sm:px-6 lg:px-8">
+                  <div className="flex items-center justify-between h-6 px-4 sm:px-6 lg:px-8">
                   </div>
                 </div>
-                <div className="w-9/12 mx-auto px-4 py-8">
-                  <h1 className="text-3xl text-slate-800 font-bold mb-6">Register</h1>
+                <div className="w-11/12 md:w-9/12 mx-auto px-3 md:px-4 py-4 md:py-8">
+                  <h1 className="text-3xl text-slate-800 font-bold mb-6 text-center md:text-left">Register</h1>
                   <form onSubmit={submit}>
                     <div>
                       <InputLabel forInput="nama_user" value="Nama" />

@@ -4,7 +4,7 @@ import BoxMap from '@/Components/MapBox/BoxMap';
 import TextInput from '@/Components/TextInput';
 import React from 'react';
 
-const DataTujuan = ({ data, onHandleChange, onReset }) => {
+const DataTujuan = ({ data, onHandleChange }) => {
 
   return (
     <div className="grow">
@@ -43,18 +43,6 @@ const DataTujuan = ({ data, onHandleChange, onReset }) => {
           </div>
         </section>
       </div>
-      <footer>
-        <div className="flex flex-col px-6 py-5 border-t border-slate-200">
-          <div className="flex self-end">
-            <button onClick={() => onReset()} className="btn btn-error hover:bg-red-500 text-slate-100 border-slate-200 hover:border-slate-300">
-              Cancel
-            </button>
-            <button className="btn bg-indigo-500 hover:bg-indigo-600 border-none text-white ml-3">
-              Tambahkan
-            </button>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };

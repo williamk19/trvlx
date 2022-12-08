@@ -78,18 +78,18 @@ const TravelPackageLandingPage = () => {
         <div className='flex w-full justify-center'>
           <div className='flex gap-2 w-full justify-between items-center md:items-end mb-14 p-0 md:p-2 flex-col md:flex-row'>
             <div className='flex flex-col items-center md:items-start max-w-xl'>
-              <h1 className='mb-4 leading-8 text-3xl font-bold text-shadow-md'>
+              <h1 className='mb-4 leading-8 text-3xl font-bold text-shadow'>
                 Destinasi Favorit
               </h1>
-              <p className='text-lg text-shadow-md text-center md:text-start'>
+              <p className='text-lg text-shadow text-center md:text-start'>
                 Beberapa destinasi travel yang kami sediakan
               </p>
             </div>
             <div className='flex'>
-              <a className='link leading-8 text-lg inline font-bold text-shadow-md'>
+              <a className='link leading-8 text-lg inline font-bold text-shadow'>
                 Lihat Tujuan Lainnya
               </a>
-              <ArrowTopRightOnSquareIcon className='ml-2 w-5 inline' />
+              <ArrowTopRightOnSquareIcon className='ml-2 w-5 inline text-shadow' />
             </div>
           </div>
         </div>

@@ -7,8 +7,8 @@ const BenefitsLandingPage = () => {
     <div className='text-center mb-14 md:mb-32 w-11/12 max-w-6xl pt-16 sm:pt-32'>
       <div className='flex w-full justify-center'>
         <div className='flex flex-col box-shadow-2xl items-center max-w-2xl mb-11'>
-          <h1 className='mb-5 text-3xl text-shadow-md md:text-4xl font-bold'>Kemudahan dengan TRVLX</h1>
-          <p className='text-lg text-shadow-md'>
+          <h1 className='mb-5 text-3xl text-shadow md:text-4xl font-bold'>Kemudahan dengan TRVLX</h1>
+          <p className='text-lg text-shadow'>
             Banyak benefit yang didapatkan dengan menggunakkan jasa travel dengan Skytravelink dengan layanan support admin dan juga pelayanan travel yang terbaik.
           </p>
         </div>

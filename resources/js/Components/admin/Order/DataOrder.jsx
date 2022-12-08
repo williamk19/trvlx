@@ -5,7 +5,7 @@ import React from 'react';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const DataOrder = ({ data, onReset, onHandleChange, onDateChange, errors }) => {
+const DataOrder = ({ data, onHandleChange, onDateChange, errors }) => {
 
   return (
     <div className="grow">
@@ -61,18 +61,6 @@ const DataOrder = ({ data, onReset, onHandleChange, onDateChange, errors }) => {
           </div>
         </section>
       </div>
-      <footer>
-        <div className="flex flex-col px-6 py-5 border-t border-slate-200">
-          <div className="flex self-end">
-            <button onClick={() => onReset()} className="btn btn-error hover:bg-red-500 text-slate-100 border-slate-200 hover:border-slate-300">
-              Cancel
-            </button>
-            <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 border-none">
-              Tambahkan
-            </button>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };
