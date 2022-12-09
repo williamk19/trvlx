@@ -23,7 +23,7 @@ const DataOrder = ({ data, onHandleChange, onDateChange, errors }) => {
                 handleChange={onHandleChange}
                 required
               />
-              <InputError message={errors.message} className="mt-2" />
+              <InputError message={errors.nama_penumpang} className="mt-2" />
             </div>
           </div>
         </section>
@@ -36,7 +36,7 @@ const DataOrder = ({ data, onHandleChange, onDateChange, errors }) => {
                 className='w-full text-gray-900 border-gray-300 rounded-lg'
                 selected={data.tanggal_pemberangkatan} 
                 onChange={(date) => onDateChange(date)} />
-              <InputError message={errors.message} className="mt-2" />
+              <InputError message={errors.tanggal_pemberangkatan} className="mt-2" />
             </div>
           </div>
         </section>
@@ -56,7 +56,7 @@ const DataOrder = ({ data, onHandleChange, onDateChange, errors }) => {
                 <option value={3}>3 Penumpang</option>
                 <option value={4}>4 Penumpang</option>
               </select>
-              <InputError message={''} className="mt-2" />
+              <InputError message={errors.jumlah_seat} className="mt-2" />
             </div>
           </div>
         </section>

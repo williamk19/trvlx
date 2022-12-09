@@ -52,7 +52,7 @@ const TestimonialsLandingPage = () => {
           <button onClick={() => slider?.current?.slickPrev()}>
             <ChevronLeftIcon className='w-6' />
           </button>
-          <Slider ref={slider} className='mb-16 w-full items-center' {...settings}>
+          <Slider ref={slider} className='w-full items-center' {...settings}>
             {testimonialData.map((data, idx) => (
               <TestimonialCard key={idx} data={data} />
             ))}

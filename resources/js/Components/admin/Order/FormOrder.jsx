@@ -11,9 +11,17 @@ const FormOrder = ({ type }) => {
     nama_penumpang: '',
     tanggal_pemberangkatan: new Date(),
     jumlah_seat: 1,
+    latlng_jemput: {},
     alamat_jemput: '',
-    latlng_jemput: [],
+    deskripsi_jemput: '',
+    latlng_tujuan: {},
+    alamat_tujuan: '',
+    deskripsi_tujuan: ''
   });
+
+  useEffect(() => {
+    console.log(data.latlng_jemput, data.latlng_tujuan);
+  }, [data])
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -35,8 +43,8 @@ const FormOrder = ({ type }) => {
     setData('tanggal_pemberangkatan', date);
   };
 
-  const onLocationChange = () => {
-
+  const onLocationChange = (name, latLng) => {
+    setData(name, latLng);
   };
 
   const submit = (e) => {
@@ -70,7 +78,12 @@ const FormOrder = ({ type }) => {
             onLocationChange={onLocationChange}
             onHandleChange={onHandleChange} />);
       default:
-        return (<DataOrder />);
+        return (
+          <DataOrder
+            data={data}
+            errors={errors}
+            onDateChange={onDateChange}
+            onHandleChange={onHandleChange} />);
     }
   };
 
@@ -111,7 +124,7 @@ const FormOrder = ({ type }) => {
                       </div>
                       <div className="flex flex-wrap justify-end space-x-2">
                         <button className="btn-sm border-slate-200 hover:border-slate-300 text-slate-600" onClick={(e) => {
-                          e.stopPropagation(); 
+                          e.stopPropagation();
                           setModalOpen(false);
                         }}>Cancel</button>
                         <button className="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white" onClick={(e) => {
