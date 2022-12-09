@@ -56,9 +56,9 @@ Route::middleware(['auth', 'verified', 'role:1,2'])->group(function () {
 
   // Order Travel
   Route::get('/order/list', [OrderController::class, 'orderList'])->name('order.list');
-  Route::inertia('/order/data', 'Admin/FormPageOrder', ['type' => 'data']);
-  Route::inertia('/order/jemput', 'Admin/FormPageOrder', ['type' => 'jemput']);
-  Route::inertia('/order/tujuan', 'Admin/FormPageOrder', ['type' => 'tujuan']);
+  Route::get('/order/data', [OrderController::class, 'orderData'])->name('order.data');
+  Route::get('/order/jemput', [OrderController::class, 'orderJemput'])->name('order.jemput');
+  Route::get('/order/tujuan', [OrderController::class, 'orderTujuan'])->name('order.tujuan');
   Route::resource('order', OrderController::class);
 });
 

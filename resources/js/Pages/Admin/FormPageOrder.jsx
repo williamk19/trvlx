@@ -19,6 +19,7 @@ const FormPageOrder = (props) => {
       />
       <FormOrder
         type={props.type}
+        layananData={props.layananData}
       />
     </AuthenticatedLayout>
   );

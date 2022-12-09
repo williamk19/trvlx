@@ -5,12 +5,17 @@ import { useForm, usePage } from '@inertiajs/inertia-react';
 import DataJemput from './DataJemput';
 import DataTujuan from './DataTujuan';
 import Modal from '@/Components/Core/Modal';
+import { ToastContainer, toast } from 'react-toastify';
+import _ from 'lodash';
+import 'react-toastify/dist/ReactToastify.css';
 
-const FormOrder = ({ type }) => {
+const FormOrder = ({ type, layananData }) => {
+  const [modalOpen, setModalOpen] = useState(false);
   const { data, setData, post, processing, errors, reset } = useForm({
     nama_penumpang: '',
     tanggal_pemberangkatan: new Date(),
     jumlah_seat: 1,
+    layanan: 1,
     latlng_jemput: {},
     alamat_jemput: '',
     deskripsi_jemput: '',
@@ -20,10 +25,19 @@ const FormOrder = ({ type }) => {
   });
 
   useEffect(() => {
-    console.log(data.latlng_jemput, data.latlng_tujuan);
-  }, [data])
-
-  const [modalOpen, setModalOpen] = useState(false);
+    if (!_.isEmpty(errors)) {
+      toast.error('Ada yang belum terisi !', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  }, [errors]);
 
   const onHandleChange = (event) => {
     if (event.target.name === 'telepon_user') {
@@ -49,7 +63,7 @@ const FormOrder = ({ type }) => {
 
   const submit = (e) => {
     e.preventDefault();
-    post(route('register'));
+    post(route('order.store'));
   };
 
   const formType = () => {
@@ -58,6 +72,7 @@ const FormOrder = ({ type }) => {
         return (
           <DataOrder
             data={data}
+            layananData={layananData}
             errors={errors}
             onDateChange={onDateChange}
             onHandleChange={onHandleChange} />
@@ -89,6 +104,7 @@ const FormOrder = ({ type }) => {
 
   return (
     <div>
+      <ToastContainer />
       <div className="bg-white shadow-lg rounded-lg mb-8">
         <div className="flex flex-col md:-mr-px">
           <SidebarOrder />
@@ -97,7 +113,7 @@ const FormOrder = ({ type }) => {
             <div className="flex flex-col px-6 py-5 border-t border-slate-200">
               <div className="flex self-end">
                 <button onClick={() => reset()} className="btn btn-error hover:bg-red-500 text-slate-100 border-slate-200 hover:border-slate-300">
-                  Cancel
+                  Reset
                 </button>
                 <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 border-none" onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
                   Tambahkan

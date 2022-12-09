@@ -17,9 +17,10 @@ return new class extends Migration
             $table->id('id_lokasi');
             $table->point('lat_lng_asal');
             $table->point('lat_lng_tujuan');
-            $table->string('alamat_lengkap_asal');
-            $table->string('alamat_lengkap_tujuan');
-            $table->text('deskripsi_lokasi');
+            $table->string('alamat_asal');
+            $table->string('alamat_tujuan');
+            $table->text('deskripsi_asal');
+            $table->text('deskripsi_tujuan');
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lokasis');
+        Schema::dropIfExists('lokasi');
     }
 };

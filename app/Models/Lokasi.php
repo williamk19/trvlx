@@ -14,9 +14,10 @@ class Lokasi extends Model
   protected $fillable = [
     'lat_lng_asal',
     'lat_lng_tujuan',
-    'alamat_lengkap_asal',
-    'alamat_lengkap_tujuan',
-    'deskripsi_lokasi',
+    'alamat_asal',
+    'alamat_tujuan',
+    'deskripsi_asal',
+    'deskripsi_tujuan',
     'created_at',
     'updated_at'
   ];

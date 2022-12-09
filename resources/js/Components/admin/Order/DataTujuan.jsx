@@ -8,7 +8,7 @@ const DataTujuan = ({ data, onHandleChange, errors, onLocationChange }) => {
 
   return (
     <div className="grow">
-      <div className="p-6 space-y-6">
+      <div className="p-6 md:py-0 space-y-6">
         <h2 className="text-2xl text-slate-800 font-bold mb-5">Data Tujuan</h2>
         <section>
           <div className="sm:flex gap-4 sm:items-start space-y-4 sm:space-y-0 sm:space-x-4 mt-5">
