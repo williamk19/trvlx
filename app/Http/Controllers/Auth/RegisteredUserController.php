@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Rules\PhoneNumberValidator;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
+
 class RegisteredUserController extends Controller
 {
   /**
@@ -36,12 +38,12 @@ class RegisteredUserController extends Controller
     $request->validate([
       'nama_user' => 'required|string|max:255',
       'email_user' => 'required|string|email|max:255|unique:users',
-      'telepon_user' => 'required|string|unique:users|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:255',
+      'telepon_user' => ['required', 'string', new PhoneNumberValidator, 'min:10', 'max:17'],
       'password' => ['required', 'confirmed', Rules\Password::defaults()],
     ]);
 
     $user = User::create([
-      'nama_user' => $request->nama_user,
+      'nama_user' => ucwords($request->nama_user),
       'id_kategori' => 4,
       'email_user' => $request->email_user,
       'telepon_user' => "+62" . $request->telepon_user,

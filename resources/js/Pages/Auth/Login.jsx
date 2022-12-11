@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
@@ -7,6 +7,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import AuthImage from '@/assets/images/image-login.png';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import useCountDown from 'react-countdown-hook';
 
 export default function Login({ auth, status, canResetPassword }) {
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -14,6 +15,27 @@ export default function Login({ auth, status, canResetPassword }) {
     password: '',
     remember: '',
   });
+
+  // const [timeoutLogin, setTimeoutLogin] = useState(0);
+  // const [timeLeft, { start, pause, resume }] = useCountDown(0, 1000);
+  // useEffect(() => {
+  //   if (typeof errors?.seconds == 'number') {
+  //     setTimeoutLogin(errors?.secods);
+  //   }
+  // }, [errors]);
+  // useEffect(() => {
+  //   if (timeoutLogin > 0) {
+  //     start(timeoutLogin * 1000);
+  //   }
+  // }, [timeoutLogin]);
+  // useEffect(() => {
+  //   console.log(timeLeft);
+  //   if (timeLeft > 0) {
+  //     errors.email_user = `Terlalu banyak login. Coba login kembali dalam ${timeLeft / 1000} detik.`;
+  //   } else if (timeLeft === 0) {
+  //     errors.email_user = ``;
+  //   }
+  // }, [timeLeft]);
 
   useEffect(() => {
     return () => {

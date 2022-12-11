@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -50,17 +52,27 @@ class LoginRequest extends FormRequest
       'password' => $this->password
     ];
 
-    // dd($user_credential);
-    // Debugbar::info("Test");
-    // dd(Auth::attempt($user_credential), $user_credential);
-
-    if (!Auth::attempt($user_credential/*, $this->boolean('remember')*/)) {
+    if (!Auth::attempt($user_credential, $this->boolean('remember'))) {
       RateLimiter::hit($this->throttleKey());
+
+      if (User::where('email_user', $user_credential['email_user'])->first()) {
+        $user = User::where('email_user', $user_credential['email_user'])->first();
+
+        if (!Hash::check($user_credential['password'], $user->password)) {
+          throw ValidationException::withMessages([
+            'password' => trans('auth.password'),
+          ]);
+        } else {
+          throw ValidationException::withMessages([
+            'email_user' => trans('auth.failed'),
+          ]);
+        }
+      }
 
       throw ValidationException::withMessages([
         'email_user' => trans('auth.failed'),
       ]);
-    }    
+    }
 
     RateLimiter::clear($this->throttleKey());
   }
@@ -74,7 +86,7 @@ class LoginRequest extends FormRequest
    */
   public function ensureIsNotRateLimited()
   {
-    if (!RateLimiter::tooManyAttempts($this->throttleKey(), 10)) {
+    if (!RateLimiter::tooManyAttempts($this->throttleKey(), 15)) {
       return;
     }
 
@@ -87,6 +99,7 @@ class LoginRequest extends FormRequest
         'seconds' => $seconds,
         'minutes' => ceil($seconds / 60),
       ]),
+      'seconds' => $seconds
     ]);
   }
 
