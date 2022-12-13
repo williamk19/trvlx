@@ -39,7 +39,7 @@ const TestimonialsLandingPage = () => {
   ];
 
   return (
-    <div className='w-11/12 py-10 md:py-20 flex flex-col items-center justify-center'>
+    <div className='w-11/12 mb-16 md:mb-10 py-10 md:py-20 flex flex-col items-center justify-center'>
       <div className='flex flex-col items-center max-w-2xl mb-11 text-center'>
         <h1 className='mb-5 leading-8 text-4xl font-bold text-shadow'>
           Testimonial

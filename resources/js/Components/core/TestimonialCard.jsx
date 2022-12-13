@@ -4,7 +4,7 @@ import React from 'react';
 const TestimonialCard = ({ data }) => {
   return (
     <div className='flex flex-col px-4 pt-5 pb-2 md:px-12 md:pt-10 md:pb-6 justify-center items-center'>
-      <div className="flex gap-2 md:gap-4 w-10/12 items-center">
+      <div className="flex gap-5 md:gap-6 w-10/12 items-center">
         <div className="avatar">
           <div className="w-16 h-16 drop-shadow-xl rounded-full">
             <img src={data.pic} />

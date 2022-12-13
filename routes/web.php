@@ -28,38 +28,46 @@ Route::get('/', function () {
   ]);
 });
 
-Route::middleware(['auth', 'verified', 'role:1,2'])->group(function () {
-  //=====================================================================================
-  // Laravel Routing
+Route::group(['middleware' => ['auth', 'verified']], function () {
+  Route::group(['middleware' => ['role:3']], function() {
+    Route::get('/sopir/dashboard', function() {
+      return Inertia::render('Admin/Dashboard');
+    });
+  });
 
-  Route::get('/dashboard', function () {
-    return Inertia::render('Admin/Dashboard');
-  })->name('admin.dashboard');
+  Route::group(['middleware' => ['role:4']], function () {
+    Route::get('/client/dashboard', function () {
+      return Inertia::render('Admin/Dashboard');
+    });
+  });
 
-  // Kendaraan
-  Route::resource('kendaraan', KendaraanController::class);
+  Route::group(['middleware' => ['role:1,2']], function () {
+    Route::get('/dashboard', function () {
+      return Inertia::render('Admin/Dashboard');
+    })->name('admin.dashboard');
+    
+    Route::resource('kendaraan', KendaraanController::class);
 
-  // User
-  Route::get('/user/admin', [UserController::class, 'admin'])->name('user.admin');
-  Route::get('/user/sopir', [UserController::class, 'sopir'])->name('user.sopir');
-  Route::get('/user/pengguna', [UserController::class, 'pengguna'])->name('user.pengguna');
-  Route::get('/user/admin/{user}/edit', [UserController::class, 'adminEdit'])
-    ->name('user.adminEdit');
-  Route::get('/user/sopir/{user}/edit', [UserController::class, 'sopirEdit'])
-    ->name('user.sopirEdit');
-  Route::get('/user/pengguna/{user}/edit', [UserController::class, 'penggunaEdit'])
-    ->name('user.penggunaEdit');
-  Route::resource('user', UserController::class);
+    Route::resource('layanan', LayananController::class);
 
-  // Layanan
-  Route::resource('layanan', LayananController::class);
+    Route::controller(UserController::class)->group(function() {
+      Route::get('/user/admin', 'admin')->name('user.admin');
+      Route::get('/user/sopir', 'sopir')->name('user.sopir');
+      Route::get('/user/pengguna', 'pengguna')->name('user.pengguna');
+      Route::get('/user/admin/{user}/edit', 'adminEdit')->name('user.adminEdit');
+      Route::get('/user/sopir/{user}/edit', 'sopirEdit')->name('user.sopirEdit');
+      Route::get('/user/pengguna/{user}/edit', 'penggunaEdit')->name('user.penggunaEdit');
+    });
+    Route::resource('user', UserController::class);
 
-  // Order Travel
-  Route::get('/order/list', [OrderController::class, 'orderList'])->name('order.list');
-  Route::get('/order/data', [OrderController::class, 'orderData'])->name('order.data');
-  Route::get('/order/jemput', [OrderController::class, 'orderJemput'])->name('order.jemput');
-  Route::get('/order/tujuan', [OrderController::class, 'orderTujuan'])->name('order.tujuan');
-  Route::resource('order', OrderController::class);
+    Route::controller(OrderController::class)->group(function() {
+      Route::get('/order/list', 'orderList')->name('order.list');
+      Route::get('/order/data', 'orderData')->name('order.data');
+      Route::get('/order/jemput', 'orderJemput')->name('order.jemput');
+      Route::get('/order/tujuan', 'orderTujuan')->name('order.tujuan');
+    });
+    Route::resource('order', OrderController::class);
+  });
 });
 
 require __DIR__ . '/auth.php';

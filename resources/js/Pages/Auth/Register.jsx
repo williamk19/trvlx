@@ -9,7 +9,7 @@ import { Head, Link, useForm } from '@inertiajs/inertia-react';
 export default function Register({ auth }) {
   const { data, setData, post, processing, errors, reset } = useForm({
     nama_user: '',
-    email_user: '',
+    email: '',
     telepon_user: '',
     password: '',
     password_confirmation: '',
@@ -71,17 +71,17 @@ export default function Register({ auth }) {
                     </div>
                     <div className="flex flex-col md:flex-row gap-4 w-full">
                       <div className="mt-4 w-full">
-                        <InputLabel forInput="email_user" value="Email" />
+                        <InputLabel forInput="email" value="Email" />
                         <TextInput
                           type="email"
-                          name="email_user"
-                          value={data.email_user}
+                          name="email"
+                          value={data.email}
                           className="mt-1 block w-full text-black"
                           autoComplete="email"
                           handleChange={onHandleChange}
                           required
                         />
-                        <InputError message={errors.email_user} className="mt-2" />
+                        <InputError message={errors.email} className="mt-2" />
                       </div>
                       <div className="mt-4 w-full">
                         <InputLabel forInput="telepon_user" value="Nomor Telepon" />

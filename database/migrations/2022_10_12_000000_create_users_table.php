@@ -17,7 +17,7 @@ return new class extends Migration
       $table->id();
       $table->string('nama_user');
       $table->foreignId('id_kategori')->constrained('users_role');
-      $table->string('email_user')->unique();
+      $table->string('email')->unique();
       $table->string('telepon_user')->unique();
       $table->timestamp('email_verified_at')->nullable();
       $table->string('password');

@@ -39,7 +39,7 @@ class UserController extends Controller
         return [
           'id' => $item->id,
           'nama_user' => $item->nama_user,
-          'email_user' => $item->email_user,
+          'email' => $item->email,
           'telepon_user' => $item->telepon_user
         ];
       });
@@ -59,7 +59,7 @@ class UserController extends Controller
         return [
           'id' => $item->id,
           'nama_user' => $item->nama_user,
-          'email_user' => $item->email_user,
+          'email' => $item->email,
           'telepon_user' => $item->telepon_user
         ];
       });
@@ -80,7 +80,7 @@ class UserController extends Controller
         return [
           'id' => $item->id,
           'nama_user' => $item->nama_user,
-          'email_user' => $item->email_user,
+          'email' => $item->email,
           'telepon_user' => $item->telepon_user
         ];
       });
@@ -170,11 +170,11 @@ class UserController extends Controller
   {
     $request->validate([
       'nama_user' => 'required|string|max:255',
-      'email_user' => [
+      'email' => [
         'required',
         'string',
         'max:255',
-        ValidationRule::unique('users', 'email_user')->ignore($user->id)
+        ValidationRule::unique('users', 'email')->ignore($user->id)
       ],
       'telepon_user' => [
         'required',
@@ -186,7 +186,7 @@ class UserController extends Controller
 
     $updateUser = [
       'nama_user' => $request->nama_user,
-      'email_user' => $request->email_user,
+      'email' => $request->email,
       'telepon_user' => $request->telepon_user,
       'id_kategori' => $request->id_kategori
     ];

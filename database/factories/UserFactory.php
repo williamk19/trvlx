@@ -22,7 +22,7 @@ class UserFactory extends Factory
     return [
       'nama_user' => fake()->name(),
       'id_kategori' => 4,
-      'email_user' => $email,
+      'email' => $email,
       'telepon_user' => fake()->unique()->e164PhoneNumber(),
       'email_verified_at' => now(),
       'password' => Hash::make($email),

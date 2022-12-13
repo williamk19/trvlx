@@ -24,7 +24,7 @@ class User extends Authenticatable
   protected $fillable = [
     'nama_user',
     'id_kategori',
-    'email_user',
+    'email',
     'telepon_user',
     'password',
     'created_at',
@@ -53,5 +53,15 @@ class User extends Authenticatable
   public function role()
   {
     return $this->belongsTo(UserRole::class);
+  }
+
+  public function hasRole($role)
+  {
+    dd($this->nama_kategori);
+    if ($this->nama_kategori === $role) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

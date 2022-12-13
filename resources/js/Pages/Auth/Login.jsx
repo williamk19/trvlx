@@ -11,7 +11,7 @@ import useCountDown from 'react-countdown-hook';
 
 export default function Login({ auth, status, canResetPassword }) {
   const { data, setData, post, processing, errors, reset } = useForm({
-    email_user: '',
+    email: '',
     password: '',
     remember: '',
   });
@@ -31,9 +31,9 @@ export default function Login({ auth, status, canResetPassword }) {
   // useEffect(() => {
   //   console.log(timeLeft);
   //   if (timeLeft > 0) {
-  //     errors.email_user = `Terlalu banyak login. Coba login kembali dalam ${timeLeft / 1000} detik.`;
+  //     errors.email = `Terlalu banyak login. Coba login kembali dalam ${timeLeft / 1000} detik.`;
   //   } else if (timeLeft === 0) {
-  //     errors.email_user = ``;
+  //     errors.email = ``;
   //   }
   // }, [timeLeft]);
 
@@ -70,18 +70,18 @@ export default function Login({ auth, status, canResetPassword }) {
                   <form onSubmit={submit}>
                     <div className="space-y-4">
                       <div>
-                        <InputLabel forInput="email_user" value="Email" />
+                        <InputLabel forInput="email" value="Email" />
                         <TextInput
-                          id="email_user"
+                          id="email"
                           type="email"
-                          name="email_user"
-                          value={data.email_user}
+                          name="email"
+                          value={data.email}
                           className="block w-full text-gray-700"
                           autoComplete="email"
                           isFocused={true}
                           handleChange={onHandleChange}
                         />
-                        <InputError message={errors.email_user} className="mt-2" />
+                        <InputError message={errors.email} className="mt-2" />
                       </div>
                       <div className="mt-4">
                         <InputLabel forInput="password" value="Password" />
@@ -107,7 +107,7 @@ export default function Login({ auth, status, canResetPassword }) {
                       <div className="mr-1">
                         <Link
                           className="text-sm text-gray-700 underline hover:no-underline"
-                          href="/reset-password">
+                          href="/forgot-password">
                           Forgot Password?
                         </Link>
                       </div>

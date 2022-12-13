@@ -24,16 +24,16 @@ class DatabaseSeeder extends Seeder
     $now = Carbon::now('utc')->toDateTimeString();
 
     UserRole::insert([
-      ['nama_kategori' => 'Super Admin'],
-      ['nama_kategori' => 'Admin'],
-      ['nama_kategori' => 'Sopir Travel'],
-      ['nama_kategori' => 'Pelanggan']
+      ['nama_kategori' => 'super admin'],
+      ['nama_kategori' => 'admin'],
+      ['nama_kategori' => 'sopir'],
+      ['nama_kategori' => 'pelanggan']
     ]);
 
     User::create([
       'nama_user' => 'Admin Travel',
       'id_kategori' => 1,
-      'email_user' => 'admin@travel.com',
+      'email' => 'admin@travel.com',
       'telepon_user' => "+62" . '8123456789',
       'password' => Hash::make(env('PASSWORD_ADMIN')),
     ]);
@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
     User::create([
       'nama_user' => 'Admin Travel 2',
       'id_kategori' => 2,
-      'email_user' => 'admin@travel2.com',
+      'email' => 'admin@travel2.com',
       'telepon_user' => "+62" . '0987654321',
       'password' => Hash::make(env('PASSWORD_ADMIN')),
     ]);
@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
     User::create([
       'nama_user' => 'Sopir Travel',
       'id_kategori' => 3,
-      'email_user' => 'sopir@travel.com',
+      'email' => 'sopir@travel.com',
       'telepon_user' => "+62" . '8947364983',
       'password' => Hash::make(env('PASSWORD_ADMIN')),
     ]);

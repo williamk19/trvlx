@@ -17,12 +17,16 @@ class Role
    */
   public function handle(Request $request, Closure $next, ...$roles)
   {
+    if (!Auth::check())
+      return redirect('/');
+
     $user = Auth::user();
+
     foreach ($roles as $role) {
       if ($role == (string) $user->id_kategori)
         return $next($request);
     }
 
-    abort(403);
+    return abort(403);
   }
 }

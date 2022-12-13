@@ -37,7 +37,7 @@ class RegisteredUserController extends Controller
   {
     $request->validate([
       'nama_user' => 'required|string|max:255',
-      'email_user' => 'required|string|email|max:255|unique:users',
+      'email' => 'required|string|email|max:255|unique:users',
       'telepon_user' => ['required', 'string', new PhoneNumberValidator, 'min:10', 'max:17'],
       'password' => ['required', 'confirmed', Rules\Password::defaults()],
     ]);
@@ -45,7 +45,7 @@ class RegisteredUserController extends Controller
     $user = User::create([
       'nama_user' => ucwords($request->nama_user),
       'id_kategori' => 4,
-      'email_user' => $request->email_user,
+      'email' => $request->email,
       'telepon_user' => "+62" . $request->telepon_user,
       'password' => Hash::make($request->password),
     ]);

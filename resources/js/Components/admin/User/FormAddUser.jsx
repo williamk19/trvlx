@@ -9,7 +9,7 @@ const FormAddUser = ({ itemUser, auth }) => {
 
   const { data, setData, post, processing, errors, reset } = useForm({
     nama_user: itemUser?.nama_user.length > 0 ? itemUser.nama_user : '',
-    email_user: itemUser?.email_user.length > 0 ? itemUser.email_user : '',
+    email: itemUser?.email.length > 0 ? itemUser.email : '',
     telepon_user: itemUser?.telepon_user.length > 0 ? itemUser.telepon_user : '',
     id_kategori: itemUser?.id_kategori ? itemUser.id_kategori : '',
   });
@@ -58,18 +58,18 @@ const FormAddUser = ({ itemUser, auth }) => {
             </div>
             <div className="md:flex space-y-4 md:space-y-0 md:space-x-4">
               <div className="flex-1">
-                <label className="block text-sm font-bold mb-1" htmlFor="email_user">
+                <label className="block text-sm font-bold mb-1" htmlFor="email">
                   Email User
                 </label>
                 <input
-                  id="email_user"
+                  id="email"
                   className="form-input rounded-md w-full"
                   type="text"
-                  value={data.email_user}
-                  name='email_user'
+                  value={data.email}
+                  name='email'
                   onChange={(e) => onHandleChange(e)}
                   placeholder='admin@gmail.com' />
-                <InputError message={errors.email_user} className="mt-2" />
+                <InputError message={errors.email} className="mt-2" />
               </div>
             </div>
             <div className="md:flex space-y-4 md:space-y-0 md:space-x-4">

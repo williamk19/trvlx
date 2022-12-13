@@ -68,7 +68,7 @@ const TableUser = ({ user, query }) => {
           </div>
         </td>
         <td>
-          {k.email_user}
+          {k.email}
         </td>
         <td>{k.telepon_user}</td>
         <th>

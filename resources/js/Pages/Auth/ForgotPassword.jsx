@@ -7,7 +7,7 @@ import { Head, useForm } from '@inertiajs/inertia-react';
 
 export default function ForgotPassword({ status }) {
   const { data, setData, post, processing, errors } = useForm({
-    email_user: '',
+    email: '',
   });
 
   const onHandleChange = (event) => {
@@ -23,32 +23,32 @@ export default function ForgotPassword({ status }) {
   return (
     <GuestLayout>
       <Head title="Forgot Password" />
-
-      <div className="mb-4 text-sm text-gray-500 leading-normal">
-        Forgot your password? No problem. Just let us know your email address and we will email you a password
-        reset link that will allow you to choose a new one.
-      </div>
-
-      {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
-
-      <form onSubmit={submit}>
-        <TextInput
-          type="text"
-          name="email_user"
-          value={data.email_user}
-          className="mt-1 block w-full"
-          isFocused={true}
-          handleChange={onHandleChange}
-        />
-
-        <InputError message={errors.email_user} className="mt-2" />
-
-        <div className="flex items-center justify-end mt-4">
-          <PrimaryButton className="ml-4" processing={processing}>
-            Email Password Reset Link
-          </PrimaryButton>
+      <div className='bg-white p-4 rounded-md max-w-xl shadow-2xl'>
+        <div className="mb-4 text-md text-gray-700 font-medium">
+          Silahkan ketik alamat email anda untuk menerima email yang dapat anda gunakan untuk melakukan reset password.
         </div>
-      </form>
+
+        {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+
+        <form onSubmit={submit}>
+          <TextInput
+            type="text"
+            name="email"
+            value={data.email}
+            className="mt-1 block w-full text-black"
+            isFocused={true}
+            handleChange={onHandleChange}
+          />
+
+          <InputError message={errors.email} className="mt-2" />
+
+          <div className="flex items-center justify-end mt-4">
+            <PrimaryButton className="ml-4" processing={processing}>
+              Email Tautan Reset Password
+            </PrimaryButton>
+          </div>
+        </form>
+      </div>
     </GuestLayout>
   );
 }
