@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 export default function TextInput({
   type = 'text',
   telp = false,
+  disabled = false,
   placeholder = '',
   name,
   value,
@@ -27,6 +28,7 @@ export default function TextInput({
         type={type}
         name={name}
         value={value}
+        disabled={disabled && true}
         className={
           `border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm` +
           className

@@ -5,6 +5,7 @@ use App\Http\Controllers\LayananController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -29,23 +30,13 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
-  Route::group(['middleware' => ['role:3']], function() {
-    Route::get('/sopir/dashboard', function() {
-      return Inertia::render('Admin/Dashboard');
-    });
-  });
-
-  Route::group(['middleware' => ['role:4']], function () {
-    Route::get('/client/dashboard', function () {
-      return Inertia::render('Admin/Dashboard');
-    });
+  Route::group(['middleware' => ['role:1,2,3,4']], function() {
+    Route::get('/dashboard', function () {
+      return Inertia::render('Dashboard');
+    })->name('dashboard');
   });
 
   Route::group(['middleware' => ['role:1,2']], function () {
-    Route::get('/dashboard', function () {
-      return Inertia::render('Admin/Dashboard');
-    })->name('admin.dashboard');
-    
     Route::resource('kendaraan', KendaraanController::class);
 
     Route::resource('layanan', LayananController::class);
