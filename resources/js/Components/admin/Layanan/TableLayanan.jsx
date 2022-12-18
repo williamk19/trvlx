@@ -11,7 +11,9 @@ const TableLayanan = ({ layanan, query }) => {
 
   useEffect(() => {
     setData(layanan.data);
-  }, [layanan.data]);
+    setPrevUrl(layanan.prev_page_url);
+    setNextUrl(layanan.next_page_url);
+  }, [layanan.data, layanan.prev_page_url, layanan.next_page_url]);
 
   const handleNextClick = () => {
     if (nextUrl === null)

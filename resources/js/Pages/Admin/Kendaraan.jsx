@@ -4,20 +4,38 @@ import { Head, usePage } from '@inertiajs/inertia-react';
 import { Inertia } from '@inertiajs/inertia';
 import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
 import TableKendaraan from '@/Components/Admin/Kendaraan/TableKendaraan';
-import NotificationKendaraan from '@/Components/Admin/NotificationAdmin';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Kendaraan = (props) => {
   const [searchQuery, setSearchQuery] = useState(props.query);
-  const [notificationOpen, setNotificationOpen] = useState(true);
   let { url } = usePage();
 
   useEffect(() => {
-    if (notificationOpen === true) {
-      setTimeout(() => {
-        setNotificationOpen(false);
-      }, 5000);
+    if (!_.isEmpty(props.flash.message) && props.flash.message.type === "info") {
+      toast.info(`${props.flash.message.merk_mobil}, ${props.flash.message.nama_mobil} Berhasil Diubah`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else if (!_.isEmpty(props.flash.message)) {
+      toast.success(`${props.flash.message.merk_mobil}, ${props.flash.message.nama_mobil} Berhasil Dibuat`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
-  }, [notificationOpen]);
+  }, [props.flash]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -43,20 +61,6 @@ const Kendaraan = (props) => {
     }
   }, [searchQuery]);
 
-  const messageNotification = (type) => {
-    if (type === undefined) {
-      return 'telah dimasukkan';
-    }
-    switch(type) {
-      case 'error':
-        return 'telah dihapus';
-      case 'info':
-        return 'telah diubah';
-      default:
-        return 'telah dimasukkan';
-    }
-  }
-
   return (
     <AuthenticatedLayout
       auth={props.auth}
@@ -73,11 +77,7 @@ const Kendaraan = (props) => {
         buttonLink={route('kendaraan.create')}
       />
       <TableKendaraan kendaraan={props.kendaraan} />
-      {props.flash?.message && (
-        <NotificationKendaraan type={props.flash?.message.type} className={'absolute font-bold top-20 right-8'} open={notificationOpen} setOpen={setNotificationOpen}>
-          {`${props.flash?.message.plat_nomor} ${props.flash?.message.merk_mobil}, ${props.flash?.message.nama_mobil} ${messageNotification(props.flash?.message.type)}`}
-        </NotificationKendaraan>
-      )}
+      <ToastContainer />
     </AuthenticatedLayout>
   );
 };

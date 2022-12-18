@@ -16,7 +16,7 @@ return new class extends Migration
     Schema::create('users', function (Blueprint $table) {
       $table->id();
       $table->string('nama_user');
-      $table->foreignId('id_kategori')->constrained('users_role');
+      $table->enum('id_kategori', [1, 2, 3 ,4]);
       $table->string('email')->unique();
       $table->string('telepon_user')->unique();
       $table->timestamp('email_verified_at')->nullable();
@@ -34,10 +34,5 @@ return new class extends Migration
   public function down()
   {
     Schema::dropIfExists('users');
-    // Schema::table('users', function (Blueprint $table) {
-    //   $table->dropForeign('users_id_kategori_foreign');
-    //   $table->dropIndex('users_id_kategori_index');
-    //   $table->dropColumn('id_kategori');
-    // });
   }
 };

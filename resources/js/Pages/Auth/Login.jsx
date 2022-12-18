@@ -56,15 +56,11 @@ export default function Login({ auth, status, canResetPassword }) {
     <GuestLayout auth={auth}>
       <Head title="Log in" />
       {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
-      <div className="w-full mt-6 bg-white shadow-2xl overflow-hidden rounded-xl">
+      <div className="w-full -mt-10 md:mt-0 lg:mt-0 2xl:-mt-5 bg-white shadow-2xl overflow-hidden rounded-xl">
         <main className="w-full shadow-xl">
           <div className=" bg-white relative md:flex">
             <div className="md:w-1/2">
-              <div className="py-8 flex flex-col after:flex-1">
-                <div className="flex-1">
-                  <div className="flex items-center justify-between md:h-16 px-4 sm:px-6 lg:px-8">
-                  </div>
-                </div>
+              <div className="py-4 flex flex-col after:flex-1">
                 <div className="w-10/12 md:w-9/12 mx-auto px-0 md:px-4 md:py-8">
                   <h1 className="text-center md:text-left text-3xl text-slate-800 font-bold mb-6">Login</h1>
                   <form onSubmit={submit}>

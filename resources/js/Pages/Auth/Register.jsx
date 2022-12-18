@@ -43,15 +43,11 @@ export default function Register({ auth }) {
   return (
     <GuestLayout auth={auth}>
       <Head title="Register" />
-      <div className="w-full mt-24 mb-10 md:mt-6 md:mb-0 bg-white shadow-2xl overflow-hidden rounded-xl">
+      <div className="w-full mt-32 md:mt-20 2xl:mt-20 mb-10 md:mb-0 bg-white shadow-2xl overflow-hidden rounded-xl">
         <main className="w-full shadow-xl">
           <div className=" bg-white relative md:flex rounded-2xl">
             <div className="md:w-2/3">
               <div className="py-2 md:py-8 flex flex-col after:flex-1">
-                <div className="flex-1">
-                  <div className="flex items-center justify-between h-6 px-4 sm:px-6 lg:px-8">
-                  </div>
-                </div>
                 <div className="w-11/12 md:w-9/12 mx-auto px-3 md:px-4 py-4 md:py-8">
                   <h1 className="text-3xl text-slate-800 font-bold mb-6 text-center md:text-left">Register</h1>
                   <form onSubmit={submit}>

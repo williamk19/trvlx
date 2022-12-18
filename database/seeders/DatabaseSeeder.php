@@ -23,13 +23,6 @@ class DatabaseSeeder extends Seeder
   {
     $now = Carbon::now('utc')->toDateTimeString();
 
-    UserRole::insert([
-      ['nama_kategori' => 'super admin'],
-      ['nama_kategori' => 'admin'],
-      ['nama_kategori' => 'sopir'],
-      ['nama_kategori' => 'pelanggan']
-    ]);
-
     User::create([
       'nama_user' => 'Admin Travel',
       'id_kategori' => 1,
@@ -115,6 +108,8 @@ class DatabaseSeeder extends Seeder
 
     Layanan::insert([
       [
+        'id_sopir' => 3,
+        'id_kendaraan' => 1,
         'kota_asal' => 'Surabaya',
         'kota_tujuan' => 'Malang',
         'biaya_jasa' => '100000',
@@ -122,6 +117,8 @@ class DatabaseSeeder extends Seeder
         'updated_at' => $now
       ],
       [
+        'id_sopir' => 3,
+        'id_kendaraan' => 1,
         'kota_asal' => 'Malang',
         'kota_tujuan' => 'Madura',
         'biaya_jasa' => '200000',
@@ -129,6 +126,8 @@ class DatabaseSeeder extends Seeder
         'updated_at' => $now
       ],
       [
+        'id_sopir' => 3,
+        'id_kendaraan' => 1,
         'kota_asal' => 'Jakarta',
         'kota_tujuan' => 'Malang',
         'biaya_jasa' => '700000',
@@ -136,6 +135,8 @@ class DatabaseSeeder extends Seeder
         'updated_at' => $now
       ],
       [
+        'id_sopir' => 3,
+        'id_kendaraan' => 1,
         'kota_asal' => 'Surabaya',
         'kota_tujuan' => 'Semarang',
         'biaya_jasa' => '450000',
@@ -143,14 +144,16 @@ class DatabaseSeeder extends Seeder
         'updated_at' => $now
       ],
       [
+        'id_sopir' => 3,
+        'id_kendaraan' => 1,
         'kota_asal' => 'Yogyakarta',
         'kota_tujuan' => 'Malang',
         'biaya_jasa' => '500000',
         'created_at' => $now,
         'updated_at' => $now
-      ],
+      ]
     ]);
 
-    User::factory(100)->create();
+    User::factory(1000)->create();
   }
 }

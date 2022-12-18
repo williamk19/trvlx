@@ -10,7 +10,9 @@ const TableKendaraan = ({ kendaraan, query }) => {
 
   useEffect(() => {
     setData(kendaraan.data);
-  }, [kendaraan.data]);
+    setPrevUrl(kendaraan.prev_page_url);
+    setNextUrl(kendaraan.next_page_url);
+  }, [kendaraan.data, kendaraan.prev_page_url, kendaraan.next_page_url]);
 
   const handleNextClick = () => {
     if (nextUrl === null)

@@ -9,6 +9,7 @@ import {
   TicketIcon, 
   MapIcon 
 } from '@heroicons/react/24/solid';
+import _ from 'lodash';
 
 function Sidebar({ role, sidebarOpen, setSidebarOpen }) {
   const { url } = usePage();
@@ -133,7 +134,7 @@ function Sidebar({ role, sidebarOpen, setSidebarOpen }) {
                       <div className="grow flex items-center">
                         {menuData.icon}
                         <span className="text-sm font-bold ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                          {menuData.name}
+                          {_.capitalize(menuData.name)}
                         </span>
                       </div>
                     </div>

@@ -10,7 +10,9 @@ const TableUser = ({ user, query }) => {
 
   useEffect(() => {
     setData(user.data);
-  }, [user.data]);
+    setPrevUrl(user.prev_page_url);
+    setNextUrl(user.next_page_url);
+  }, [user.data, user.prev_page_url, user.next_page_url]);
 
   const handleNextClick = () => {
     if (nextUrl === null)
