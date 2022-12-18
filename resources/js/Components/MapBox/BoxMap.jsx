@@ -20,6 +20,7 @@ const BoxMap = ({ type = 'pick', name, latlng, onLocationChange }) => {
           ? (<BoxRouteMap />)
           : (
             <DragMarkerMap
+              watchType={true}
               name={name}
               latlng={latlng}
               onLocationChange={onLocationChange}

@@ -59,6 +59,14 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     });
     Route::resource('order', OrderController::class);
   });
+
+  Route::group(['middleware' => ['role:3']], function () {
+    
+  });
+
+  Route::group(['middleware' => ['role:4']], function () {
+  
+  });
 });
 
 require __DIR__ . '/auth.php';

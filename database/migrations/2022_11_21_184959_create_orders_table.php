@@ -23,8 +23,8 @@ return new class extends Migration
       $table->date('tanggal_pemberangkatan');
       $table->enum('status_pembayaran', [
         'pending',
-        'rejected',
-        'done'
+        'confirmed',
+        'rejected'
       ]);
       $table->integer('total_seat');
       $table->string('total_harga');

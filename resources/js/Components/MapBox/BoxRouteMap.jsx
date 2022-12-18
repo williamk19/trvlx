@@ -4,7 +4,7 @@ import RoutingMap from './RoutingMap';
 import "leaflet/dist/leaflet.css";
 
 const tempDestination = [-7.4323535, 112.7205893];
-const BoxRouteMap = ({ destination = tempDestination }) => {
+const BoxRouteMap = ({ watchType = false, destination = tempDestination }) => {
   const routingMachine = useRef();
   const [host, setHost] = useState([]);
   let waypoints = [];
@@ -14,7 +14,7 @@ const BoxRouteMap = ({ destination = tempDestination }) => {
     map
       .locate({
         enableHighAccuracy: true,
-        watch: true
+        watch: {watchType}
       })
       .on("locationfound", function (e) {
         map.flyTo(e.latlng, 15);

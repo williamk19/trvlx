@@ -19,8 +19,10 @@ const DataJemput = ({ data, onHandleChange, errors, onLocationChange }) => {
                 latlng={data.latlng_jemput}
                 onLocationChange={onLocationChange}
               />
+              <p className='text-gray-600 font-semibold mt-5 mb-5'>
+                * Arahkan tanda biru untuk memilih lokasi yang diinginkan
+              </p>
             </div>
-            <InputError message={errors.latlng_jemput} className="mt-2" />
             <div className='mt-10 w-full md:w-3/4 lg:w-2/4'>
               <div className='w-full'>
                 <InputLabel forInput="alamat_jemput" value="Alamat Lengkap Pejemputan"

@@ -25,6 +25,13 @@ const createRoutingMachineLayer = ({ waypoints }) => {
     }
   });
 
+  // On Routes Found Handle
+  // instance.on('routesfound', function (e) {
+  //   var routes = e.routes;
+  //   var summary = routes[0].summary;
+  //   console.log('Total distance is ' + summary.totalDistance / 1000 + ' km and total time is ' + Math.round(summary.totalTime % 3600 / 60) + ' minutes');
+  // });
+
   return instance;
 };
 

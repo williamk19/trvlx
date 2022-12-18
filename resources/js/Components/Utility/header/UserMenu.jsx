@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from '@inertiajs/inertia-react';
 import Transition from '../Transition';
-
 import UserAvatar from '@/assets/images/user-avatar-32.png';
 
 function UserMenu({ auth }) {
@@ -10,7 +9,7 @@ function UserMenu({ auth }) {
   const dropdown = useRef(null);
 
   const getCategory = (id_kategori) => {
-    switch (id_kategori) {
+    switch (parseInt(id_kategori)) {
       case 1:
         return "Super Admin Travel";
       case 2:
