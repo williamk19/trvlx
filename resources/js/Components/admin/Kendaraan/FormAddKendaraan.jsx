@@ -26,7 +26,7 @@ const FormAddKendaraan = ({ itemKendaraan }) => {
       post(route('kendaraan.store'));
     } else {
       Inertia.put(route('kendaraan.update', {
-        kendaraan: itemKendaraan.id_kendaraan,
+        kendaraan: itemKendaraan.id,
         ...data
       }));
     }

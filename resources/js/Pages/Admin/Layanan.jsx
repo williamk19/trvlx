@@ -3,22 +3,41 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
 import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
 import TableLayanan from '@/Components/Admin/Layanan/TableLayanan';
-import NotificationAdmin from '@/Components/Admin/NotificationAdmin'; 
 import { Inertia } from '@inertiajs/inertia';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Layanan = (props) => {
   let { url } = usePage();
-  const [notificationOpen, setNotificationOpen] = useState(true);
   const [searchQuery, setSearchQuery] = useState(props.query);
   const base_url = url.split("?").slice(0, 1).join();
 
   useEffect(() => {
-    if (notificationOpen === true) {
-      setTimeout(() => {
-        setNotificationOpen(false);
-      }, 5000);
+    console.log()
+    if (!_.isEmpty(props.flash.message) && props.flash.message.type === "info") {
+      toast.info(`${props.flash.message.kota_asal} - ${props.flash.message.kota_tujuan} Berhasil Diubah`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else if (!_.isEmpty(props.flash.message)) {
+      toast.success(`${props.flash.message.kota_asal}, ${props.flash.message.kota_tujuan} Berhasil Dibuat`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
-  }, [notificationOpen]);
+  }, [props.flash]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -59,16 +78,8 @@ const Layanan = (props) => {
         handleSearch={handleSearch}
         addButton={true}
       />
-      {props.flash?.message && (
-        <NotificationAdmin
-          type={props.flash?.message.type}
-          className={'transition-all delay-1000 absolute font-bold top-20 right-8'}
-          open={notificationOpen}
-          setOpen={setNotificationOpen}>
-          {`${props.flash?.message}`}
-        </NotificationAdmin>
-      )}
       <TableLayanan layanan={props.layanan} />
+      <ToastContainer />
     </AuthenticatedLayout>
   );
 }

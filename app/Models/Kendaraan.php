@@ -12,7 +12,7 @@ class Kendaraan extends Model
   // use SoftDeletes;
 
   protected $table = 'kendaraan';
-  protected $primaryKey = 'id_kendaraan';
+  protected $primaryKey = 'id';
 
   protected $fillable = [
     'plat_nomor',

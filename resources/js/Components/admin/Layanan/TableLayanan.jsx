@@ -71,7 +71,7 @@ const TableLayanan = ({ layanan, query }) => {
         </td>
         <th>
           <Link
-            href={`/layanan/${l.id_layanan}/edit`}
+            href={`/layanan/${l.id}/edit`}
             className="btn bg-indigo-400 border-none hover:bg-indigo-500 btn-xs">
             Edit
           </Link>

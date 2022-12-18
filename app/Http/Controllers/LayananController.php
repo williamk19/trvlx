@@ -20,7 +20,7 @@ class LayananController extends Controller
       ->paginate(5)
       ->through(fn($item) =>
         [
-          'id' => $item->id_layanan,
+          'id' => $item->id,
           'kota_asal' => $item->kota_asal,
           'kota_tujuan' => $item->kota_tujuan,
           'biaya_jasa' => $item->biaya_jasa
@@ -59,6 +59,8 @@ class LayananController extends Controller
     ]);
 
     $createLayanan = Layanan::create([
+      'id_sopir' => 3,
+      'id_kendaraan' => 1,
       'kota_asal' => $request->kota_asal,
       'kota_tujuan' => $request->kota_tujuan,
       'biaya_jasa' => $request->biaya_jasa,
@@ -66,10 +68,7 @@ class LayananController extends Controller
 
     return redirect()
       ->route('layanan.index')
-      ->with(
-        'message',
-        $createLayanan->kota_asal . " - " . $createLayanan->kota_tujuan . " Telah dibuat"
-      );
+      ->with('message', $createLayanan);
   }
 
   /**
@@ -111,20 +110,20 @@ class LayananController extends Controller
       'biaya_jasa' => 'required|numeric',
     ]);
 
-    Layanan::where('id_layanan', $layanan->id)
-      ->first()
-      ->update([
-        'kota_asal' => $request->kota_asal,
-        'kota_tujuan' => $request->kota_tujuan,
-        'biaya_jasa' => $request->biaya_jasa
-      ]);
+    $updateLayanan = [
+      'kota_asal' => $request->kota_asal,
+      'kota_tujuan' => $request->kota_tujuan,
+      'biaya_jasa' => $request->biaya_jasa
+    ];
 
+    Layanan::where('id', $layanan->id)
+      ->first()
+      ->update($updateLayanan);
+
+    $updateLayanan['type'] = 'info';
     return redirect()
       ->route('layanan.index')
-      ->with(
-        'message',
-        $request->kota_asal . " - " . $request->kota_tujuan . " Telah diubah"
-      );
+      ->with('message', $updateLayanan);
   }
 
   /**
@@ -136,7 +135,7 @@ class LayananController extends Controller
   public function destroy(Layanan $layanan)
   {
     $deletedLayanan = clone $layanan;
-    Layanan::destroy($layanan->id_layanan);
+    Layanan::destroy($layanan->id);
     $deletedLayanan->type = "error";
     return redirect()
       ->route('layanan.index')

@@ -23,7 +23,7 @@ class KendaraanController extends Controller
       ->paginate(5)
       ->through(fn($item) =>
         [
-          'id' => $item->id_kendaraan,
+          'id' => $item->id,
           'plat_nomor' => $item->plat_nomor,
           'merk_mobil' => $item->merk_mobil,
           'nama_mobil' => $item->nama_mobil,
@@ -95,7 +95,7 @@ class KendaraanController extends Controller
    */
   public function edit(Kendaraan $kendaraan)
   {
-    $itemKendaraan = Kendaraan::where('id_kendaraan', $kendaraan->id_kendaraan)->first();
+    $itemKendaraan = Kendaraan::where('id', $kendaraan->id)->first();
     return Inertia::render('Admin/FormPageKendaraan', [
       'itemKendaraan' => $itemKendaraan
     ]);
@@ -118,7 +118,7 @@ class KendaraanController extends Controller
         'required',
         'string',
         'max:255',
-        ValidationRule::unique('kendaraan', 'plat_nomor')->ignore($kendaraan->id_kendaraan, 'id_kendaraan')
+        ValidationRule::unique('kendaraan', 'plat_nomor')->ignore($kendaraan->id, 'id')
       ]
     ]);
 
@@ -129,7 +129,7 @@ class KendaraanController extends Controller
       'jumlah_seat' => $request->jumlah_seat
     ];
 
-    Kendaraan::where('id_kendaraan', $kendaraan->id_kendaraan)
+    Kendaraan::where('id', $kendaraan->id)
       ->first()
       ->update($updateKendaraan);
 
@@ -149,7 +149,7 @@ class KendaraanController extends Controller
   {
     $deletedKendaraan = clone $kendaraan;
     $deletedKendaraan->type = "error";
-    $itemKendaraan = Kendaraan::where('id_kendaraan', $kendaraan->id_kendaraan)->first()->delete();
+    $itemKendaraan = Kendaraan::where('id', $kendaraan->id)->first()->delete();
     return redirect()
       ->route('kendaraan.index')
       ->with('message', $deletedKendaraan);
