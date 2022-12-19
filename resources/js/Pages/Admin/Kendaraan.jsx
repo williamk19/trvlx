@@ -5,7 +5,6 @@ import { Inertia } from '@inertiajs/inertia';
 import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
 import TableKendaraan from '@/Components/Admin/Kendaraan/TableKendaraan';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const Kendaraan = (props) => {
   const [searchQuery, setSearchQuery] = useState(props.query);
@@ -14,6 +13,17 @@ const Kendaraan = (props) => {
   useEffect(() => {
     if (!_.isEmpty(props.flash.message) && props.flash.message.type === "info") {
       toast.info(`${props.flash.message.merk_mobil}, ${props.flash.message.nama_mobil} Berhasil Diubah`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else if (!_.isEmpty(props.flash.message) && props.flash.message.type === "error") {
+      toast.error(`${props.flash.message.merk_mobil}, ${props.flash.message.nama_mobil} Berhasil Dihapus`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

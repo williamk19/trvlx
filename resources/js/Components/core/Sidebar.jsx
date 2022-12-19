@@ -52,12 +52,21 @@ function Sidebar({ role, sidebarOpen, setSidebarOpen }) {
 
   useEffect(() => {
     switch (parseInt(role)) {
-      case 1 || 2:
+      case 1:
         setSidebarMenu([
           { name: 'dashboard', url: '/dashboard', icon: <TvIcon className='w-5 ' /> },
           { name: 'order', url: '/order', icon: <TicketIcon className='w-5 ' /> },
-          { name: 'kendaraan', url: '/kendaraan', icon: <TruckIcon className='w-5 ' /> },
           { name: 'layanan', url: '/layanan', icon: <MapIcon className='w-5 ' /> },
+          { name: 'kendaraan', url: '/kendaraan', icon: <TruckIcon className='w-5 ' /> },
+          { name: 'user', url: '/user', icon: <UsersIcon className='w-5 ' /> }
+        ]);
+        break;
+      case 2:
+        setSidebarMenu([
+          { name: 'dashboard', url: '/dashboard', icon: <TvIcon className='w-5 ' /> },
+          { name: 'order', url: '/order', icon: <TicketIcon className='w-5 ' /> },
+          { name: 'layanan', url: '/layanan', icon: <MapIcon className='w-5 ' /> },
+          { name: 'kendaraan', url: '/kendaraan', icon: <TruckIcon className='w-5 ' /> },
           { name: 'user', url: '/user', icon: <UsersIcon className='w-5 ' /> }
         ]);
         break;

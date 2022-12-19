@@ -40,10 +40,26 @@ class DatabaseSeeder extends Seeder
     ]);
 
     User::create([
-      'nama_user' => 'Sopir Travel',
+      'nama_user' => 'Darius Hasan',
       'id_kategori' => 3,
-      'email' => 'sopir@travel.com',
-      'telepon_user' => "+62" . '8947364983',
+      'email' => 'darius@hasan.com',
+      'telepon_user' => "+62" . '8947364933',
+      'password' => Hash::make(env('PASSWORD_ADMIN')),
+    ]);
+
+    User::create([
+      'nama_user' => 'Nurman Kurniawan',
+      'id_kategori' => 3,
+      'email' => 'nurman@kurniawan.com',
+      'telepon_user' => "+62" . '8524281232',
+      'password' => Hash::make(env('PASSWORD_ADMIN')),
+    ]);
+
+    User::create([
+      'nama_user' => 'David Setiaji',
+      'id_kategori' => 3,
+      'email' => 'david@setiaji.com',
+      'telepon_user' => "+62" . '8947324983',
       'password' => Hash::make(env('PASSWORD_ADMIN')),
     ]);
 
@@ -113,6 +129,7 @@ class DatabaseSeeder extends Seeder
         'kota_asal' => 'Surabaya',
         'kota_tujuan' => 'Malang',
         'biaya_jasa' => '100000',
+        'status' => 'active',
         'created_at' => $now,
         'updated_at' => $now
       ],
@@ -122,6 +139,7 @@ class DatabaseSeeder extends Seeder
         'kota_asal' => 'Malang',
         'kota_tujuan' => 'Madura',
         'biaya_jasa' => '200000',
+        'status' => 'active',
         'created_at' => $now,
         'updated_at' => $now
       ],
@@ -131,6 +149,7 @@ class DatabaseSeeder extends Seeder
         'kota_asal' => 'Jakarta',
         'kota_tujuan' => 'Malang',
         'biaya_jasa' => '700000',
+        'status' => 'active',
         'created_at' => $now,
         'updated_at' => $now
       ],
@@ -140,6 +159,7 @@ class DatabaseSeeder extends Seeder
         'kota_asal' => 'Surabaya',
         'kota_tujuan' => 'Semarang',
         'biaya_jasa' => '450000',
+        'status' => 'active',
         'created_at' => $now,
         'updated_at' => $now
       ],
@@ -149,11 +169,12 @@ class DatabaseSeeder extends Seeder
         'kota_asal' => 'Yogyakarta',
         'kota_tujuan' => 'Malang',
         'biaya_jasa' => '500000',
+        'status' => 'disabled',
         'created_at' => $now,
         'updated_at' => $now
       ]
     ]);
 
-    User::factory(1000)->create();
+    User::factory(100)->create();
   }
 }

@@ -1,17 +1,20 @@
-import { Link, useForm } from '@inertiajs/inertia-react';
+import { useForm } from '@inertiajs/inertia-react';
 import InputError from '../../InputError';
 import { Inertia } from '@inertiajs/inertia';
 import CurrencyFormat from 'react-currency-format';
-import { useEffect } from 'react';
 
-const FormLayanan = ({ itemLayanan }) => {
+const FormLayanan = ({ itemLayanan, itemSopir, itemKendaraan, listSopir, listKendaraan }) => {
   const { data, setData, post, processing, errors, reset } = useForm({
     kota_asal: itemLayanan?.kota_asal.length > 0 ? itemLayanan.kota_asal : '',
     kota_tujuan: itemLayanan?.kota_tujuan.length > 0 ? itemLayanan.kota_tujuan : '',
     biaya_jasa: itemLayanan?.biaya_jasa > 0 ? itemLayanan.biaya_jasa : 0,
+    sopir: itemSopir?.id ? itemSopir.nama_user : 0,
+    kendaraan: itemKendaraan?.id ? itemKendaraan.id : 0,
+    status: itemLayanan?.status.length > 0 ? itemLayanan.status : 'active'
   });
 
   const onHandleChange = (event) => {
+    console.log(event.target.name, event.target.value);
     setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
   };
 
@@ -52,8 +55,6 @@ const FormLayanan = ({ itemLayanan }) => {
                   placeholder='Malang, Surabaya, ...' />
                 <InputError message={errors.kota_asal} className="mt-2" />
               </div>
-            </div>
-            <div className="md:flex space-y-4 md:space-y-0 md:space-x-4">
               <div className="flex-1">
                 <label className="block text-sm font-bold mb-1" htmlFor="kota_tujuan">
                   Kota Tujuan Travel
@@ -67,6 +68,42 @@ const FormLayanan = ({ itemLayanan }) => {
                   onChange={(e) => onHandleChange(e)}
                   placeholder='Jakarta, Madura, ...' />
                 <InputError message={errors.kota_tujuan} className="mt-2" />
+              </div>
+            </div>
+            <div className="md:flex space-y-4 md:space-y-0 md:space-x-4">
+              <div className="flex-1">
+                <label className="block text-sm font-bold mb-1" htmlFor="sopir">
+                  Sopir Travel
+                </label>
+                <select
+                  data-theme='light'
+                  value={data.sopir}
+                  name='sopir'
+                  className="select select-bordered border-slate-500 w-full"
+                  onChange={(e) => onHandleChange(e)}>
+                  <option value={'default'} className='text-black' disabled>Nama Sopir</option>
+                  {listSopir.map((s) => (
+                    <option key={s.id} value={s.id}>{s.title}</option>
+                  ))}
+                </select>
+                <InputError message={errors.sopir} className="mt-2" />
+              </div>
+              <div className="flex-1">
+                <label className="block text-sm font-bold mb-1" htmlFor="kendaraan">
+                  Kendaraan Travel
+                </label>
+                <select
+                  data-theme='light'
+                  value={data.kendaraan}
+                  name='kendaraan'
+                  className="select select-bordered border-slate-500 w-full"
+                  onChange={(e) => onHandleChange(e)}>
+                  <option value={'default'} className='text-black' disabled>Nama Kendaraan</option>
+                  {listKendaraan.map((k) => (
+                    <option key={k.id} value={k.id}>{k.title}</option>
+                  ))}
+                </select>
+                <InputError message={errors.kendaraan} className="mt-2" />
               </div>
             </div>
             <div className="md:flex space-y-4 md:space-y-0 md:space-x-4">
@@ -88,6 +125,22 @@ const FormLayanan = ({ itemLayanan }) => {
                   }}
                   placeholder='Rp. 250,000' />
                 <InputError message={errors.biaya_jasa} className="mt-2" />
+              </div>
+              <div className="flex-initial">
+                <label className="block text-sm font-bold mb-1" htmlFor="status">
+                  Status Layanan
+                </label>
+                <select
+                  data-theme='light'
+                  value={data.status}
+                  name='status'
+                  className="select select-bordered border-slate-500 w-full"
+                  onChange={(e) => onHandleChange(e)}>
+                  <option value={'default'} className='text-black' disabled>Status</option>
+                    <option value={'active'}>{'Active'}</option>
+                    <option value={'disabled'}>{'Disabled'}</option>
+                </select>
+                <InputError message={errors.kendaraan} className="mt-2" />
               </div>
             </div>
             <div className="flex justify-between">

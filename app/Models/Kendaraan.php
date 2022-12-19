@@ -22,4 +22,9 @@ class Kendaraan extends Model
     'created_at',
     'updated_at'
   ];
+
+  public function layanan()
+  {
+    return $this->hasMany(Layanan::class);
+  }
 }

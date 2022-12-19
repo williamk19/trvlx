@@ -21,6 +21,10 @@ const FormPageLayanan = (props) => {
       />
       <FormLayanan
         itemLayanan={props.layanan}
+        itemSopir={props.sopir}
+        itemKendaraan={props.kendaraan}
+        listSopir={props.listSopir}
+        listKendaraan={props.listKendaraan}
       />
     </AuthenticatedLayout>
   );

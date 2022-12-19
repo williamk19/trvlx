@@ -3,23 +3,51 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
 import TableUser from '@/Components/Admin/User/TableUser';
 import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
-import NotificationKendaraan from '@/Components/Admin/NotificationAdmin';
 import { Inertia } from '@inertiajs/inertia';
+import { toast, ToastContainer } from 'react-toastify';
 
 export default function Pengguna(props) {
   const [searchQuery, setSearchQuery] = useState(props.query);
-  const [notificationOpen, setNotificationOpen] = useState(true);
 
   let { url } = usePage();
   const base_url = url.split("?").slice(0, 1).join();
 
   useEffect(() => {
-    if (notificationOpen === true) {
-      setTimeout(() => {
-        setNotificationOpen(false);
-      }, 5000);
+    if (!_.isEmpty(props.flash.message) && props.flash.message.type === "info") {
+      toast.info(`${props.flash.message.nama_user} Berhasil Diubah`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else if (!_.isEmpty(props.flash.message) && props.flash.message.type === "error") {
+      toast.error(`${props.flash.message.nama_user} Berhasil Dihapus`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else if (!_.isEmpty(props.flash.message)) {
+      toast.success(`${props.flash.message.nama_user} Berhasil Dibuat`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
-  }, [notificationOpen]);
+  }, [props.flash]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -64,14 +92,8 @@ export default function Pengguna(props) {
       />
       <div className="py-8">
         <div className="mx-auto">
-          {props.flash?.message && (
-            <NotificationKendaraan type={props.flash?.message.type} className={'absolute font-bold top-20 right-8'} open={notificationOpen} setOpen={setNotificationOpen}>
-              {props.flash.message.id
-                ? `${props.flash?.message.nama_user} telah dihapus`
-                : `${props.flash?.message}`}
-            </NotificationKendaraan>
-          )}
           <TableUser query={searchQuery} user={props.user} />
+          <ToastContainer />
         </div>
       </div>
     </AuthenticatedLayout>

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kendaraan;
 use App\Models\Layanan;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -18,12 +20,16 @@ class LayananController extends Controller
     $dataLayanan = Layanan::where('kota_asal', 'like', '%' . $request->search . '%')
       ->orWhere('kota_tujuan', 'like', '%' . $request->search . '%')
       ->paginate(5)
-      ->through(fn($item) =>
+      ->through(
+        fn ($item) =>
         [
           'id' => $item->id,
+          'sopir' => $item->sopir,
+          'kendaraan' => $item->kendaraan,
           'kota_asal' => $item->kota_asal,
           'kota_tujuan' => $item->kota_tujuan,
-          'biaya_jasa' => $item->biaya_jasa
+          'biaya_jasa' => $item->biaya_jasa,
+          'status' => $item->status
         ]
       );
 
@@ -90,8 +96,27 @@ class LayananController extends Controller
    */
   public function edit(Layanan $layanan)
   {
+    $listSopir = User::where('id_kategori', 3)->get()->map(
+      fn ($item) =>
+      [
+        'id' => $item->id,
+        'title' => $item->nama_user,
+      ]
+    );
+
+    $listKendaraan = Kendaraan::all()->map(
+      fn ($item) => [
+        'id' => $item->id,
+        'title' => $item->merk_mobil . ", " . $item->nama_mobil . " (" . $item->plat_nomor . ")"
+      ]
+    );
+
     return Inertia::render('Admin/FormPageLayanan', [
-      'layanan' => $layanan
+      'layanan' => $layanan,
+      'sopir' => $layanan->sopir,
+      'kendaraan' => $layanan->kendaraan,
+      'listSopir' => $listSopir,
+      'listKendaraan' => $listKendaraan
     ]);
   }
 
@@ -108,12 +133,18 @@ class LayananController extends Controller
       'kota_asal' => 'required|string|max:255',
       'kota_tujuan' => 'required|string|max:255',
       'biaya_jasa' => 'required|numeric',
+      'sopir' => 'required|numeric',
+      'kendaraan' => 'required|numeric',
+      'status' => 'required|in:active,disabled'
     ]);
 
     $updateLayanan = [
       'kota_asal' => $request->kota_asal,
       'kota_tujuan' => $request->kota_tujuan,
-      'biaya_jasa' => $request->biaya_jasa
+      'biaya_jasa' => $request->biaya_jasa,
+      'id_sopir' => $request->sopir,
+      'id_kendaraan' => $request->kendaraan,
+      'status' => $request->status
     ];
 
     Layanan::where('id', $layanan->id)
@@ -139,9 +170,6 @@ class LayananController extends Controller
     $deletedLayanan->type = "error";
     return redirect()
       ->route('layanan.index')
-      ->with(
-        'message',
-        $deletedLayanan->kota_asal . " - " . $deletedLayanan->kota_tujuan . " Telah Dihapus"
-      );
+      ->with('message', $deletedLayanan);
   }
 }

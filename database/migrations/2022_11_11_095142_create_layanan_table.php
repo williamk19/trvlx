@@ -20,6 +20,7 @@ return new class extends Migration
       $table->string('kota_asal');
       $table->string('kota_tujuan');
       $table->double('biaya_jasa');
+      $table->enum('status', ['active', 'disabled']);
       $table->timestamps();
     });
   }

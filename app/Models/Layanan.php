@@ -12,10 +12,23 @@ class Layanan extends Model
   protected $primaryKey = 'id';
 
   protected $fillable = [
+    'id_sopir',
+    'id_kendaraan',
     'kota_asal',
     'kota_tujuan',
     'biaya_jasa',
+    'status',
     'created_at',
     'updated_at'
   ];
+
+  public function sopir()
+  {
+    return $this->belongsTo(User::class, 'id_sopir');
+  }
+
+  public function kendaraan()
+  {
+    return $this->belongsTo(Kendaraan::class, 'id_kendaraan');
+  }
 }

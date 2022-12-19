@@ -5,7 +5,6 @@ import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
 import TableLayanan from '@/Components/Admin/Layanan/TableLayanan';
 import { Inertia } from '@inertiajs/inertia';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const Layanan = (props) => {
   let { url } = usePage();
@@ -13,9 +12,20 @@ const Layanan = (props) => {
   const base_url = url.split("?").slice(0, 1).join();
 
   useEffect(() => {
-    console.log()
+    console.log();
     if (!_.isEmpty(props.flash.message) && props.flash.message.type === "info") {
       toast.info(`${props.flash.message.kota_asal} - ${props.flash.message.kota_tujuan} Berhasil Diubah`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else if (!_.isEmpty(props.flash.message) && props.flash.message.type === "error") {
+      toast.error(`${props.flash.message.kota_asal} - ${props.flash.message.kota_tujuan} Berhasil Dihapus`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -82,6 +92,6 @@ const Layanan = (props) => {
       <ToastContainer />
     </AuthenticatedLayout>
   );
-}
+};
 
 export default Layanan;

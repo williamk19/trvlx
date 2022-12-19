@@ -200,7 +200,7 @@ class UserController extends Controller
     $category = $this->getCategory($user->id_kategori);
     return redirect()
       ->route("user.$category")
-      ->with('message', "$userObject->nama_user telah diubah");
+      ->with('message', $userObject);
   }
 
   /**
@@ -216,8 +216,6 @@ class UserController extends Controller
         ->route('user.index')
         ->with('message', 'Akun sedang dipakai saat ini');
     }
-
-
 
     $deletedUser = clone $user;
     $deletedUser->type = "error";

@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import { Link, useForm, usePage } from '@inertiajs/inertia-react';
 import InputError from '../../InputError';
 import { Inertia } from '@inertiajs/inertia';
+import { toast, ToastContainer } from 'react-toastify';
 
 const FormAddUser = ({ itemUser, auth }) => {
+  console.log(itemUser.id, auth.user.id);
   let { url } = usePage();
   let idUrl = +url.split("/")[3];
 
@@ -20,11 +22,16 @@ const FormAddUser = ({ itemUser, auth }) => {
 
   const handleDelete = (e) => {
     e.preventDefault();
+    if (itemUser.id === auth.user.id)
+      return toast.error('Anda tidak dapat hapus akun sendiri');
     Inertia.delete(route("user.destroy", itemUser.id));
   };
 
   const submit = (e) => {
     e.preventDefault();
+    if (itemUser.id === auth.user.id)
+      return toast.error('Anda tidak dapat edit akun sendiri');
+
     if (!itemUser) {
       post(route('user.store'));
     } else {
@@ -37,6 +44,7 @@ const FormAddUser = ({ itemUser, auth }) => {
 
   return (
     <div data-theme="light" className='rounded-lg p-8 shadow-lg lg:w-8/12'>
+      <ToastContainer theme="dark" />
       <div>
         <form onSubmit={submit}>
           <div className="space-y-4">
