@@ -15,7 +15,7 @@ const FormOrder = ({ type, layananData }) => {
     nama_penumpang: '',
     tanggal_pemberangkatan: new Date(),
     jumlah_seat: 1,
-    layanan: 1,
+    layanan: 0,
     latlng_jemput: {},
     alamat_jemput: '',
     deskripsi_jemput: '',
@@ -25,8 +25,8 @@ const FormOrder = ({ type, layananData }) => {
   });
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    setData('layanan', layananData[0].id)
+  }, []);
 
   useEffect(() => {
     if (!_.isEmpty(errors)) {
@@ -44,7 +44,6 @@ const FormOrder = ({ type, layananData }) => {
   }, [errors]);
 
   const onHandleChange = (event) => {
-    console.log(event.target.value);
     if (event.target.name === 'telepon_user') {
       const re = /^[0-9\b]+$/;
       let number = event.target.value.replace(/^0+/, '');

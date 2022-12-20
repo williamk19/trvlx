@@ -1,12 +1,14 @@
 import { useMap } from 'react-leaflet';
 import { useEffect, useState, useRef } from 'react';
 import RoutingMap from './RoutingMap';
+import ZoomControlMap from './ZoomControlMap';
 import "leaflet/dist/leaflet.css";
 
 const tempDestination = [-7.4323535, 112.7205893];
 const BoxRouteMap = ({ watchType = false, destination = tempDestination }) => {
   const routingMachine = useRef();
   const [host, setHost] = useState([]);
+  const [initialHost, setInitialHost] = useState([]);
   let waypoints = [];
 
   const map = useMap();
@@ -14,27 +16,27 @@ const BoxRouteMap = ({ watchType = false, destination = tempDestination }) => {
     map
       .locate({
         enableHighAccuracy: true,
-        watch: {watchType}
       })
       .on("locationfound", function (e) {
         map.flyTo(e.latlng, 15);
         map.on('zoomend', () => {
-          setHost([e.latlng.lat, e.latlng.lng]);
+          setInitialHost([e.latlng.lat, e.latlng.lng]);
         });
       });
-  }, [map]);
+  }, [])
 
   useEffect(() => {
     if (routingMachine.current) {
       let waypoints = [
-        host, destination
+        initialHost, destination
       ];
       routingMachine.current.setWaypoints(waypoints);
     }
-  }, [host, destination]);
+  }, [initialHost, destination]);
 
   return (
     <>
+      <ZoomControlMap />
       <RoutingMap ref={routingMachine} waypoints={waypoints} />
     </>
   );

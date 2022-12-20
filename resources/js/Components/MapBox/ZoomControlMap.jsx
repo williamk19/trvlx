@@ -7,6 +7,10 @@ const createZoomLayer = () => {
     position: "bottomleft",
     strings: {
       title: "Show me where I am, yo!"
+    },
+    locateOptions: {
+      watch: true,
+      enableHighAccuracy: true
     }
   })
   return instance;

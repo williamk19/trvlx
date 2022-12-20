@@ -7,6 +7,7 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Layanan;
 use App\Models\Lokasi;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -34,7 +35,7 @@ class OrderController extends Controller
       "biaya_jasa" => $user->biaya_jasa
     ]));
 
-    return Inertia::render('Client/FormPageOrder', [
+    return Inertia::render('Admin/FormPageOrder', [
       'type' => 'data',
       'layananData' => $layanan
     ]);
@@ -42,12 +43,30 @@ class OrderController extends Controller
 
   public function orderJemput()
   {
-    return Inertia::render('Admin/FormPageOrder', ['type' => 'jemput']);
+    $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
+      "id" => $user->id,
+      "kota_asal" => $user->kota_asal,
+      "kota_tujuan" => $user->kota_tujuan,
+      "biaya_jasa" => $user->biaya_jasa
+    ]));
+    return Inertia::render('Admin/FormPageOrder', [
+      'type' => 'jemput', 
+      'layananData' => $layanan
+    ]);
   }
 
   public function orderTujuan()
   {
-    return Inertia::render('Admin/FormPageOrder', ['type' => 'tujuan']);
+    $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
+      "id" => $user->id,
+      "kota_asal" => $user->kota_asal,
+      "kota_tujuan" => $user->kota_tujuan,
+      "biaya_jasa" => $user->biaya_jasa
+    ]));
+    return Inertia::render('Admin/FormPageOrder', [
+      'type' => 'tujuan', 
+      'layananData' => $layanan
+    ]);
   }
 
   public function orderList()
@@ -73,7 +92,6 @@ class OrderController extends Controller
    */
   public function store(StoreOrderRequest $request)
   {
-    dd($request->user()->id);
     $request->validate([
       'nama_penumpang' => 'required|string|max:255',
       'tanggal_pemberangkatan' => 'required|date',
@@ -86,7 +104,7 @@ class OrderController extends Controller
       'deskripsi_jemput' => 'string|nullable',
       'deskripsi_tujuan' => 'string|nullable'
     ]);
-    
+
     $lokasi = Lokasi::create([
       'lat_asal' => $request->latlng_jemput["lat"],
       'lng_asal' => $request->latlng_jemput["lng"],
@@ -98,18 +116,21 @@ class OrderController extends Controller
       'deskripsi_tujuan' => $request->deskripsi_tujuan
     ]);
 
-    // $order = Order::create([
-    //   'id_lokasi' => $lokasi->id,
-    //   'id_layanan' => $request->layanan
-    //   'id_user' => $request->
-    //   'nama_penumpang' =>
-    //   'tanggal_pemberangkatan' => 
-    //   'status_pembayaran' => 
-    //   'total_seat' => 
-    //   'total_harga' =>
-    // ]);
+    $total_harga = (Layanan::where('id', $request->layanan)->first('biaya_jasa')->biaya_jasa) * ($request->jumlah_seat);
+    $order = Order::create([
+      'id_lokasi' => $lokasi->id,
+      'id_layanan' => $request->layanan,
+      'id_user' => 10,
+      'nama_penumpang' => 'William Kurniawan',
+      'tanggal_pemberangkatan' => Carbon::tomorrow(),
+      'status_pembayaran' => 'confirmed',
+      'total_seat' => $request->jumlah_seat,
+      'total_harga' => $total_harga
+    ]);
 
-    
+    return redirect()
+      ->route('order.index')
+      ->with('message', $order);
   }
 
   /**
@@ -156,7 +177,7 @@ class OrderController extends Controller
     //
   }
 
-  public function clientOrder() 
+  public function clientOrder()
   {
     return redirect('/client-order/data');
   }
@@ -178,11 +199,30 @@ class OrderController extends Controller
 
   public function clientOrderJemput()
   {
-    return Inertia::render('Client/FormPageOrder', ['type' => 'jemput']);
+    $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
+      "id" => $user->id,
+      "kota_asal" => $user->kota_asal,
+      "kota_tujuan" => $user->kota_tujuan,
+      "biaya_jasa" => $user->biaya_jasa
+    ]));
+
+    return Inertia::render('Client/FormPageOrder', [
+      'type' => 'jemput',
+      'layananData' => $layanan
+    ]);
   }
 
   public function clientOrderTujuan()
   {
-    return Inertia::render('Client/FormPageOrder', ['type' => 'tujuan']);
+    $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
+      "id" => $user->id,
+      "kota_asal" => $user->kota_asal,
+      "kota_tujuan" => $user->kota_tujuan,
+      "biaya_jasa" => $user->biaya_jasa
+    ]));
+    return Inertia::render('Client/FormPageOrder', [
+      'type' => 'tujuan',
+      'layananData' => $layanan
+    ]);
   }
 }

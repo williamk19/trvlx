@@ -2,9 +2,48 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
 import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
 import CardOrder from '@/Components/Admin/Order/CardOrder';
+import { toast, ToastContainer } from 'react-toastify';
+import { useEffect } from 'react';
 
 const Order = (props) => {
   let { url } = usePage();
+  useEffect(() => {
+    if (!_.isEmpty(props.flash.message) && props.flash.message.type === "info") {
+      toast.info(`Order Berhasil Diubah`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else if (!_.isEmpty(props.flash.message) && props.flash.message.type === "error") {
+      toast.error(`Order Berhasil Dihapus`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else if (!_.isEmpty(props.flash.message)) {
+      toast.success(`Order Berhasil Dibuat`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  }, [props.flash]);
+
   const items = [
     {
       id: 0,
@@ -47,6 +86,7 @@ const Order = (props) => {
           />
         ))}
       </div>
+      <ToastContainer />
     </AuthenticatedLayout>
   );
 };

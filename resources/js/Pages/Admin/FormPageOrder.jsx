@@ -14,7 +14,7 @@ const FormPageOrder = (props) => {
     >
       <Head title="Create Order" />
       <HeaderAdmin
-        title={'Travel Order ⏩'}
+        title={'Travel Order ⏭️'}
         url={url}
       />
       <FormOrder
