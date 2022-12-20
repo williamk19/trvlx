@@ -8,13 +8,12 @@ const FormLayanan = ({ itemLayanan, itemSopir, itemKendaraan, listSopir, listKen
     kota_asal: itemLayanan?.kota_asal.length > 0 ? itemLayanan.kota_asal : '',
     kota_tujuan: itemLayanan?.kota_tujuan.length > 0 ? itemLayanan.kota_tujuan : '',
     biaya_jasa: itemLayanan?.biaya_jasa > 0 ? itemLayanan.biaya_jasa : 0,
-    sopir: itemSopir?.id ? itemSopir.nama_user : 0,
+    sopir: itemSopir?.id ? itemSopir.id : 0,
     kendaraan: itemKendaraan?.id ? itemKendaraan.id : 0,
     status: itemLayanan?.status.length > 0 ? itemLayanan.status : 'active'
   });
 
   const onHandleChange = (event) => {
-    console.log(event.target.name, event.target.value);
     setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
   };
 

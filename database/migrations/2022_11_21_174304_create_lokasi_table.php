@@ -15,12 +15,14 @@ return new class extends Migration
     {
         Schema::create('lokasi', function (Blueprint $table) {
             $table->id();
-            $table->point('lat_lng_asal');
-            $table->point('lat_lng_tujuan');
+            $table->string('lat_asal');
+            $table->string('lng_asal');
+            $table->string('lat_tujuan');
+            $table->string('lng_tujuan');
             $table->string('alamat_asal');
             $table->string('alamat_tujuan');
-            $table->text('deskripsi_asal');
-            $table->text('deskripsi_tujuan');
+            $table->text('deskripsi_asal')->nullable();
+            $table->text('deskripsi_tujuan')->nullable();
             $table->timestamps();
         });
     }

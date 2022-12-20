@@ -54,4 +54,8 @@ class User extends Authenticatable
   {
     return $this->hasMany(Layanan::class);
   }
+
+  public function order() {
+    return $this->hasMany(Order::class);
+  }
 }

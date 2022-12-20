@@ -5,7 +5,6 @@ import CardOrder from '@/Components/Admin/Order/CardOrder';
 
 const Order = (props) => {
   let { url } = usePage();
-
   const items = [
     {
       id: 0,

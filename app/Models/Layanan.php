@@ -31,4 +31,9 @@ class Layanan extends Model
   {
     return $this->belongsTo(Kendaraan::class, 'id_kendaraan');
   }
+
+  public function order()
+  {
+    return $this->hasMany(Order::class);
+  }
 }

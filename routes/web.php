@@ -65,7 +65,12 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
   });
 
   Route::group(['middleware' => ['role:4']], function () {
-  
+    Route::controller(OrderController::class)->group(function () {
+      Route::get('/client-order', 'clientOrder')->name('clientorder');
+      Route::get('/client-order/data', 'clientOrderData')->name('client-order.data');
+      Route::get('/client-order/jemput', 'clientOrderJemput')->name('client-order.jemput');
+      Route::get('/client-order/tujuan', 'clientOrderTujuan')->name('client-order.tujuan');
+    });
   });
 });
 

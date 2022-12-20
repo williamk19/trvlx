@@ -27,14 +27,14 @@ class OrderController extends Controller
 
   public function orderData()
   {
-    $layanan = Layanan::all()->map(fn ($user) => ([
-      "id_layanan" => $user->id_layanan,
+    $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
+      "id" => $user->id,
       "kota_asal" => $user->kota_asal,
       "kota_tujuan" => $user->kota_tujuan,
       "biaya_jasa" => $user->biaya_jasa
     ]));
 
-    return Inertia::render('Admin/FormPageOrder', [
+    return Inertia::render('Client/FormPageOrder', [
       'type' => 'data',
       'layananData' => $layanan
     ]);
@@ -52,7 +52,8 @@ class OrderController extends Controller
 
   public function orderList()
   {
-    dd("H3h3");
+    $order = Order::find(1)->lokasi;
+    dd($order);
   }
   /**
    * Show the form for creating a new resource.
@@ -72,6 +73,7 @@ class OrderController extends Controller
    */
   public function store(StoreOrderRequest $request)
   {
+    dd($request->user()->id);
     $request->validate([
       'nama_penumpang' => 'required|string|max:255',
       'tanggal_pemberangkatan' => 'required|date',
@@ -84,21 +86,30 @@ class OrderController extends Controller
       'deskripsi_jemput' => 'string|nullable',
       'deskripsi_tujuan' => 'string|nullable'
     ]);
-
+    
     $lokasi = Lokasi::create([
-      'lat_lng_asal' => DB::raw('Point(' . $request->latlng_jemput["lat"] . ',' . $request->latlng_jemput["lng"] . ')'),
-      'lat_lng_tujuan' => DB::raw('Point(' . $request->latlng_tujuan["lat"] . ',' . $request->latlng_tujuan["lng"] . ')'),
+      'lat_asal' => $request->latlng_jemput["lat"],
+      'lng_asal' => $request->latlng_jemput["lng"],
+      'lat_tujuan' => $request->latlng_tujuan["lat"],
+      'lng_tujuan' => $request->latlng_tujuan["lng"],
       'alamat_asal' => $request->alamat_jemput,
       'alamat_tujuan' => $request->alamat_tujuan,
       'deskripsi_asal' => $request->deskripsi_jemput,
       'deskripsi_tujuan' => $request->deskripsi_tujuan
     ]);
 
-    $order = Order::create([
-      'id_lokasi' => ''
-    ]);
+    // $order = Order::create([
+    //   'id_lokasi' => $lokasi->id,
+    //   'id_layanan' => $request->layanan
+    //   'id_user' => $request->
+    //   'nama_penumpang' =>
+    //   'tanggal_pemberangkatan' => 
+    //   'status_pembayaran' => 
+    //   'total_seat' => 
+    //   'total_harga' =>
+    // ]);
 
-    dd($lokasi);
+    
   }
 
   /**
@@ -143,5 +154,35 @@ class OrderController extends Controller
   public function destroy(Order $order)
   {
     //
+  }
+
+  public function clientOrder() 
+  {
+    return redirect('/client-order/data');
+  }
+
+  public function clientOrderData()
+  {
+    $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
+      "id" => $user->id,
+      "kota_asal" => $user->kota_asal,
+      "kota_tujuan" => $user->kota_tujuan,
+      "biaya_jasa" => $user->biaya_jasa
+    ]));
+
+    return Inertia::render('Client/FormPageOrder', [
+      'type' => 'data',
+      'layananData' => $layanan
+    ]);
+  }
+
+  public function clientOrderJemput()
+  {
+    return Inertia::render('Client/FormPageOrder', ['type' => 'jemput']);
+  }
+
+  public function clientOrderTujuan()
+  {
+    return Inertia::render('Client/FormPageOrder', ['type' => 'tujuan']);
   }
 }

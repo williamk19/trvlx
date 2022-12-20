@@ -26,7 +26,7 @@ return new class extends Migration
         'rejected'
       ]);
       $table->integer('total_seat');
-      $table->string('total_harga');
+      $table->double('total_harga');
       $table->timestamps();
     });
   }

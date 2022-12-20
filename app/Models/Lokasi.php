@@ -12,8 +12,10 @@ class Lokasi extends Model
   protected $primaryKey = 'id';
 
   protected $fillable = [
-    'lat_lng_asal',
-    'lat_lng_tujuan',
+    'lat_asal',
+    'lng_asal',
+    'lat_tujuan',
+    'lng_tujuan',
     'alamat_asal',
     'alamat_tujuan',
     'deskripsi_asal',
@@ -21,4 +23,8 @@ class Lokasi extends Model
     'created_at',
     'updated_at'
   ];
+
+  public function order() {
+    return $this->hasOne(Order::class);
+  }
 }

@@ -47,7 +47,24 @@ class LayananController extends Controller
    */
   public function create()
   {
-    return Inertia::render('Admin/FormPageLayanan');
+    $listSopir = User::where('id_kategori', 3)->get()->map(
+      fn ($item) =>
+      [
+        'id' => $item->id,
+        'title' => $item->nama_user,
+      ]
+    );
+
+    $listKendaraan = Kendaraan::all()->map(
+      fn ($item) => [
+        'id' => $item->id,
+        'title' => $item->merk_mobil . ", " . $item->nama_mobil . " (" . $item->plat_nomor . ")"
+      ]
+    );
+    return Inertia::render('Admin/FormPageLayanan', [
+      'listSopir' => $listSopir,
+      'listKendaraan' => $listKendaraan
+    ]);
   }
 
   /**
@@ -132,12 +149,12 @@ class LayananController extends Controller
     $request->validate([
       'kota_asal' => 'required|string|max:255',
       'kota_tujuan' => 'required|string|max:255',
-      'biaya_jasa' => 'required|numeric',
-      'sopir' => 'required|numeric',
+      'biaya_jasa' => 'required',
+      'sopir' => 'required',
       'kendaraan' => 'required|numeric',
       'status' => 'required|in:active,disabled'
     ]);
-
+    
     $updateLayanan = [
       'kota_asal' => $request->kota_asal,
       'kota_tujuan' => $request->kota_tujuan,

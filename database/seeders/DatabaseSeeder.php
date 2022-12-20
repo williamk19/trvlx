@@ -6,10 +6,13 @@ namespace Database\Seeders;
 
 use App\Models\Kendaraan;
 use App\Models\Layanan;
+use App\Models\Lokasi;
+use App\Models\Order;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\UserRole;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -175,6 +178,27 @@ class DatabaseSeeder extends Seeder
       ]
     ]);
 
+    // $lat_lng
+    Lokasi::create([
+      'lat_asal' => '-7.3180914',
+      'lng_asal' => '112.7271303',
+      'lat_tujuan' => '-7.9597947',
+      'lng_tujuan' => '112.6485427,19',
+      'alamat_asal' => "Jl. Samamhudi 1, Malang",
+      'alamat_tujuan' => "Jl. Anggrek 2, Surabaya"
+    ]);
+
     User::factory(100)->create();
+
+    Order::create([
+      'id_user' => 10,
+      'id_layanan' => 1,
+      'id_lokasi' => 1,
+      'nama_penumpang' => "William Kurniawan",
+      'tanggal_pemberangkatan' => Carbon::now('utc')->toDateTimeString(),
+      'status_pembayaran' => 'pending',
+      'total_seat' => 2,
+      'total_harga' => 350000.0
+    ]);
   }
 }
