@@ -25,6 +25,6 @@ class Kendaraan extends Model
 
   public function layanan()
   {
-    return $this->hasMany(Layanan::class);
+    return $this->hasMany(Layanan::class, 'id_kendaraan');
   }
 }

@@ -18,7 +18,7 @@ const BoxRouteMap = ({ watchType = false, destination = tempDestination }) => {
         enableHighAccuracy: true,
       })
       .on("locationfound", function (e) {
-        map.flyTo(e.latlng, 15);
+        map.flyTo(e.latlng, 16);
         map.on('zoomend', () => {
           setInitialHost([e.latlng.lat, e.latlng.lng]);
         });

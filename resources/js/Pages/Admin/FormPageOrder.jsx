@@ -6,6 +6,7 @@ import React from 'react';
 
 const FormPageOrder = (props) => {
   const { url } = usePage();
+  console.log(props.data_order);
 
   return (
     <AuthenticatedLayout

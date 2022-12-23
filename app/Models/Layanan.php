@@ -34,6 +34,6 @@ class Layanan extends Model
 
   public function order()
   {
-    return $this->hasMany(Order::class);
+    return $this->hasMany(Order::class, 'id_layanan');
   }
 }

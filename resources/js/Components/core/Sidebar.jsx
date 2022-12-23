@@ -54,11 +54,11 @@ function Sidebar({ role, sidebarOpen, setSidebarOpen }) {
     switch (parseInt(role)) {
       case 1:
         setSidebarMenu([
-          { name: 'dashboard', url: '/dashboard', icon: <TvIcon className='w-5 ' /> },
-          { name: 'order', url: '/order', icon: <TicketIcon className='w-5 ' /> },
-          { name: 'layanan', url: '/layanan', icon: <MapIcon className='w-5 ' /> },
-          { name: 'kendaraan', url: '/kendaraan', icon: <TruckIcon className='w-5 ' /> },
-          { name: 'user', url: '/user', icon: <UsersIcon className='w-5 ' /> }
+          { name: 'dashboard', slug: 'dashboard', url: '/dashboard', icon: <TvIcon className='w-5 ' /> },
+          { name: 'order', slug: 'order', url: '/order', icon: <TicketIcon className='w-5 ' /> },
+          { name: 'layanan', slug: 'layanan', url: '/layanan', icon: <MapIcon className='w-5 ' /> },
+          { name: 'kendaraan', slug: 'kendaran', url: '/kendaraan', icon: <TruckIcon className='w-5 ' /> },
+          { name: 'user', slug: 'user', url: '/user', icon: <UsersIcon className='w-5 ' /> }
         ]);
         break;
       case 2:
@@ -78,7 +78,7 @@ function Sidebar({ role, sidebarOpen, setSidebarOpen }) {
       case 4:
         setSidebarMenu([
           { name: 'dashboard', url: '/dashboard', icon: <TvIcon className='w-5 ' /> },
-          { name: 'order travel', url: '/client-order/data', icon: <TicketIcon className='w-5 ' /> },
+          { name: 'order travel', url: '/client-order/', icon: <TicketIcon className='w-5 ' /> },
         ]);
         break;
       default:
@@ -134,10 +134,10 @@ function Sidebar({ role, sidebarOpen, setSidebarOpen }) {
             </h3>
             <ul className="mt-3">
               {sidebarMenu.map((menuData, idx) => (
-                <li key={idx} className={`px-3 py-2 rounded-lg mb-2 last:mb-0 ${pathname.includes(menuData.name) && 'bg-slate-900'}`}>
+                <li key={idx} className={`px-3 py-2 rounded-lg mb-2 last:mb-0 ${pathname.includes(menuData.url) && 'bg-slate-900'}`}>
                   <Link
                     href={menuData.url}
-                    className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes(menuData.name) && 'hover:text-slate-200'
+                    className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes(menuData.url) && 'hover:text-slate-200'
                       }`}
                   >
                     <div className="flex items-center justify-between">

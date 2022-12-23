@@ -25,6 +25,6 @@ class Lokasi extends Model
   ];
 
   public function order() {
-    return $this->hasOne(Order::class);
+    return $this->hasOne(Order::class, 'id_lokasi');
   }
 }

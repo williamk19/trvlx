@@ -2,10 +2,12 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import React, { useState } from 'react';
-import ReactDatePicker from 'react-datepicker';
+import ReactDatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
+import id from 'date-fns/locale/id';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const DataOrder = ({ data, layananData, onHandleChange, onDateChange, errors }) => {
+  registerLocale('id', id); 
   return (
     <div className="grow">
       <div className="p-6 md:py-0 space-y-6">
@@ -14,19 +16,20 @@ const DataOrder = ({ data, layananData, onHandleChange, onDateChange, errors }) 
           <div className="sm:flex w-full lg:w-10/12 sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-5">
             <div className='w-full md:w-2/4'>
               <InputLabel forInput="nama_penumpang" value="Nama Penumpang / Pemesan" />
-                <TextInput
-                  type="text"
-                  name="nama_penumpang"
-                  value={data.nama_penumpang}
-                  className="mt-1 block w-full text-black"
-                  handleChange={onHandleChange}
-                  required
-                />
+              <TextInput
+                type="text"
+                name="nama_penumpang"
+                value={data.nama_penumpang}
+                className="mt-1 block w-full text-black"
+                handleChange={onHandleChange}
+                required
+              />
               <InputError message={errors.nama_penumpang} className="mt-2" />
             </div>
             <div className='w-full md:w-2/4'>
               <InputLabel className='mb-2' forInput="tanggal_pemberangkatan" value="Tanggal Pemberangkatan" />
               <ReactDatePicker
+                locale="id"
                 name="tanggal_pemberangkatan"
                 className='w-full text-gray-900 border-gray-300 rounded-lg'
                 selected={data.tanggal_pemberangkatan}

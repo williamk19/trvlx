@@ -35,10 +35,10 @@ const DragMarkerMap = ({ name, latlng, onLocationChange }) => {
         })
         .on("locationfound", function (e) {
           setPosition(e.latlng);
-          map.flyTo(e.latlng, 14);
+          map.flyTo(e.latlng, 16);
         });
     } else {
-      map.flyTo(latlng, 14, { 
+      map.flyTo(latlng, 16, { 
         animate: false
       });
     }

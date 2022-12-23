@@ -52,10 +52,10 @@ class User extends Authenticatable
 
   public function layanan()
   {
-    return $this->hasMany(Layanan::class);
+    return $this->hasMany(Layanan::class, 'id_sopir');
   }
 
   public function order() {
-    return $this->hasMany(Order::class);
+    return $this->hasMany(Order::class, 'id_user');
   }
 }

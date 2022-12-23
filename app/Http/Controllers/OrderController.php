@@ -7,7 +7,9 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Layanan;
 use App\Models\Lokasi;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -50,7 +52,7 @@ class OrderController extends Controller
       "biaya_jasa" => $user->biaya_jasa
     ]));
     return Inertia::render('Admin/FormPageOrder', [
-      'type' => 'jemput', 
+      'type' => 'jemput',
       'layananData' => $layanan
     ]);
   }
@@ -64,15 +66,38 @@ class OrderController extends Controller
       "biaya_jasa" => $user->biaya_jasa
     ]));
     return Inertia::render('Admin/FormPageOrder', [
-      'type' => 'tujuan', 
+      'type' => 'tujuan',
       'layananData' => $layanan
     ]);
   }
 
-  public function orderList()
+  public function orderList(Request $request)
   {
-    $order = Order::find(1)->lokasi;
-    dd($order);
+    $userSearch = null;
+    if ($request->search != ''){
+      $userSearch = User::where('nama_user', 'like', '%' . $request->search . '%')->first();
+    }
+
+
+    $dataOrder = Order::where('nama_penumpang', 'like', '%' . $request->search . '%')
+      ->orWhere('id_user', $userSearch ? $userSearch->id : -1)
+      ->paginate(5)
+      ->through(
+        fn ($item) =>
+        [
+          'id' => $item->id,
+          'nama_penumpang' => $item->nama_penumpang,
+          'tanggal_pemberangkatan' => $item->tanggal_pemberangkatan,
+          'status_pembayaran' => $item->status_pembayaran,
+          'layanan' => $item->layanan
+        ]
+      );
+
+    return Inertia::render('Admin/OrderDataPage', [
+      'title' => 'List Order Travel',
+      'query' => $request->search,
+      'order' => $dataOrder
+    ]);
   }
   /**
    * Show the form for creating a new resource.
@@ -152,6 +177,7 @@ class OrderController extends Controller
   public function edit(Order $order)
   {
     //
+    return redirect('/order/data')->with('dataOrder', $order);
   }
 
   /**

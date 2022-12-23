@@ -5,13 +5,15 @@ import Locate from "leaflet.locatecontrol";
 const createZoomLayer = () => {
   const instance = new Locate({
     position: "bottomleft",
+    showCompass: true,
     strings: {
       title: "Show me where I am, yo!"
     },
-    locateOptions: {
-      watch: true,
-      enableHighAccuracy: true
-    }
+    keepCurrentZoomLevel: true,
+    // locateOptions: {
+      // watch: true,
+      // enableHighAccuracy: true
+    // }
   })
   return instance;
 };
