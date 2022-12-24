@@ -9,24 +9,31 @@ import { ToastContainer, toast } from 'react-toastify';
 import _ from 'lodash';
 import 'react-toastify/dist/ReactToastify.css';
 
-const FormOrder = ({ type, layananData }) => {
+const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
+  console.log(orderEdit);
   const [modalOpen, setModalOpen] = useState(false);
   const { data, setData, post, processing, errors, reset } = useForm({
-    nama_penumpang: '',
-    tanggal_pemberangkatan: new Date(),
-    jumlah_seat: 1,
-    layanan: 0,
-    latlng_jemput: {},
-    alamat_jemput: '',
-    deskripsi_jemput: '',
-    latlng_tujuan: {},
-    alamat_tujuan: '',
-    deskripsi_tujuan: ''
+    nama_penumpang: orderEdit?.nama_penumpang ? orderEdit.nama_penumpang : '',
+    tanggal_pemberangkatan: orderEdit?.tanggal_pemberangkatan ? new Date(orderEdit.tanggal_pemberangkatan) : new Date(),
+    jumlah_seat: orderEdit?.total_seat ? orderEdit?.total_seat : 1,
+    layanan: orderEdit?.id_layanan ? orderEdit?.id_layanan : layananData[0].id,
+    latlng_asal: orderEdit?.lokasi ? {
+      lat: orderEdit.lokasi.lat_asal,
+      lng: orderEdit.lokasi.lng_asal
+    } : {},
+    alamat_asal: orderEdit?.lokasi ? orderEdit.alamat_asal : "",
+    deskripsi_asal: orderEdit?.lokasi ? orderEdit.deskripsi_asal : "",
+    latlng_tujuan: orderEdit?.lokasi ? {
+      lat: orderEdit.lokasi.lat_tujuan,
+      lng: orderEdit.lokasi.lng_tujuan
+    } : {},
+    alamat_tujuan: orderEdit?.lokasi ? orderEdit.alamat_tujuan : "",
+    deskripsi_tujuan: orderEdit?.lokasi ? orderEdit.deskripsi_tujuan : ""
   });
 
   useEffect(() => {
-    setData('layanan', layananData[0].id)
-  }, []);
+    console.log(data);
+  }, [data]);
 
   useEffect(() => {
     if (!_.isEmpty(errors)) {
@@ -120,7 +127,7 @@ const FormOrder = ({ type, layananData }) => {
       <ToastContainer />
       <div className="bg-white shadow-lg rounded-lg mb-8">
         <div className="flex flex-col md:-mr-px">
-          <SidebarOrder />
+          <SidebarOrder edit={edit} orderId={orderId} />
           {formType()}
           <footer>
             <div className="flex flex-col px-6 py-5 border-t border-slate-200">
@@ -129,7 +136,7 @@ const FormOrder = ({ type, layananData }) => {
                   Reset
                 </button>
                 <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 border-none" onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
-                  Tambahkan
+                  {edit ? 'Edit' : 'Tambahkan'}
                 </button>
                 <Modal id="info-modal" modalOpen={modalOpen} setModalOpen={setModalOpen}>
                   <div className="p-5 flex space-x-4">
@@ -141,7 +148,7 @@ const FormOrder = ({ type, layananData }) => {
                     <div>
                       <div className="mb-2">
                         <div className="text-lg font-semibold text-slate-800">
-                          Tambahkan Order Ke dalam Database?
+                          {edit ? 'Edit' : 'Tambahkan'} Order Ke dalam Database?
                         </div>
                       </div>
                       <div className="text-sm mb-10">
@@ -160,7 +167,7 @@ const FormOrder = ({ type, layananData }) => {
                           e.stopPropagation();
                           submit(e);
                           setModalOpen(false);
-                        }}>Ya, Tambahkan</button>
+                        }}>Ya, {edit ? 'Edit Data' : 'Tambahkan'}</button>
                       </div>
                     </div>
                   </div>

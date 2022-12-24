@@ -18,6 +18,7 @@ const DataOrder = ({ data, layananData, onHandleChange, onDateChange, errors }) 
               <InputLabel forInput="nama_penumpang" value="Nama Penumpang / Pemesan" />
               <TextInput
                 type="text"
+                placeholder=''
                 name="nama_penumpang"
                 value={data.nama_penumpang}
                 className="mt-1 block w-full text-black"
