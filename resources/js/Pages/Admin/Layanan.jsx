@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
-import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
-import TableLayanan from '@/Components/Admin/Layanan/TableLayanan';
+import HeaderAdmin from '@/Components/admin/HeaderAdmin';
+import TableLayanan from '@/Components/admin/Layanan/TableLayanan';
 import { Inertia } from '@inertiajs/inertia';
 import { toast, ToastContainer } from 'react-toastify';
 
@@ -12,7 +12,6 @@ const Layanan = (props) => {
   const base_url = url.split("?").slice(0, 1).join();
 
   useEffect(() => {
-    console.log();
     if (!_.isEmpty(props.flash.message) && props.flash.message.type === "info") {
       toast.info(`${props.flash.message.kota_asal} - ${props.flash.message.kota_tujuan} Berhasil Diubah`, {
         position: "top-right",

@@ -51,6 +51,7 @@ class OrderController extends Controller
       "kota_tujuan" => $user->kota_tujuan,
       "biaya_jasa" => $user->biaya_jasa
     ]));
+
     return Inertia::render('Admin/FormPageOrder', [
       'type' => 'jemput',
       'layananData' => $layanan
@@ -65,6 +66,7 @@ class OrderController extends Controller
       "kota_tujuan" => $user->kota_tujuan,
       "biaya_jasa" => $user->biaya_jasa
     ]));
+
     return Inertia::render('Admin/FormPageOrder', [
       'type' => 'tujuan',
       'layananData' => $layanan
@@ -74,13 +76,13 @@ class OrderController extends Controller
   public function orderList(Request $request)
   {
     $userSearch = null;
-    if ($request->search != ''){
+    if ($request->search != '') {
       $userSearch = User::where('nama_user', 'like', '%' . $request->search . '%')->first();
     }
 
-
     $dataOrder = Order::where('nama_penumpang', 'like', '%' . $request->search . '%')
       ->orWhere('id_user', $userSearch ? $userSearch->id : -1)
+      ->orderBy('created_at', 'desc')
       ->paginate(5)
       ->through(
         fn ($item) =>
@@ -122,22 +124,22 @@ class OrderController extends Controller
       'tanggal_pemberangkatan' => 'required|date',
       'jumlah_seat' => 'required|numeric',
       'layanan' => 'required|numeric',
-      'latlng_jemput' => 'required',
+      'latlng_asal' => 'required',
       'latlng_tujuan' => 'required',
-      'alamat_jemput' => 'required|string|max:255',
+      'alamat_asal' => 'required|string|max:255',
       'alamat_tujuan' => 'required|string|max:255',
-      'deskripsi_jemput' => 'string|nullable',
+      'deskripsi_asal' => 'string|nullable',
       'deskripsi_tujuan' => 'string|nullable'
     ]);
 
     $lokasi = Lokasi::create([
-      'lat_asal' => $request->latlng_jemput["lat"],
-      'lng_asal' => $request->latlng_jemput["lng"],
+      'lat_asal' => $request->latlng_asal["lat"],
+      'lng_asal' => $request->latlng_asal["lng"],
       'lat_tujuan' => $request->latlng_tujuan["lat"],
       'lng_tujuan' => $request->latlng_tujuan["lng"],
-      'alamat_asal' => $request->alamat_jemput,
+      'alamat_asal' => $request->alamat_asal,
       'alamat_tujuan' => $request->alamat_tujuan,
-      'deskripsi_asal' => $request->deskripsi_jemput,
+      'deskripsi_asal' => $request->deskripsi_asal,
       'deskripsi_tujuan' => $request->deskripsi_tujuan
     ]);
 
@@ -146,7 +148,7 @@ class OrderController extends Controller
       'id_lokasi' => $lokasi->id,
       'id_layanan' => $request->layanan,
       'id_user' => 10,
-      'nama_penumpang' => 'William Kurniawan',
+      'nama_penumpang' => $request->nama_penumpang,
       'tanggal_pemberangkatan' => Carbon::tomorrow(),
       'status_pembayaran' => 'confirmed',
       'total_seat' => $request->jumlah_seat,
@@ -174,10 +176,75 @@ class OrderController extends Controller
    * @param  \App\Models\Order  $order
    * @return \Illuminate\Http\Response
    */
+
+  public function editData($id)
+  {
+    $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
+      "id" => $user->id,
+      "kota_asal" => $user->kota_asal,
+      "kota_tujuan" => $user->kota_tujuan,
+      "biaya_jasa" => $user->biaya_jasa
+    ]));
+
+    $orderEdit = Order::where('id', $id)->first();
+    $orderEdit->lokasi;
+    $orderEdit->layanan;
+
+    return Inertia::render('Admin/FormPageOrder', [
+      'type' => 'data',
+      'edit' => true,
+      'orderId' => $id,
+      'layananData' => $layanan,
+      'orderEdit' => $orderEdit
+    ]);
+  }
+
+  public function editJemput($id)
+  {
+    $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
+      "id" => $user->id,
+      "kota_asal" => $user->kota_asal,
+      "kota_tujuan" => $user->kota_tujuan,
+      "biaya_jasa" => $user->biaya_jasa
+    ]));
+
+    $orderEdit = Order::where('id', $id)->first();
+    $orderEdit->lokasi;
+    $orderEdit->layanan;
+
+    return Inertia::render('Admin/FormPageOrder', [
+      'type' => 'jemput',
+      'edit' => true,
+      'orderId' => $id,
+      'layananData' => $layanan,
+      'orderEdit' => $orderEdit
+    ]);
+  }
+
+  public function editTujuan($id)
+  {
+    $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
+      "id" => $user->id,
+      "kota_asal" => $user->kota_asal,
+      "kota_tujuan" => $user->kota_tujuan,
+      "biaya_jasa" => $user->biaya_jasa
+    ]));
+
+    $orderEdit = Order::where('id', $id)->first();
+    $orderEdit->lokasi;
+    $orderEdit->layanan;
+
+    return Inertia::render('Admin/FormPageOrder', [
+      'type' => 'tujuan',
+      'edit' => true,
+      'layananData' => $layanan,
+      'orderId' => $id,
+      'orderEdit' => $orderEdit
+    ]);
+  }
   public function edit(Order $order)
   {
-    //
-    return redirect('/order/data')->with('dataOrder', $order);
+    return redirect("/order/list/" . $order->id . "/data");
   }
 
   /**
@@ -189,7 +256,49 @@ class OrderController extends Controller
    */
   public function update(UpdateOrderRequest $request, Order $order)
   {
-    //
+    $request->validate([
+      'nama_penumpang' => 'required|string|max:255',
+      'tanggal_pemberangkatan' => 'required|date',
+      'jumlah_seat' => 'required|numeric',
+      'layanan' => 'required|numeric',
+      'latlng_asal' => 'required',
+      'latlng_tujuan' => 'required',
+      'alamat_asal' => 'required|string|max:255',
+      'alamat_tujuan' => 'required|string|max:255',
+      'deskripsi_asal' => 'string|nullable',
+      'deskripsi_tujuan' => 'string|nullable'
+    ]);
+
+    $total_harga = (Layanan::where('id', $request->layanan)->first('biaya_jasa')->biaya_jasa) * ($request->jumlah_seat);
+    $orderUpdate = [
+      'id_lokasi' => $order->lokasi->id,
+      'id_layanan' => $request->layanan,
+      'id_user' => 10,
+      'nama_penumpang' => $request->nama_penumpang,
+      'tanggal_pemberangkatan' => Carbon::tomorrow(),
+      'status_pembayaran' => 'confirmed',
+      'total_seat' => $request->jumlah_seat,
+      'total_harga' => $total_harga
+    ];
+    Order::where('id', $order->id)->first()
+      ->update($orderUpdate);
+
+    Lokasi::where('id', $order->lokasi->id)->first()
+      ->update([
+        'lat_asal' => $request->latlng_asal["lat"],
+        'lng_asal' => $request->latlng_asal["lng"],
+        'lat_tujuan' => $request->latlng_tujuan["lat"],
+        'lng_tujuan' => $request->latlng_tujuan["lng"],
+        'alamat_asal' => $request->alamat_asal,
+        'alamat_tujuan' => $request->alamat_tujuan,
+        'deskripsi_asal' => $request->deskripsi_asal,
+        'deskripsi_tujuan' => $request->deskripsi_tujuan
+      ]);
+
+    $orderUpdate['type'] = 'info';
+    return redirect()
+      ->route('order.list')
+      ->with('message', $orderUpdate);
   }
 
   /**

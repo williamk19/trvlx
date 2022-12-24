@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
 import { Inertia } from '@inertiajs/inertia';
-import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
-import TableKendaraan from '@/Components/Admin/Kendaraan/TableKendaraan';
+import HeaderAdmin from '@/Components/admin/HeaderAdmin';
+import TableKendaraan from '@/Components/admin/Kendaraan/TableKendaraan';
 import { toast, ToastContainer } from 'react-toastify';
 
 const Kendaraan = (props) => {

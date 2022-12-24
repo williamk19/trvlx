@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
-import TableOrder from '@/Components/Admin/Order/TableOrder';
-import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
+import TableOrder from '@/Components/admin/Order/TableOrder';
+import HeaderAdmin from '@/Components/admin/HeaderAdmin';
 import { Inertia } from '@inertiajs/inertia';
 import { toast, ToastContainer } from 'react-toastify';
 
 export default function Pengguna(props) {
-  console.log(props);
   const [searchQuery, setSearchQuery] = useState(props.query);
 
   let { url } = usePage();
@@ -15,7 +14,7 @@ export default function Pengguna(props) {
 
   useEffect(() => {
     if (!_.isEmpty(props.flash.message) && props.flash.message.type === "info") {
-      toast.info(`${props.flash.message.nama_user} Berhasil Diubah`, {
+      toast.info(`Order Berhasil Diubah`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -26,7 +25,7 @@ export default function Pengguna(props) {
         theme: "dark",
       });
     } else if (!_.isEmpty(props.flash.message) && props.flash.message.type === "error") {
-      toast.error(`${props.flash.message.nama_user} Berhasil Dihapus`, {
+      toast.error(`Order Berhasil Dihapus`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -37,7 +36,7 @@ export default function Pengguna(props) {
         theme: "dark",
       });
     } else if (!_.isEmpty(props.flash.message)) {
-      toast.success(`${props.flash.message.nama_user} Berhasil Dibuat`, {
+      toast.success(`Order Berhasil Dibuat`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

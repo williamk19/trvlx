@@ -25,10 +25,6 @@ const FormOrder = ({ type, layananData }) => {
   });
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
-
-  useEffect(() => {
     if (!_.isEmpty(errors)) {
       toast.error('Ada yang belum terisi !', {
         position: "top-right",

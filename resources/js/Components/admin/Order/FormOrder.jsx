@@ -8,10 +8,11 @@ import Modal from '@/Components/Core/Modal';
 import { ToastContainer, toast } from 'react-toastify';
 import _ from 'lodash';
 import 'react-toastify/dist/ReactToastify.css';
+import { Inertia } from '@inertiajs/inertia';
 
 const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
-  console.log(orderEdit);
   const [modalOpen, setModalOpen] = useState(false);
+
   const { data, setData, post, processing, errors, reset } = useForm({
     nama_penumpang: orderEdit?.nama_penumpang ? orderEdit.nama_penumpang : '',
     tanggal_pemberangkatan: orderEdit?.tanggal_pemberangkatan ? new Date(orderEdit.tanggal_pemberangkatan) : new Date(),
@@ -21,21 +22,18 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
       lat: orderEdit.lokasi.lat_asal,
       lng: orderEdit.lokasi.lng_asal
     } : {},
-    alamat_asal: orderEdit?.lokasi ? orderEdit.alamat_asal : "",
-    deskripsi_asal: orderEdit?.lokasi ? orderEdit.deskripsi_asal : "",
+    alamat_asal: orderEdit?.lokasi ? orderEdit.lokasi.alamat_asal : "",
+    deskripsi_asal: orderEdit?.lokasi.deskripsi_asal ? orderEdit.lokasi.deskripsi_asal : "",
     latlng_tujuan: orderEdit?.lokasi ? {
       lat: orderEdit.lokasi.lat_tujuan,
       lng: orderEdit.lokasi.lng_tujuan
     } : {},
-    alamat_tujuan: orderEdit?.lokasi ? orderEdit.alamat_tujuan : "",
-    deskripsi_tujuan: orderEdit?.lokasi ? orderEdit.deskripsi_tujuan : ""
+    alamat_tujuan: orderEdit?.lokasi ? orderEdit.lokasi.alamat_tujuan : "",
+    deskripsi_tujuan: orderEdit?.lokasi.deskripsi_tujuan ? orderEdit.lokasi.deskripsi_tujuan : ""
   });
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
-
-  useEffect(() => {
+    console.log(errors);
     if (!_.isEmpty(errors)) {
       toast.error('Ada yang belum terisi !', {
         position: "top-right",
@@ -74,20 +72,20 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
 
   const submit = (e) => {
     e.preventDefault();
-    post(route('order.store'));
+    if (!orderEdit) {
+      post(route('order.store'));
+    } else {
+      console.log(data);
+      Inertia.put(route('order.update', {
+        order: orderEdit,
+        ...data
+      }));
+    }
+    
   };
 
   const formType = () => {
     switch (type) {
-      case "layanan":
-        return (
-          <DataOrder
-            data={data}
-            layananData={layananData}
-            errors={errors}
-            onDateChange={onDateChange}
-            onHandleChange={onHandleChange} />
-        );
       case "data":
         return (
           <DataOrder

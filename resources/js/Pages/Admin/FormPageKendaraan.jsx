@@ -1,9 +1,9 @@
 import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/inertia-react';
-import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
+import HeaderAdmin from '@/Components/admin/HeaderAdmin';
 import { usePage } from '@inertiajs/inertia-react'
-import FormAddKendaraan from '@/Components/Admin/Kendaraan/FormAddKendaraan';
+import FormAddKendaraan from '@/Components/admin/Kendaraan/FormAddKendaraan';
 
 const FormPageKendaraan = (props) => {
   let { url } = usePage();

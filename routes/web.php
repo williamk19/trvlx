@@ -56,6 +56,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
       Route::get('/order/data', 'orderData')->name('order.data');
       Route::get('/order/jemput', 'orderJemput')->name('order.jemput');
       Route::get('/order/tujuan', 'orderTujuan')->name('order.tujuan');
+      Route::get('/order/list/{id}/data', 'editData')->name('edit.data');
+      Route::get('/order/list/{id}/jemput', 'editJemput')->name('edit.jemput');
+      Route::get('/order/list/{id}/tujuan', 'editTujuan')->name('edit.tujuan');
     });
     Route::resource('order', OrderController::class);
   });

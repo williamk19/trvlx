@@ -10,7 +10,6 @@ const TableLayanan = ({ layanan, query }) => {
   const [nextUrl, setNextUrl] = useState(layanan.next_page_url);
 
   useEffect(() => {
-    console.log(layanan.data);
     setData(layanan.data);
     setPrevUrl(layanan.prev_page_url);
     setNextUrl(layanan.next_page_url);

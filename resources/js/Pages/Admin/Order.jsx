@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
-import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
-import CardOrder from '@/Components/Admin/Order/CardOrder';
+import HeaderAdmin from '@/Components/admin/HeaderAdmin';
+import CardOrder from '@/Components/admin/Order/CardOrder';
 import { toast, ToastContainer } from 'react-toastify';
 import { useEffect } from 'react';
 

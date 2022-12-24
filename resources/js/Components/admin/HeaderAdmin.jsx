@@ -12,9 +12,9 @@ const HeaderAdmin = ({
   buttonLink,
   addButton = false
 }) => {
-
   const nameTransform = (url) => {
-    return url.split("?").slice(0, 1).join('');
+    let name = url.split("?").slice(0, 1).join('');
+    return name.split("-").join(' ');
   };
 
   const toBreadcrumbs = (pathname, nameTransform, { rootName = "Home" } = {}) =>

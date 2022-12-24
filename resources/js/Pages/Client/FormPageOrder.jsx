@@ -1,4 +1,4 @@
-import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
+import HeaderAdmin from '@/Components/admin/HeaderAdmin';
 import FormOrder from '@/Components/Client/Order/FormOrder';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';

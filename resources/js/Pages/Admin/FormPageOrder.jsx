@@ -1,12 +1,11 @@
-import HeaderAdmin from '@/Components/Admin/HeaderAdmin';
-import FormOrder from '@/Components/Admin/Order/FormOrder';
+import HeaderAdmin from '@/Components/admin/HeaderAdmin';
+import FormOrder from '@/Components/admin/Order/FormOrder';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
 import React from 'react';
 
 const FormPageOrder = (props) => {
   const { url } = usePage();
-  console.log(props.data_order);
 
   return (
     <AuthenticatedLayout
@@ -15,12 +14,15 @@ const FormPageOrder = (props) => {
     >
       <Head title="Create Order" />
       <HeaderAdmin
-        title={'Travel Order ⏭️'}
+        title={`${props.edit ? 'Edit' : 'Tambah'} Travel Order ⏭️`}
         url={url}
       />
       <FormOrder
+        orderId={props.orderId || null}
         type={props.type}
+        edit={props.edit}
         layananData={props.layananData}
+        orderEdit={props.orderEdit}
       />
     </AuthenticatedLayout>
   );
