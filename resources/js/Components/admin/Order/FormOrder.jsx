@@ -4,7 +4,7 @@ import DataOrder from './DataOrder';
 import { useForm, usePage } from '@inertiajs/inertia-react';
 import DataJemput from './DataJemput';
 import DataTujuan from './DataTujuan';
-import Modal from '@/Components/Core/Modal';
+import Modal from '@/Components/core/Modal';
 import { ToastContainer, toast } from 'react-toastify';
 import _ from 'lodash';
 import 'react-toastify/dist/ReactToastify.css';

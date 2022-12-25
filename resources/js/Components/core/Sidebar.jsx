@@ -78,7 +78,7 @@ function Sidebar({ role, sidebarOpen, setSidebarOpen }) {
       case 4:
         setSidebarMenu([
           { name: 'dashboard', url: '/dashboard', icon: <TvIcon className='w-5 ' /> },
-          { name: 'order travel', url: '/client-order/', icon: <TicketIcon className='w-5 ' /> },
+          { name: 'order travel', url: '/client-order/data', icon: <TicketIcon className='w-5 ' /> },
         ]);
         break;
       default:

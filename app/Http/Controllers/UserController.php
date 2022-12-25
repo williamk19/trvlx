@@ -31,9 +31,14 @@ class UserController extends Controller
 
   public function admin(Request $request)
   {
-    $adminData = User::where('id_kategori', 1)
-      ->orWhere('id_kategori', 2)
-      ->where('nama_user', 'like', '%' . $request->search . '%')
+    $adminData = User::where(function ($query) {
+      $query->where('id_kategori', '=', 1)
+        ->orWhere('id_kategori', '=', 2);
+    })->where(
+      fn ($query) => $query
+        ->where('nama_user', 'like', '%' . $request->search . '%')
+        ->orWhere('email', 'like', '%' . $request->search . '%')
+    )
       ->paginate(5)
       ->through(function ($item) {
         return [
@@ -53,7 +58,9 @@ class UserController extends Controller
   public function sopir(Request $request)
   {
     $sopirData = User::where('id_kategori', 3)
-    ->where('nama_user', 'like', '%' . $request->search . '%')
+      ->where(fn ($query) => $query
+        ->where('nama_user', 'like', '%' . $request->search . '%')
+        ->orWhere('email', 'like', '%' . $request->search . '%'))
       ->paginate(5)
       ->through(function ($item) {
         return [
@@ -74,7 +81,11 @@ class UserController extends Controller
   public function pengguna(Request $request)
   {
     $penggunaData = User::where('id_kategori', 4)
-      ->where('nama_user', 'like', '%'.$request->search.'%')
+      ->where(
+        fn ($query) => $query
+          ->where('nama_user', 'like', '%' . $request->search . '%')
+          ->orWhere('email', 'like', '%' . $request->search . '%')
+      )
       ->paginate(5)
       ->through(function ($item) {
         return [

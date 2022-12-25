@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Sidebar from '@/Components/Core/Sidebar';
-import Header from '@/Components/Core/Header';
+import Sidebar from '@/Components/core/Sidebar';
+import Header from '@/Components/core/Header';
 
 const AuthenticatedLayout = ({ auth, header, children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);

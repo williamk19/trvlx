@@ -149,7 +149,7 @@ class OrderController extends Controller
       'id_layanan' => $request->layanan,
       'id_user' => 10,
       'nama_penumpang' => $request->nama_penumpang,
-      'tanggal_pemberangkatan' => Carbon::tomorrow(),
+      'tanggal_pemberangkatan' => Carbon::parse($request->tanggal_pemberangkatan, 'UTC')->format('Y-m-d'),
       'status_pembayaran' => 'confirmed',
       'total_seat' => $request->jumlah_seat,
       'total_harga' => $total_harga
@@ -310,54 +310,5 @@ class OrderController extends Controller
   public function destroy(Order $order)
   {
     //
-  }
-
-  public function clientOrder()
-  {
-    return redirect('/client-order/data');
-  }
-
-  public function clientOrderData()
-  {
-    $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
-      "id" => $user->id,
-      "kota_asal" => $user->kota_asal,
-      "kota_tujuan" => $user->kota_tujuan,
-      "biaya_jasa" => $user->biaya_jasa
-    ]));
-
-    return Inertia::render('Client/FormPageOrder', [
-      'type' => 'data',
-      'layananData' => $layanan
-    ]);
-  }
-
-  public function clientOrderJemput()
-  {
-    $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
-      "id" => $user->id,
-      "kota_asal" => $user->kota_asal,
-      "kota_tujuan" => $user->kota_tujuan,
-      "biaya_jasa" => $user->biaya_jasa
-    ]));
-
-    return Inertia::render('Client/FormPageOrder', [
-      'type' => 'jemput',
-      'layananData' => $layanan
-    ]);
-  }
-
-  public function clientOrderTujuan()
-  {
-    $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
-      "id" => $user->id,
-      "kota_asal" => $user->kota_asal,
-      "kota_tujuan" => $user->kota_tujuan,
-      "biaya_jasa" => $user->biaya_jasa
-    ]));
-    return Inertia::render('Client/FormPageOrder', [
-      'type' => 'tujuan',
-      'layananData' => $layanan
-    ]);
   }
 }

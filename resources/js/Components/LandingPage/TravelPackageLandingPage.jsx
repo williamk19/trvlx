@@ -8,7 +8,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
-import TravelPackageCard from '../Core/TravelPackageCard';
+import TravelPackageCard from '../core/TravelPackageCard';
 
 const TravelPackageLandingPage = () => {
   const settings = {

@@ -4,7 +4,7 @@ import DataOrder from './DataOrder';
 import { useForm, usePage } from '@inertiajs/inertia-react';
 import DataJemput from './DataJemput';
 import DataTujuan from './DataTujuan';
-import Modal from '@/Components/Core/Modal';
+import Modal from '@/Components/core/Modal';
 import { ToastContainer, toast } from 'react-toastify';
 import _ from 'lodash';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,9 +16,9 @@ const FormOrder = ({ type, layananData }) => {
     tanggal_pemberangkatan: new Date(),
     jumlah_seat: 1,
     layanan: 1,
-    latlng_jemput: {},
-    alamat_jemput: '',
-    deskripsi_jemput: '',
+    latlng_asal: {},
+    alamat_asal: '',
+    deskripsi_asal: '',
     latlng_tujuan: {},
     alamat_tujuan: '',
     deskripsi_tujuan: ''
@@ -40,7 +40,6 @@ const FormOrder = ({ type, layananData }) => {
   }, [errors]);
 
   const onHandleChange = (event) => {
-    console.log(event.target.value);
     if (event.target.name === 'telepon_user') {
       const re = /^[0-9\b]+$/;
       let number = event.target.value.replace(/^0+/, '');
@@ -64,7 +63,7 @@ const FormOrder = ({ type, layananData }) => {
 
   const submit = (e) => {
     e.preventDefault();
-    post(route('order.store'));
+    post(route('client-order.store'));
   };
 
   const formType = () => {
@@ -126,7 +125,7 @@ const FormOrder = ({ type, layananData }) => {
                   Reset
                 </button>
                 <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 border-none" onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
-                  Tambahkan
+                  Pesan Travel
                 </button>
                 <Modal id="info-modal" modalOpen={modalOpen} setModalOpen={setModalOpen}>
                   <div className="p-5 flex space-x-4">
@@ -138,13 +137,13 @@ const FormOrder = ({ type, layananData }) => {
                     <div>
                       <div className="mb-2">
                         <div className="text-lg font-semibold text-slate-800">
-                          Tambahkan Order Ke dalam Database?
+                          Apakah data yang anda masukkan sudah benar?
                         </div>
                       </div>
                       <div className="text-sm mb-10">
                         <div className="space-y-2">
                           <p className='text-gray-800 font-medium text-sm'>
-                            Apakah anda setuju untuk menambahkan pesanan / order ke dalam Database anda. Jika ya, maka anda dapat melihat data yang telah di tambahkan ke tabel order travel.
+                            Pastikan anda memasukkan data secara jelas dan benar. Apabila terjadi kesalahan anda dapat menghubungi admin melalui WA.
                           </p>
                         </div>
                       </div>
@@ -157,7 +156,7 @@ const FormOrder = ({ type, layananData }) => {
                           e.stopPropagation();
                           submit(e);
                           setModalOpen(false);
-                        }}>Ya, Tambahkan</button>
+                        }}>Ya, Pesan Travel</button>
                       </div>
                     </div>
                   </div>

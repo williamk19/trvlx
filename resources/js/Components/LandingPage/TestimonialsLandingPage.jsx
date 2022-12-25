@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import Slider from 'react-slick';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/solid';
-import TestimonialCard from '../Core/TestimonialCard';
+import TestimonialCard from '../core/TestimonialCard';
 
 const TestimonialsLandingPage = () => {
   const slider = useRef(null);

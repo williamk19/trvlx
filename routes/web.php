@@ -1,5 +1,8 @@
 <?php
 
+use App\Events\OrderCreated;
+use App\Http\Controllers\ClientOrderController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KendaraanController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\OrderController;
@@ -31,12 +34,12 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
   Route::group(['middleware' => ['role:1,2,3,4']], function() {
-    Route::get('/dashboard', function () {
-      return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'filter'])->name('dashboard');
   });
 
   Route::group(['middleware' => ['role:1,2']], function () {
+    Route::get('/admin/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
+
     Route::resource('kendaraan', KendaraanController::class);
 
     Route::resource('layanan', LayananController::class);
@@ -68,12 +71,15 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
   });
 
   Route::group(['middleware' => ['role:4']], function () {
-    Route::controller(OrderController::class)->group(function () {
-      Route::get('/client-order', 'clientOrder')->name('clientorder');
+    Route::get('/client/dashboard', [DashboardController::class, 'client'])->name('client.dashboard');
+
+    Route::controller(ClientOrderController::class)->group(function () {
+      Route::get('/client-order', 'clientOrder')->name('client-order');
       Route::get('/client-order/data', 'clientOrderData')->name('client-order.data');
       Route::get('/client-order/jemput', 'clientOrderJemput')->name('client-order.jemput');
       Route::get('/client-order/tujuan', 'clientOrderTujuan')->name('client-order.tujuan');
     });
+    Route::resource('client-order', ClientOrderController::class);
   });
 });
 
