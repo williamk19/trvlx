@@ -55,20 +55,22 @@ const Layanan = (props) => {
 
   useEffect(() => {
     if (searchQuery !== props.query) {
-      Inertia.get(route(route().current()),
-        { search: searchQuery },
-        {
+      if (searchQuery === "") {
+        Inertia.visit(`${base_url}`, {
           replace: true,
           preserveState: true,
           preserveScroll: true
-        }
-      );
-    } else if (searchQuery === "") {
-      Inertia.visit(`${base_url}`, {
-        replace: true,
-        preserveState: true,
-        preserveScroll: true
-      });
+        });
+      } else {
+        Inertia.get(route(route().current()),
+          { search: searchQuery },
+          {
+            replace: true,
+            preserveState: true,
+            preserveScroll: true
+          }
+        );
+      }
     }
   }, [searchQuery]);
 

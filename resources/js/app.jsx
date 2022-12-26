@@ -12,18 +12,18 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
 createInertiaApp({
-    title: (title) => ` ${appName} - ${title}`,
-    resolve: (name) =>
-        resolvePageComponent(
-            `./Pages/${name}.jsx`,
-            import.meta.glob("./Pages/**/*.jsx")
-        ),
-    setup({ el, App, props }) {
-        return render(<App {...props} />, el);
-    },
+  title: (title) => ` ${appName} - ${title}`,
+  resolve: (name) =>
+    resolvePageComponent(
+      `./Pages/${name}.jsx`,
+      import.meta.glob("./Pages/**/*.jsx")
+    ),
+  setup({ el, App, props }) {
+    return render(<App {...props} />, el);
+  },
 });
 
-InertiaProgress.init({ 
+InertiaProgress.init({
   includeCSS: true,
   delay: 250,
   color: '#3464a8'

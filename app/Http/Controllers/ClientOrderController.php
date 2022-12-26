@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderCreated;
 use App\Models\Layanan;
 use App\Models\Lokasi;
 use App\Models\Order;
@@ -74,6 +75,8 @@ class ClientOrderController extends Controller
       'total_seat' => $request->jumlah_seat,
       'total_harga' => $total_harga
     ]);
+
+    broadcast(new OrderCreated($order))->toOthers();
 
     return redirect()
       ->route('client.dashboard')

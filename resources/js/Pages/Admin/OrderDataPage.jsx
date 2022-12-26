@@ -1,3 +1,4 @@
+import '@/bootstrapAdmin';
 import React, { useState, useEffect } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/inertia-react';
@@ -6,11 +7,34 @@ import HeaderAdmin from '@/Components/admin/HeaderAdmin';
 import { Inertia } from '@inertiajs/inertia';
 import { toast, ToastContainer } from 'react-toastify';
 
-export default function Pengguna(props) {
+export default function OrderDataPage(props) {
   const [searchQuery, setSearchQuery] = useState(props.query);
-
+  const [updated, setUpdate] = useState(false);
+  const [updatedMessage, setUpdatedMessage] = useState(false);
   let { url } = usePage();
   const base_url = url.split("?").slice(0, 1).join();
+
+  useEffect(() => {
+    window.Echo.channel('orders').listen('OrderCreated', (e) => {
+      console.log(e);
+      setUpdate(true);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (updated === true) {
+      Inertia.get(route(route().current()),
+        { search: searchQuery },
+        {
+          replace: true,
+          preserveState: true,
+          preserveScroll: true
+        }
+      );
+      setUpdatedMessage(true);
+      setUpdate(false);
+    }
+  }, [updated]);
 
   useEffect(() => {
     if (!_.isEmpty(props.flash.message) && props.flash.message.type === "info") {
@@ -46,8 +70,20 @@ export default function Pengguna(props) {
         progress: undefined,
         theme: "dark",
       });
+    } else if (updatedMessage === true) {
+      toast.success(`Order Baru Diterima`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setUpdatedMessage(false);
     }
-  }, [props.flash]);
+  }, [props.flash, updatedMessage]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -56,20 +92,22 @@ export default function Pengguna(props) {
 
   useEffect(() => {
     if (searchQuery !== props.query) {
-      Inertia.get(route(route().current()),
-        { search: searchQuery },
-        { 
+      if (searchQuery === "") {
+        Inertia.visit(`${base_url}`, {
           replace: true,
           preserveState: true,
           preserveScroll: true
-        }
-      );
-    } else if (searchQuery === "") {
-      Inertia.visit(`${base_url}`, {
-        replace: true,
-        preserveState: true,
-        preserveScroll: true
-      });
+        });
+      } else {
+        Inertia.get(route(route().current()),
+          { search: searchQuery },
+          {
+            replace: true,
+            preserveState: true,
+            preserveScroll: true
+          }
+        );
+      }
     }
   }, [searchQuery]);
 

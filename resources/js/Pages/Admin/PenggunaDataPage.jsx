@@ -6,7 +6,7 @@ import HeaderAdmin from '@/Components/admin/HeaderAdmin';
 import { Inertia } from '@inertiajs/inertia';
 import { toast, ToastContainer } from 'react-toastify';
 
-export default function Pengguna(props) {
+export default function PenggunaDataPage(props) {
   const [searchQuery, setSearchQuery] = useState(props.query);
 
   let { url } = usePage();
@@ -56,20 +56,22 @@ export default function Pengguna(props) {
 
   useEffect(() => {
     if (searchQuery !== props.query) {
-      Inertia.get(route(route().current()),
-        { search: searchQuery },
-        { 
+      if (searchQuery === "") {
+        Inertia.visit(`${base_url}`, {
           replace: true,
           preserveState: true,
           preserveScroll: true
-        }
-      );
-    } else if (searchQuery === "") {
-      Inertia.visit(`${base_url}`, {
-        replace: true,
-        preserveState: true,
-        preserveScroll: true
-      });
+        });
+      } else {
+        Inertia.get(route(route().current()),
+          { search: searchQuery },
+          {
+            replace: true,
+            preserveState: true,
+            preserveScroll: true
+          }
+        );
+      }
     }
   }, [searchQuery]);
 

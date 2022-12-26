@@ -44,21 +44,6 @@ const TableOrder = ({ order, query }) => {
     }
   };
 
-  const pathMapping = (id) => {
-    switch (id) {
-      case 1:
-        return '/admin';
-      case 2:
-        return '/admin';
-      case 3:
-        return '/sopir';
-      case 4:
-        return '/pengguna';
-      default:
-        return '/pengguna';
-    }
-  };
-
   const renderData = data.length > 0 ? data.map((o) => {
     return (
       <tr key={o.id}>
@@ -73,7 +58,7 @@ const TableOrder = ({ order, query }) => {
           {o.tanggal_pemberangkatan}
         </td>
         <td>
-          {`${o.layanan.kota_asal} - ${o.layanan.kota_asal}`}
+          {`${o.layanan.kota_asal} - ${o.layanan.kota_tujuan}`}
         </td>
         <td>
           {o.status_pembayaran}
