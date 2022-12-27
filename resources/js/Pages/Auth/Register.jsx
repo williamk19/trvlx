@@ -124,7 +124,7 @@ export default function Register({ auth }) {
                     <div className="flex items-center justify-end mt-4">
                       <button
                         disabled={processing}
-                        className="btn border-none bg-blue-600 hover:bg-blue-700 text-white ml-3 disabled:text-zinc-800">
+                        className={`btn ${processing && 'loading'} border-none bg-blue-600 hover:bg-blue-700 text-white ml-3 disabled:text-zinc-800`}>
                         Daftar
                       </button>
                     </div>

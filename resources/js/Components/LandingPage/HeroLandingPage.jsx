@@ -2,6 +2,7 @@ import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from 'react';
 import Typewriter from 'typewriter-effect';
+import { Link } from '@inertiajs/inertia-react';
 
 const HeroLandingPage = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -52,7 +53,9 @@ const HeroLandingPage = () => {
                 </select>
               </div>
               <div className="form-control mt-6">
-                <button className="btn btn-info font-bold">Cari Travel</button>
+                <Link href='/login' className='w-full text-center'>
+                  <button className="btn text-white text-base w-11/12 shadow-md hover:scale-105 btn-info font-bold">Cari Travel</button>
+                </Link>
               </div>
             </div>
           </div>

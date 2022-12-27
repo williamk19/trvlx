@@ -23,14 +23,22 @@ export default function OrderDataPage(props) {
 
   useEffect(() => {
     if (updated === true) {
-      Inertia.get(route(route().current()),
-        { search: searchQuery },
-        {
+      if (searchQuery === "") {
+        Inertia.visit(`${base_url}`, {
           replace: true,
           preserveState: true,
           preserveScroll: true
-        }
-      );
+        });
+      } else {
+        Inertia.get(route(route().current()),
+          { search: searchQuery },
+          {
+            replace: true,
+            preserveState: true,
+            preserveScroll: true
+          }
+        );
+      }
       setUpdatedMessage(true);
       setUpdate(false);
     }

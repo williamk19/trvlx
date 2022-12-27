@@ -3,11 +3,10 @@ import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import AuthImage from '@/assets/images/image-login.png';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
-import useCountDown from 'react-countdown-hook';
+import Banner from '@/Components/core/Banner';
 
 export default function Login({ auth, status, canResetPassword }) {
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -15,6 +14,7 @@ export default function Login({ auth, status, canResetPassword }) {
     password: '',
     remember: '',
   });
+  const [bannerOpen, setBannerOpen] = useState(false);
 
   // const [timeoutLogin, setTimeoutLogin] = useState(0);
   // const [timeLeft, { start, pause, resume }] = useCountDown(0, 1000);
@@ -38,6 +38,9 @@ export default function Login({ auth, status, canResetPassword }) {
   // }, [timeLeft]);
 
   useEffect(() => {
+    if (status) 
+      setBannerOpen(true);
+
     return () => {
       reset('password');
     };
@@ -55,7 +58,10 @@ export default function Login({ auth, status, canResetPassword }) {
   return (
     <GuestLayout auth={auth}>
       <Head title="Log in" />
-      {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+      {status && 
+        <Banner className="w-full mb-10" type="success" open={bannerOpen} setOpen={setBannerOpen}>
+          {status}
+        </Banner>}
       <div className="w-full -mt-10 md:mt-0 lg:mt-0 2xl:-mt-5 bg-white shadow-2xl overflow-hidden rounded-xl">
         <main className="w-full shadow-xl">
           <div className=" bg-white relative md:flex">
@@ -110,7 +116,7 @@ export default function Login({ auth, status, canResetPassword }) {
                       <button
                         type='submit'
                         disabled={processing}
-                        className="btn border-none bg-blue-600 hover:bg-blue-700 text-white ml-3 disabled:text-zinc-800">
+                        className={`btn ${processing && 'loading'} border-none bg-blue-600 hover:bg-blue-700 text-white ml-3 disabled:text-zinc-800`}>
                         Sign In
                       </button>
                     </div>

@@ -81,7 +81,7 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
         ...data
       }));
     }
-    
+
   };
 
   const formType = () => {
@@ -130,10 +130,12 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
           <footer>
             <div className="flex flex-col px-6 py-5 border-t border-slate-200">
               <div className="flex self-end">
-                <button onClick={() => reset()} className="btn btn-error hover:bg-red-500 text-slate-100 border-slate-200 hover:border-slate-300">
-                  Reset
-                </button>
-                <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 border-none" onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
+                {!edit && (
+                  <button onClick={() => reset()} className="btn btn-error hover:bg-red-500 text-slate-100 border-slate-200 hover:border-slate-300">
+                    Reset
+                  </button>
+                )}
+                <button disabled={processing} className={`btn ${processing && "loading"} bg-indigo-500 hover:bg-indigo-600 disabled:text-black text-white ml-3 border-none`} onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
                   {edit ? 'Edit' : 'Tambahkan'}
                 </button>
                 <Modal id="info-modal" modalOpen={modalOpen} setModalOpen={setModalOpen}>
