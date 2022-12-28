@@ -1,10 +1,41 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/inertia-react';
+import { Head, Link } from '@inertiajs/inertia-react';
 import { toast, ToastContainer } from 'react-toastify';
+import TravelWrapper from '@/Components/Client/Dashboard/TravelWrapper';
+import PaginationKendaraan from '@/Components/admin/Kendaraan/PaginationKendaraan';
+import { Inertia } from '@inertiajs/inertia';
 
 export default function Dashboard(props) {
-  console.log(props);
+  const [orderList, setOrderList] = useState(props.orderList.data);
+  const [prevUrl, setPrevUrl] = useState(props.orderList.prev_page_url);
+  const [nextUrl, setNextUrl] = useState(props.orderList.next_page_url);
+
+  useEffect(() => {
+    setOrderList(props.orderList.data);
+    setPrevUrl(props.orderList.prev_page_url);
+    setNextUrl(props.orderList.next_page_url);
+  }, [props.orderList.data, props.orderList.prev_page_url, props.orderList.next_page_url]);
+
+  const handleNextClick = () => {
+    if (nextUrl === null)
+      return;
+    Inertia.get(nextUrl, {}, {
+      replace: true
+    });
+  };
+
+  const handlePrevClick = () => {
+    if (prevUrl === null)
+      return;
+    Inertia.get(prevUrl, {}, {
+      replace: true
+    });
+  };
+
+  useEffect(() => {
+    console.log(props);
+  }, []);
 
   useEffect(() => {
     if (!_.isEmpty(props.flash.message)) {
@@ -29,16 +60,31 @@ export default function Dashboard(props) {
     >
       <Head title="Dashboard" />
       <ToastContainer />
-      <div className="py-12">
+      <div className="py-1">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-          <div className='mb-8'>
-            <h1 className='text-xl md:text-2xl font-medium text-slate-800'>
-              Selamat Datang, <span className='font-bold'>{props.auth.user.nama_user}</span> ✨
+          <div className='mb-8 flex justify-between'>
+            <h1 className='text-xl md:text-2xl basis-3/4 md:basis-5/6 font-medium text-slate-800'>
+              Selamat Datang,
+              <span className='font-bold block'>{props.auth.user.nama_user} ✨</span>
             </h1>
+            <Link href={route('client-order.data')}>
+              <button className="btn sm:w-30 md:w-40 bg-indigo-500 hover:bg-indigo-600 border-none text-white">
+                <svg className="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
+                  <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
+                </svg>
+                <span className="hidden sm:block ml-0 sm:ml-2 sm:text-xs">Tambahkan</span>
+              </button>
+            </Link>
           </div>
-          <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-            <div className="p-6 bg-white border-b border-gray-200">
-            </div>
+          <TravelWrapper orderList={orderList} />
+          <div className='mt-20'>
+            <PaginationKendaraan
+              firstIndex={props.orderList.from}
+              lastIndex={props.orderList.to}
+              dataLength={props.orderList.total}
+              handleNextClick={handleNextClick}
+              handlePrevClick={handlePrevClick}
+            />
           </div>
         </div>
       </div>

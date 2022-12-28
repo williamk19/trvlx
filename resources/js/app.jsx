@@ -24,7 +24,6 @@ createInertiaApp({
 });
 
 InertiaProgress.init({
-  includeCSS: true,
-  delay: 250,
+  includeCSS: false,
   color: '#3464a8'
 });

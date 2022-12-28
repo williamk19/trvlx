@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Services\Midtrans\CreateSnapTokenService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -25,6 +27,22 @@ class DashboardController extends Controller
   }
 
   public function client() {
-    return Inertia::render('Client/Dashboard');
+    $order = Order::where('id_user', auth()->user()->id)
+      ->orderBy('created_at', 'desc')
+      ->paginate(6)
+      ->through(
+        fn ($item) =>
+        [
+          'id' => $item->id,
+          'nama_penumpang' => $item->nama_penumpang,
+          'tanggal_pemberangkatan' => $item->tanggal_pemberangkatan,
+          'status_pembayaran' => $item->status_pembayaran,
+          'layanan' => $item->layanan
+        ]
+      );;
+
+    return Inertia::render('Client/Dashboard', [
+      'orderList' => $order
+    ]);
   }
 }

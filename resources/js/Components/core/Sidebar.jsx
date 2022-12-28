@@ -18,6 +18,7 @@ function Sidebar({ role, sidebarOpen, setSidebarOpen }) {
   const trigger = useRef(null);
   const sidebar = useRef(null);
 
+  localStorage.setItem('sidebar-expanded', true);
   const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
   const [sidebarExpanded, setSidebarExpanded] = useState(storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true');
   const [sidebarMenu, setSidebarMenu] = useState([{}]);
@@ -144,7 +145,7 @@ function Sidebar({ role, sidebarOpen, setSidebarOpen }) {
                       <div className="grow flex items-center">
                         {menuData.icon}
                         <span className="text-sm font-bold ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                          {_.capitalize(menuData.name)}
+                          {_.startCase(_.toLower(menuData.name))}
                         </span>
                       </div>
                     </div>
