@@ -21,12 +21,14 @@ return new class extends Migration
       $table->string('nama_penumpang');
       $table->date('tanggal_pemberangkatan');
       $table->enum('status_pembayaran', [
+        'init',
         'pending',
         'confirmed',
         'rejected'
       ]);
       $table->integer('total_seat');
       $table->double('total_harga');
+      $table->string('snap_token')->nullable();
       $table->timestamps();
     });
   }

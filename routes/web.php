@@ -74,10 +74,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/client/dashboard', [DashboardController::class, 'client'])->name('client.dashboard');
 
     Route::controller(ClientOrderController::class)->group(function () {
-      Route::get('/client-order', 'clientOrder')->name('client-order');
       Route::get('/client-order/data', 'clientOrderData')->name('client-order.data');
       Route::get('/client-order/jemput', 'clientOrderJemput')->name('client-order.jemput');
       Route::get('/client-order/tujuan', 'clientOrderTujuan')->name('client-order.tujuan');
+      Route::get('/client-order/payment/{id}', 'clientPayment')->name('client-order.payment');
     });
     Route::resource('client-order', ClientOrderController::class);
   });

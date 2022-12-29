@@ -19,8 +19,14 @@ class Order extends Model
     'tanggal_pemberangkatan',
     'status_pembayaran',
     'total_seat',
-    'total_harga'
+    'total_harga',
+    'snap_token'
   ];
+
+  public function user()
+  {
+    return $this->belongsTo(User::class, 'id_user');
+  }
 
   public function lokasi()
   {

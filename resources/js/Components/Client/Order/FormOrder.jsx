@@ -23,7 +23,7 @@ const FormOrder = ({ type, layananData }) => {
     alamat_tujuan: '',
     deskripsi_tujuan: ''
   });
-
+  
   useEffect(() => {
     if (!_.isEmpty(errors)) {
       toast.error('Ada yang belum terisi !', {

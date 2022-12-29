@@ -6,9 +6,11 @@ use App\Events\OrderCreated;
 use App\Models\Layanan;
 use App\Models\Lokasi;
 use App\Models\Order;
+use App\Services\Midtrans\CreateSnapTokenService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Midtrans\Snap;
 
 class ClientOrderController extends Controller
 {
@@ -19,7 +21,7 @@ class ClientOrderController extends Controller
    */
   public function index()
   {
-    //
+    return redirect()->route('client-order.data');
   }
 
   /**
@@ -71,7 +73,7 @@ class ClientOrderController extends Controller
       'id_user' => auth()->user()->id,
       'nama_penumpang' => $request->nama_penumpang,
       'tanggal_pemberangkatan' => Carbon::parse($request->tanggal_pemberangkatan, 'UTC')->format('Y-m-d'),
-      'status_pembayaran' => 'confirmed',
+      'status_pembayaran' => 'init',
       'total_seat' => $request->jumlah_seat,
       'total_harga' => $total_harga
     ]);
@@ -79,7 +81,7 @@ class ClientOrderController extends Controller
     broadcast(new OrderCreated($order))->toOthers();
 
     return redirect()
-      ->route('client.dashboard')
+      ->route('client-order.payment', ['id' => $order->id])
       ->with('message', $order);
   }
 
@@ -128,11 +130,6 @@ class ClientOrderController extends Controller
     //
   }
 
-  public function clientOrder()
-  {
-    return redirect('/client-order/data');
-  }
-
   public function clientOrderData()
   {
     $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
@@ -144,7 +141,7 @@ class ClientOrderController extends Controller
 
     return Inertia::render('Client/FormPageOrder', [
       'type' => 'data',
-      'layananData' => $layanan
+      'layananData' => $layanan,
     ]);
   }
 
@@ -174,6 +171,47 @@ class ClientOrderController extends Controller
     return Inertia::render('Client/FormPageOrder', [
       'type' => 'tujuan',
       'layananData' => $layanan
+    ]);
+  }
+
+  public function clientPayment($id)
+  {
+    $order = Order::where('id', $id)->first();
+    $order->user;
+    $order->layanan;
+    if ($order->status_pembayaran === 'init') {
+      $snap = new CreateSnapTokenService();
+      $snapToken = $snap->getSnapToken([
+        'transaction_details' => [
+          'order_id' => $order->id,
+          'gross_amount' => $order->total_harga,
+        ],
+        'item_details' => [
+          [
+            'id' => $order->layanan->id,
+            'price' => $order->layanan->biaya_jasa,
+            'quantity' => $order->total_seat,
+            'name' => 'Travel ' . $order->layanan->kota_asal . ' ' . $order->layanan->kota_tujuan,
+          ],
+        ],
+        'customer_details' => [
+          'first_name' => $order->user->nama_user,
+          'email' => $order->user->email,
+          'phone' => $order->user->telepon_user,
+        ]
+      ]);
+
+      $order->update([
+        'status_pembayaran' => 'pending',
+        'snap_token' => $snapToken
+      ]);
+    } else if ($order->status_pembayaran === 'pending') {
+      $snapToken = $order->snap_token;
+    }
+
+    return Inertia::render('Client/Payment', [
+      'order' => $order,
+      'snapToken' => $snapToken
     ]);
   }
 }
