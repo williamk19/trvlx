@@ -8,6 +8,23 @@ const TableOrder = ({ order, query }) => {
   const [prevUrl, setPrevUrl] = useState(order.prev_page_url);
   const [nextUrl, setNextUrl] = useState(order.next_page_url);
 
+  const statusColor = (type) => {
+    switch (type) {
+      case 'confirmed':
+        return 'bg-emerald-100 text-emerald-600';
+      case 'pending':
+        return 'bg-amber-100 text-amber-600';
+      case 'rejected':
+        return 'bg-rose-100 text-rose-600';
+      case 'init':
+        return 'bg-sky-100 text-sky-600';
+      case 'done':
+        return 'bg-indigo-100 text-indigo-600';
+      default:
+        return 'bg-slate-100 text-slate-500';
+    }
+  };
+
   useEffect(() => {
     setData(order.data);
     setPrevUrl(order.prev_page_url);
@@ -61,7 +78,9 @@ const TableOrder = ({ order, query }) => {
           {`${o.layanan.kota_asal} - ${o.layanan.kota_tujuan}`}
         </td>
         <td>
-          {o.status_pembayaran}
+          <div className={`text-xs inline-flex font-medium rounded-full text-center px-2.5 py-1 ${statusColor(o.status_pembayaran)}`}>
+            {o.status_pembayaran}
+          </div>
         </td>
         <th>
           <Link

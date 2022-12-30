@@ -62,6 +62,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
       Route::get('/order/list/{id}/data', 'editData')->name('edit.data');
       Route::get('/order/list/{id}/jemput', 'editJemput')->name('edit.jemput');
       Route::get('/order/list/{id}/tujuan', 'editTujuan')->name('edit.tujuan');
+      Route::post('/order/payment', 'receivePayment')->name('order.payment');
     });
     Route::resource('order', OrderController::class);
   });

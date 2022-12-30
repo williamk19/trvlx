@@ -178,12 +178,14 @@ class ClientOrderController extends Controller
   {
     $order = Order::where('id', $id)->first();
     $order->user;
+    $order->lokasi;
     $order->layanan;
+    $dt = Carbon::parse($order->created_at)->getTimestamp();
     if ($order->status_pembayaran === 'init') {
       $snap = new CreateSnapTokenService();
       $snapToken = $snap->getSnapToken([
         'transaction_details' => [
-          'order_id' => $order->id,
+          'order_id' => $order->id . "_" . $order->id_user . "_" . $dt,
           'gross_amount' => $order->total_harga,
         ],
         'item_details' => [
@@ -205,7 +207,11 @@ class ClientOrderController extends Controller
         'status_pembayaran' => 'pending',
         'snap_token' => $snapToken
       ]);
-    } else if ($order->status_pembayaran === 'pending') {
+    } else if (
+      $order->status_pembayaran === 'pending'
+      || $order->status_pembayaran === 'done'
+      || $order->status_pembayaran === 'confirmed'
+      || $order->status_pembayaran === 'failed') {
       $snapToken = $order->snap_token;
     }
 

@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Layanan;
 use App\Models\Lokasi;
 use App\Models\User;
+use App\Services\Midtrans\CallbackService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -306,5 +307,45 @@ class OrderController extends Controller
   public function destroy(Order $order)
   {
     //
+  }
+
+  public function receivePayment()
+  {
+    $callback = new CallbackService;
+
+    if ($callback->isSignatureKeyVerified()) {
+      $notification = $callback->getNotification();
+      $order = $callback->getOrder();
+
+      if ($callback->isSuccess()) {
+        Order::where('id', $order->id)->update([
+          'status_pembayaran' => 'done',
+        ]);
+      }
+
+      if ($callback->isExpire()) {
+        Order::where('id', $order->id)->update([
+          'status_pembayaran' => 'failed',
+        ]);
+      }
+
+      if ($callback->isCancelled()) {
+        Order::where('id', $order->id)->update([
+          'status_pembayaran' => 'failed',
+        ]);
+      }
+
+      return response()
+        ->json([
+          'success' => true,
+          'message' => 'Notifikasi berhasil diproses',
+        ]);
+    } else {
+      return response()
+        ->json([
+          'error' => true,
+          'message' => 'Signature key tidak terverifikasi',
+        ], 403);
+    }
   }
 }

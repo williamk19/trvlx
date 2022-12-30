@@ -23,8 +23,9 @@ return new class extends Migration
       $table->enum('status_pembayaran', [
         'init',
         'pending',
+        'done',
         'confirmed',
-        'rejected'
+        'failed'
       ]);
       $table->integer('total_seat');
       $table->double('total_harga');
