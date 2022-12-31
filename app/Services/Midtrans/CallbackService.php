@@ -3,6 +3,7 @@
 namespace App\Services\Midtrans;
 
 use App\Models\Order;
+use Carbon\Carbon;
 use Midtrans\Notification;
 
 class CallbackService extends Midtrans
@@ -55,13 +56,14 @@ class CallbackService extends Midtrans
 
   protected function _createLocalSignatureKey()
   {
-    $orderId = $this->order->number;
+    $dt = Carbon::parse($this->order->created_at)->getTimestamp();
+    $orderId = $this->order->id . "_" . $this->order->id_user . "_" . $dt;
     $statusCode = $this->notification->status_code;
-    $grossAmount = $this->order->total_price;
+    $grossAmount = number_format((float) $this->order->total_harga, 2, '.', '');
     $serverKey = $this->serverKey;
     $input = $orderId . $statusCode . $grossAmount . $serverKey;
     $signature = openssl_digest($input, 'sha512');
-
+    
     return $signature;
   }
 
@@ -70,7 +72,8 @@ class CallbackService extends Midtrans
     $notification = new Notification();
 
     $orderNumber = $notification->order_id;
-    $order = Order::where('id', $orderNumber)->first();
+    $id = explode('_', $orderNumber)[0];
+    $order = Order::where('id', $id)->first();
 
     $this->notification = $notification;
     $this->order = $order;
