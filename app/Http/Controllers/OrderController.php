@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderCreated;
+use App\Events\OrderPaid;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
@@ -150,6 +152,11 @@ class OrderController extends Controller
       'status_pembayaran' => 'confirmed',
       'total_seat' => $request->jumlah_seat,
       'total_harga' => $total_harga
+    ]);
+
+    $dt = Carbon::parse($order->created_at)->getTimestamp();
+    Order::where('id', $order->id)->update([
+      'id_payment' => $order->id . "_" . $order->id_user . "_" . $dt,
     ]);
 
     return redirect()
@@ -318,10 +325,10 @@ class OrderController extends Controller
       $order = $callback->getOrder();
 
       if ($callback->isSuccess()) {
-        
         Order::where('id', $order->id)->update([
           'status_pembayaran' => 'done',
         ]);
+        broadcast(new OrderCreated($order, 'pay'))->toOthers();
       }
 
       if ($callback->isExpire()) {

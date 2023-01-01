@@ -78,7 +78,10 @@ class ClientOrderController extends Controller
       'total_harga' => $total_harga
     ]);
 
-    broadcast(new OrderCreated($order))->toOthers();
+    $dt = Carbon::parse($order->created_at)->getTimestamp();
+    Order::where('id', $order->id)->update([
+      'id_payment' => $order->id . "_" . $order->id_user . "_" . $dt,
+    ]);
 
     return redirect()
       ->route('client-order.payment', ['id' => $order->id])
@@ -180,12 +183,12 @@ class ClientOrderController extends Controller
     $order->user;
     $order->lokasi;
     $order->layanan;
-    $dt = Carbon::parse($order->created_at)->getTimestamp();
+    
     if ($order->status_pembayaran === 'init') {
       $snap = new CreateSnapTokenService();
       $snapToken = $snap->getSnapToken([
         'transaction_details' => [
-          'order_id' => $order->id . "_" . $order->id_user . "_" . $dt,
+          'order_id' => $order->id_payment,
           'gross_amount' => $order->total_harga,
         ],
         'item_details' => [
@@ -207,6 +210,7 @@ class ClientOrderController extends Controller
         'status_pembayaran' => 'pending',
         'snap_token' => $snapToken
       ]);
+      broadcast(new OrderCreated($order, 'add'))->toOthers();
     } else if (
       $order->status_pembayaran === 'pending'
       || $order->status_pembayaran === 'done'

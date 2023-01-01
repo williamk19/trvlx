@@ -40,7 +40,10 @@ const PaymentTrigger = ({ order, handlePayment }) => {
           </li>
         </ul>
         <div className="mb-4">
-          <button className="btn w-full bg-indigo-500 hover:bg-indigo-600 text-white border-none shadow-lg" onClick={handlePayment}>
+          <button
+            disabled={order.status_pembayaran === 'confirmed' ? true : false}
+            className="btn w-full bg-indigo-500 hover:bg-indigo-600 text-white border-none shadow-lg" 
+            onClick={handlePayment}>
             Bayar Sekarang
           </button>
         </div>

@@ -13,7 +13,7 @@ const PaymentDetails = ({ order }) => {
           </div>
           <div className="text-sm text-slate-800">
             <span className="mr-3">
-              {`${order.id}_${order.id_user}_${Math.floor(Date.parse(order.created_at) / 1000)}`}
+              {`${order.id_payment}`}
             </span>
           </div>
         </li>

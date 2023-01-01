@@ -56,8 +56,7 @@ class CallbackService extends Midtrans
 
   protected function _createLocalSignatureKey()
   {
-    $dt = Carbon::parse($this->order->created_at)->getTimestamp();
-    $orderId = $this->order->id . "_" . $this->order->id_user . "_" . $dt;
+    $orderId = $this->order->id_payment;
     $statusCode = $this->notification->status_code;
     $grossAmount = number_format((float) $this->order->total_harga, 2, '.', '');
     $serverKey = $this->serverKey;

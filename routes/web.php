@@ -1,6 +1,5 @@
 <?php
 
-use App\Events\OrderCreated;
 use App\Http\Controllers\ClientOrderController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KendaraanController;

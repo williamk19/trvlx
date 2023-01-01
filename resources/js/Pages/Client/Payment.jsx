@@ -2,6 +2,7 @@ import HeaderAdmin from '@/Components/admin/HeaderAdmin';
 import PaymentDetails from '@/Components/Client/Payment/PaymentDetails';
 import PaymentTrigger from '@/Components/Client/Payment/PaymentTrigger';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { Inertia } from '@inertiajs/inertia';
 import { Head, usePage } from '@inertiajs/inertia-react';
 import React from 'react';
 
@@ -14,19 +15,22 @@ const Payment = (props) => {
       let snapToken = props.snapToken;
       snap.pay(snapToken, {
         onSuccess: function (result) {
-          console.log('success');
-          console.log(result);
+          return Inertia.reload({
+            preserveScroll: true
+          });
         },
         onPending: function (result) {
-          console.log('pending');
-          console.log(result);
+          return Inertia.reload({
+            preserveScroll: true
+          });
         },
         onError: function (result) {
-          console.log('error');
-          console.log(result);
+          return Inertia.reload({
+            preserveScroll: true
+          });
         },
         onClose: function () {
-          console.log('customer closed the popup without finishing the payment');
+          // console.log('customer closed the popup without finishing the payment');
         }
       });
     }

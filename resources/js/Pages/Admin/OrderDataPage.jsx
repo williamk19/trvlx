@@ -16,7 +16,6 @@ export default function OrderDataPage(props) {
 
   useEffect(() => {
     window.Echo.channel('orders').listen('OrderCreated', (e) => {
-      console.log(e);
       setUpdate(true);
     });
   }, []);

@@ -20,9 +20,10 @@ class OrderCreated implements ShouldBroadcast
    * @return void
    */
   public $orderNotif;
-  public function __construct($orderNotif)
+  public function __construct($orderNotif, $type)
   {
     $this->orderNotif = $orderNotif;
+    $this->orderNotif['type'] = $type;
     info($orderNotif);
   }
 
