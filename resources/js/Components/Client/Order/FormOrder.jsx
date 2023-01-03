@@ -118,7 +118,7 @@ const FormOrder = ({ type, layananData }) => {
         <div className="flex flex-col md:-mr-px">
           <SidebarOrder />
           {formType()}
-          <footer>
+          <footer className='mt-4'>
             <div className="flex flex-col px-6 py-5 border-t border-slate-200">
               <div className="flex self-end">
                 <button onClick={() => reset()} className="btn btn-error hover:bg-red-500 text-slate-100 border-slate-200 hover:border-slate-300">

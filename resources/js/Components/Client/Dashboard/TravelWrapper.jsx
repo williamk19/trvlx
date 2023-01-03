@@ -1,7 +1,6 @@
 import TravelCard from '@/Components/Client/Dashboard/TravelCard';
 
 const TravelWrapper = ({ orderList }) => {
-  console.log(orderList);
   return (
     <div className="grid grid-cols-12 gap-6">
       {orderList?.map(order => (
