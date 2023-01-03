@@ -11,6 +11,7 @@ import { Icon } from 'leaflet';
 import _ from 'lodash';
 import ZoomControlMap from './ZoomControlMap';
 import "leaflet/dist/leaflet.css";
+import GeoSearchMap from './GeoSearchMap';
 
 const DragMarkerMap = ({ name, latlng, onLocationChange }) => {
   const center = {

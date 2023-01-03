@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Inertia } from '@inertiajs/inertia';
 
 const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
+  console.log(orderEdit);
   const [modalOpen, setModalOpen] = useState(false);
 
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -29,11 +30,11 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
       lng: orderEdit.lokasi.lng_tujuan
     } : {},
     alamat_tujuan: orderEdit?.lokasi ? orderEdit.lokasi.alamat_tujuan : "",
-    deskripsi_tujuan: orderEdit?.lokasi.deskripsi_tujuan ? orderEdit.lokasi.deskripsi_tujuan : ""
+    deskripsi_tujuan: orderEdit?.lokasi.deskripsi_tujuan ? orderEdit.lokasi.deskripsi_tujuan : "",
+    status: orderEdit?.status_pembayaran ? orderEdit?.status_pembayaran : 'init'
   });
 
   useEffect(() => {
-    console.log(errors);
     if (!_.isEmpty(errors)) {
       toast.error('Ada yang belum terisi !', {
         position: "top-right",
@@ -60,6 +61,10 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
     } else {
       setData(event.target.name, event.target.value);
     }
+  };
+
+  const onSelectChange = (e) => {
+    setData(e.name, e.value);
   };
 
   const onDateChange = (date) => {
@@ -93,6 +98,7 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
             layananData={layananData}
             errors={errors}
             onDateChange={onDateChange}
+            onSelectChange={onSelectChange}
             onHandleChange={onHandleChange} />
         );
       case "jemput":

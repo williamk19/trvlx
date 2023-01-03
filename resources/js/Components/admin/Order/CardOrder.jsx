@@ -24,7 +24,7 @@ const CardOrder = ({ category, title, link, content, ...props }) => {
   };
 
   return (
-    <div className="col-span-full sm:col-span-6 xl:col-span-4 bg-white shadow-lg rounded-sm border border-slate-200">
+    <div className="col-span-full sm:col-span-6 xl:col-span-4 bg-white shadow-lg rounded-xl border border-slate-200">
       <div className="flex flex-col h-full p-5">
         <header>
           <div className="flex items-center justify-between">

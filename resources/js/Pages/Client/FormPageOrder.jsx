@@ -13,10 +13,6 @@ const FormPageOrder = (props) => {
       errors={props.errors}
     >
       <Head title="Create Order" />
-      <HeaderAdmin
-        title={'Travel Order ⏩'}
-        url={url}
-      />
       <FormOrder
         type={props.type}
         layananData={props.layananData}

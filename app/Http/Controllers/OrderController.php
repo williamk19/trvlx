@@ -270,19 +270,22 @@ class OrderController extends Controller
       'alamat_asal' => 'required|string|max:255',
       'alamat_tujuan' => 'required|string|max:255',
       'deskripsi_asal' => 'string|nullable',
-      'deskripsi_tujuan' => 'string|nullable'
+      'deskripsi_tujuan' => 'string|nullable',
+      'status' => 'string|required'
     ]);
 
     $total_harga = (Layanan::where('id', $request->layanan)->first('biaya_jasa')->biaya_jasa) * ($request->jumlah_seat);
+    
     $orderUpdate = [
       'id_lokasi' => $order->lokasi->id,
       'id_layanan' => $request->layanan,
-      'id_user' => 10,
+      'id_user' => $order->id_user,
       'nama_penumpang' => $request->nama_penumpang,
       'tanggal_pemberangkatan' => Carbon::tomorrow(),
       'status_pembayaran' => 'confirmed',
       'total_seat' => $request->jumlah_seat,
-      'total_harga' => $total_harga
+      'total_harga' => $total_harga,
+      'status_pembayaran' => $request->status
     ];
     Order::where('id', $order->id)->first()
       ->update($orderUpdate);

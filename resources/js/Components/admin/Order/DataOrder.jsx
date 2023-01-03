@@ -4,10 +4,20 @@ import TextInput from '@/Components/TextInput';
 import React, { useState } from 'react';
 import ReactDatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
 import id from 'date-fns/locale/id';
+import Select from 'react-select';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const DataOrder = ({ data, layananData, onHandleChange, onDateChange, errors }) => {
-  registerLocale('id', id); 
+const DataOrder = ({ data, layananData, onHandleChange, onDateChange, onSelectChange, errors }) => {
+  registerLocale('id', id);
+  console.log(data);
+  const statusOption = [
+    { name: 'status', value: 'init', label: 'Init' },
+    { name: 'status', value: 'pending', label: 'Pending' },
+    { name: 'status', value: 'done', label: 'Done' },
+    { name: 'status', value: 'confirmed', label: 'Confirmed' },
+    { name: 'status', value: 'failed', label: 'Failed' },
+  ];
+
   return (
     <div className="grow">
       <div className="p-6 md:py-0 space-y-6">
@@ -40,7 +50,7 @@ const DataOrder = ({ data, layananData, onHandleChange, onDateChange, errors }) 
           </div>
         </section>
         <section>
-          <div className="sm:flex w-full lg:w-10/12 sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-5 mb-0 md:mb-8">
+          <div className="sm:flex w-full lg:w-10/12 sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-5 mb-0">
             <div className='w-full md:w-2/4'>
               <InputLabel className='mb-2' forInput="jumlah_seat" value="Jumlah Kursi Dipesan" />
               <select
@@ -73,6 +83,25 @@ const DataOrder = ({ data, layananData, onHandleChange, onDateChange, errors }) 
                 ))}
               </select>
               <InputError message={errors.layanan} className="mt-2" />
+            </div>
+          </div>
+          <div className="sm:flex w-full lg:w-10/12 sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-5 mb-0 md:mb-8">
+            <div className='w-full md:w-1/4'>
+              <InputLabel className='mb-2' forInput="status" value="Status Pembayaran" />
+              <select
+                data-theme='light'
+                value={data.status}
+                name='status'
+                className="select select-bordered w-full"
+                onChange={onHandleChange}>
+                <option value={''} disabled>Status Pembayaran</option>
+                <option value={'init'}>Init</option>
+                <option value={'pending'}>Pending</option>
+                <option value={'done'}>Done</option>
+                <option value={'confirmed'}>Confirmed</option>
+                <option value={'failed'}>Failed</option>
+              </select>
+              <InputError message={errors.status} className="mt-2" />
             </div>
           </div>
         </section>

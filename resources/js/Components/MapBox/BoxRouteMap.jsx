@@ -36,7 +36,6 @@ const BoxRouteMap = ({ watchType = false, destination = tempDestination }) => {
 
   return (
     <>
-      {/* <ZoomControlMap /> */}
       <RoutingMap ref={routingMachine} waypoints={waypoints} />
     </>
   );

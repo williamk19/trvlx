@@ -19,9 +19,7 @@ const DataTujuan = ({ data, onHandleChange, errors, onLocationChange }) => {
                 latlng={data.latlng_tujuan}
                 onLocationChange={onLocationChange}
               />
-              <p className='text-gray-600 font-semibold mt-5 mb-5'>
-                * Arahkan tanda biru untuk memilih lokasi yang diinginkan
-              </p>
+             
             </div>
             <div className='mt-10 w-full md:w-3/4 lg:w-2/4'>
               <div className='w-full'>
@@ -47,6 +45,9 @@ const DataTujuan = ({ data, onHandleChange, errors, onLocationChange }) => {
                   placeholder="Dekat mini market, belakang pasar,..."></textarea>
                 <InputError message={errors.deskripsi_tujuan} className="mt-2" />
               </div>
+              <p className='text-gray-600 font-semibold mt-5 mb-5'>
+                * Arahkan tanda biru untuk memilih lokasi yang diinginkan
+              </p>
             </div>
           </div>
         </section>

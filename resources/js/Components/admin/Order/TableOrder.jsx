@@ -14,7 +14,7 @@ const TableOrder = ({ order, query }) => {
         return 'bg-emerald-100 text-emerald-600';
       case 'pending':
         return 'bg-amber-100 text-amber-600';
-      case 'rejected':
+      case 'failed':
         return 'bg-rose-100 text-rose-600';
       case 'init':
         return 'bg-sky-100 text-sky-600';
@@ -101,7 +101,7 @@ const TableOrder = ({ order, query }) => {
 
   return (
     <>
-      <div data-theme="light" className="overflow-x-auto w-full">
+      <div data-theme="light" className="overflow-x-auto rounded-xl shadow-lg w-full">
         <table className="table w-full">
           <thead>
             <tr>

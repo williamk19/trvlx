@@ -114,7 +114,7 @@ const FormOrder = ({ type, layananData }) => {
   return (
     <div>
       <ToastContainer />
-      <div className="bg-white shadow-lg rounded-lg mb-8">
+      <div className="bg-white shadow-lg rounded-lg">
         <div className="flex flex-col md:-mr-px">
           <SidebarOrder />
           {formType()}

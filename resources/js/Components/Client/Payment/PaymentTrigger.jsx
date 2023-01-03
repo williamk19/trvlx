@@ -8,7 +8,7 @@ const PaymentTrigger = ({ order, handlePayment }) => {
         return 'bg-emerald-100 text-emerald-600';
       case 'pending':
         return 'bg-amber-100 text-amber-600';
-      case 'rejected':
+      case 'failed':
         return 'bg-rose-100 text-rose-600';
       case 'init':
         return 'bg-sky-100 text-sky-600';
@@ -42,7 +42,7 @@ const PaymentTrigger = ({ order, handlePayment }) => {
         <div className="mb-4">
           <button
             disabled={order.status_pembayaran === 'confirmed' ? true : false}
-            className="btn w-full bg-indigo-500 hover:bg-indigo-600 text-white border-none shadow-lg" 
+            className="btn w-full bg-indigo-500 hover:bg-indigo-600 text-white border-none shadow-lg disabled:text-gray-800" 
             onClick={handlePayment}>
             Bayar Sekarang
           </button>

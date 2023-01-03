@@ -92,7 +92,7 @@ const TableUser = ({ user, query }) => {
 
   return (
     <>
-      <div data-theme="light" className="overflow-x-auto w-full">
+      <div data-theme="light" className="overflow-x-auto rounded-xl shadow-lg w-full">
         <table className="table w-full">
           <thead>
             <tr>

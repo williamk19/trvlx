@@ -15,7 +15,7 @@ const TravelCard = ({
         return 'bg-emerald-100 text-emerald-600';
       case 'pending':
         return 'bg-amber-100 text-amber-600';
-      case 'rejected':
+      case 'failed':
         return 'bg-rose-100 text-rose-600';
       case 'init':
         return 'bg-sky-100 text-sky-600';

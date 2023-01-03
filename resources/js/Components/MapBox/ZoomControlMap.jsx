@@ -9,11 +9,7 @@ const createZoomLayer = () => {
     strings: {
       title: "Show me where I am, yo!"
     },
-    keepCurrentZoomLevel: true,
-    // locateOptions: {
-      // watch: true,
-      // enableHighAccuracy: true
-    // }
+    keepCurrentZoomLevel: true
   })
   return instance;
 };
