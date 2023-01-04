@@ -51,9 +51,9 @@ export default function Settings({ itemUser, ...props }) {
     >
       <Head title="Settings" />
       <ToastContainer />
-      <div data-theme="light" className="py-10 max-w-4xl rounded-xl shadow-xl">
+      <div data-theme="light" className="pt-10 pb-6 max-w-4xl rounded-xl shadow-xl">
         <div className="mx-auto sm:px-6 lg:px-8">
-          <div className='px-6 mb-2 md:mb-8'>
+          <div className='px-6 mb-2'>
             <h1 className='text-xl md:text-3xl font-bold text-slate-800'>
               Account Settings ⚙️
             </h1>
@@ -117,7 +117,7 @@ export default function Settings({ itemUser, ...props }) {
                         Password
                       </label>
                       <input
-                        autoComplete="off"
+                        autoComplete="new-password"
                         id="password"
                         className="form-input rounded-md w-full"
                         type="password"

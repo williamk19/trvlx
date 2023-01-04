@@ -30,7 +30,9 @@ const Payment = (props) => {
           });
         },
         onClose: function () {
-          // console.log('customer closed the popup without finishing the payment');
+          return Inertia.reload({
+            preserveScroll: true
+          });
         }
       });
     }

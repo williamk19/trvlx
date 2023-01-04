@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kendaraan;
+use App\Models\Layanan;
 use App\Models\Order;
 use App\Models\User;
 use App\Services\Midtrans\CreateSnapTokenService;
@@ -10,8 +12,9 @@ use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
-  public function filter() {
-    
+  public function filter()
+  {
+
     $idRole = strval(auth()->user()->id_kategori);
     if ($idRole === '1' || $idRole === '2') {
       return redirect('/admin/dashboard');
@@ -24,11 +27,36 @@ class DashboardController extends Controller
     return redirect('/client/dashboard');
   }
 
-  public function admin() {
-    return Inertia::render('Admin/Dashboard');
+  public function admin()
+  {
+    $orderCount = Order::all()->count();
+    $layananCount = Layanan::all()->count();
+    $kendaraanCount = Kendaraan::all()->count();
+    $lastDoneOrder = Order::where(function ($query) {
+      $query
+        ->where('status_pembayaran', 'pending')
+        ->orWhere('status_pembayaran', 'done');
+    })
+      ->orderBy('created_at', 'DESC')
+      ->limit(5)
+      ->get()->map(fn ($order) => ([
+        'nama_penumpang' => $order->nama_penumpang,
+        'id_payment' => $order->id_payment,
+        'layanan' => $order->layanan->kota_asal . " - " . $order->layanan->kota_tujuan,
+        'status_pembayaran' => $order->status_pembayaran,
+        'tanggal_pemberangkatan' => $order->tanggal_pemberangkatan
+      ]));
+    
+    return Inertia::render('Admin/Dashboard', [
+      'orderCount' => $orderCount,
+      'layananCount' => $layananCount,
+      'kendaraanCount' => $kendaraanCount,
+      'lastDoneOrder' => $lastDoneOrder
+    ]);
   }
 
-  public function client() {
+  public function client()
+  {
     $order = Order::where('id_user', auth()->user()->id)
       ->orderBy('created_at', 'desc')
       ->paginate(6)
@@ -48,7 +76,8 @@ class DashboardController extends Controller
     ]);
   }
 
-  public function settings() {
+  public function settings()
+  {
     $user = User::where('id', auth()->user()->id)->first();
 
     return Inertia::render('Settings', [

@@ -4,19 +4,10 @@ import TextInput from '@/Components/TextInput';
 import React, { useState } from 'react';
 import ReactDatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
 import id from 'date-fns/locale/id';
-import Select from 'react-select';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const DataOrder = ({ data, layananData, onHandleChange, onDateChange, onSelectChange, errors }) => {
   registerLocale('id', id);
-  console.log(data);
-  const statusOption = [
-    { name: 'status', value: 'init', label: 'Init' },
-    { name: 'status', value: 'pending', label: 'Pending' },
-    { name: 'status', value: 'done', label: 'Done' },
-    { name: 'status', value: 'confirmed', label: 'Confirmed' },
-    { name: 'status', value: 'failed', label: 'Failed' },
-  ];
 
   return (
     <div className="grow">
