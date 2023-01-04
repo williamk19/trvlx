@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\User;
 use App\Services\Midtrans\CreateSnapTokenService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -10,6 +11,7 @@ use Inertia\Inertia;
 class DashboardController extends Controller
 {
   public function filter() {
+    
     $idRole = strval(auth()->user()->id_kategori);
     if ($idRole === '1' || $idRole === '2') {
       return redirect('/admin/dashboard');
@@ -43,6 +45,14 @@ class DashboardController extends Controller
 
     return Inertia::render('Client/Dashboard', [
       'orderList' => $order
+    ]);
+  }
+
+  public function settings() {
+    $user = User::where('id', auth()->user()->id)->first();
+
+    return Inertia::render('Settings', [
+      'itemUser' => $user,
     ]);
   }
 }

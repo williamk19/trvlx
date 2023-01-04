@@ -5,11 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 use Illuminate\Validation\Rule as ValidationRule;
 
 class UserController extends Controller
 {
+  public function getCategory($categoryId)
+  {
+    switch ($categoryId) {
+      case '1':
+        return 'admin';
+      case '2':
+        return 'admin';
+      case '3':
+        return 'sopir';
+      case '4':
+        return 'pengguna';
+      default:
+        return 'index';
+    }
+  }
 
   /**
    * Display a listing of the resource.
@@ -179,7 +195,7 @@ class UserController extends Controller
    */
   public function update(Request $request, User $user)
   {
-    $request->validate([
+    $valid = $request->validate([
       'nama_user' => 'required|string|max:255',
       'email' => [
         'required',
@@ -198,9 +214,21 @@ class UserController extends Controller
     $updateUser = [
       'nama_user' => $request->nama_user,
       'email' => $request->email,
-      'telepon_user' => $request->telepon_user,
-      'id_kategori' => $request->id_kategori
+      'telepon_user' => $request->telepon_user
     ];
+
+    if ($request->password !== '' || $request->password === null) {
+      $request->validate([
+        'password' => 'required_with:confirm|same:confirm',
+        'confirm' => 'required_with:password'
+      ]);
+      $updateUser = [
+        'nama_user' => $request->nama_user,
+        'email' => $request->email,
+        'telepon_user' => $request->telepon_user,
+        'password' => Hash::make($request->password)
+      ];
+    }
 
     User::where('id', $user->id)
       ->first()
@@ -209,6 +237,11 @@ class UserController extends Controller
     $updateUser['type'] = 'info';
     $userObject = (object) $updateUser;
     $category = $this->getCategory($user->id_kategori);
+
+    if ($request->type === "setting") {
+      return redirect()->route('account.settings')->with('message', 'fdsj');
+    }
+
     return redirect()
       ->route("user.$category")
       ->with('message', $userObject);
@@ -236,21 +269,5 @@ class UserController extends Controller
     return redirect()
       ->route("user.$category")
       ->with('message', $deletedUser);
-  }
-
-  public function getCategory($categoryId)
-  {
-    switch ($categoryId) {
-      case '1':
-        return 'admin';
-      case '2':
-        return 'admin';
-      case '3':
-        return 'sopir';
-      case '4':
-        return 'pengguna';
-      default:
-        return 'index';
-    }
   }
 }

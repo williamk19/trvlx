@@ -4,7 +4,7 @@ import InputError from '../../InputError';
 import { Inertia } from '@inertiajs/inertia';
 
 const FormAddKendaraan = ({ itemKendaraan }) => {
-  const { data, setData, post, processing, errors, reset } = useForm({
+  const { data, setData, post, processing, errors, reset, put } = useForm({
     nama_mobil: itemKendaraan?.nama_mobil.length > 0 ? itemKendaraan.nama_mobil : '',
     merk_mobil: itemKendaraan?.merk_mobil.length > 0 ? itemKendaraan.merk_mobil : '',
     plat_nomor: itemKendaraan?.plat_nomor.length > 0 ? itemKendaraan.plat_nomor : '',
@@ -25,7 +25,7 @@ const FormAddKendaraan = ({ itemKendaraan }) => {
     if (!itemKendaraan) {
       post(route('kendaraan.store'));
     } else {
-      Inertia.put(route('kendaraan.update', {
+      put(route('kendaraan.update', {
         kendaraan: itemKendaraan.id,
         ...data
       }));

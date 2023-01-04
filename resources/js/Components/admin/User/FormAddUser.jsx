@@ -5,11 +5,10 @@ import { Inertia } from '@inertiajs/inertia';
 import { toast, ToastContainer } from 'react-toastify';
 
 const FormAddUser = ({ itemUser, auth }) => {
-  console.log(itemUser.id, auth.user.id);
   let { url } = usePage();
   let idUrl = +url.split("/")[3];
 
-  const { data, setData, post, processing, errors, reset } = useForm({
+  const { data, setData, post, processing, errors, reset, put } = useForm({
     nama_user: itemUser?.nama_user.length > 0 ? itemUser.nama_user : '',
     email: itemUser?.email.length > 0 ? itemUser.email : '',
     telepon_user: itemUser?.telepon_user.length > 0 ? itemUser.telepon_user : '',
@@ -35,7 +34,7 @@ const FormAddUser = ({ itemUser, auth }) => {
     if (!itemUser) {
       post(route('user.store'));
     } else {
-      Inertia.put(route('user.update', {
+      put(route('user.update', {
         user: itemUser,
         ...data
       }));

@@ -36,6 +36,8 @@ Route::post('/order/payment', [OrderController::class, 'receivePayment'])->name(
 Route::group(['middleware' => ['auth', 'verified']], function () {
   Route::group(['middleware' => ['role:1,2,3,4']], function() {
     Route::get('/dashboard', [DashboardController::class, 'filter'])->name('dashboard');
+    Route::get('/account/settings', [DashboardController::class, 'settings'])->name('account.settings');
+    Route::put('/account/{user}', [UserController::class, 'update'])->name('account.update');
   });
 
   Route::group(['middleware' => ['role:1,2']], function () {

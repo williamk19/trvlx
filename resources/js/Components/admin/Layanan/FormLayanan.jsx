@@ -4,7 +4,7 @@ import { Inertia } from '@inertiajs/inertia';
 import CurrencyFormat from 'react-currency-format';
 
 const FormLayanan = ({ itemLayanan, itemSopir, itemKendaraan, listSopir, listKendaraan }) => {
-  const { data, setData, post, processing, errors, reset } = useForm({
+  const { data, setData, post, processing, errors, reset, put } = useForm({
     kota_asal: itemLayanan?.kota_asal.length > 0 ? itemLayanan.kota_asal : '',
     kota_tujuan: itemLayanan?.kota_tujuan.length > 0 ? itemLayanan.kota_tujuan : '',
     biaya_jasa: itemLayanan?.biaya_jasa > 0 ? itemLayanan.biaya_jasa : 0,
@@ -27,7 +27,7 @@ const FormLayanan = ({ itemLayanan, itemSopir, itemKendaraan, listSopir, listKen
     if (!itemLayanan) {
       post(route('layanan.store'));
     } else {
-      Inertia.put(route('layanan.update', {
+      put(route('layanan.update', {
         layanan: itemLayanan,
         ...data
       }));

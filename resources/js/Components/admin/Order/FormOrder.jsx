@@ -14,7 +14,7 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
   console.log(orderEdit);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const { data, setData, post, processing, errors, reset } = useForm({
+  const { data, setData, post, processing, errors, reset, put } = useForm({
     nama_penumpang: orderEdit?.nama_penumpang ? orderEdit.nama_penumpang : '',
     tanggal_pemberangkatan: orderEdit?.tanggal_pemberangkatan ? new Date(orderEdit.tanggal_pemberangkatan) : new Date(),
     jumlah_seat: orderEdit?.total_seat ? orderEdit?.total_seat : 1,
@@ -80,8 +80,7 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
     if (!orderEdit) {
       post(route('order.store'));
     } else {
-      console.log(data);
-      Inertia.put(route('order.update', {
+      put(route('order.update', {
         order: orderEdit,
         ...data
       }));
