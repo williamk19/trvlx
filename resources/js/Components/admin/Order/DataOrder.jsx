@@ -35,6 +35,7 @@ const DataOrder = ({ data, layananData, onHandleChange, onDateChange, onSelectCh
                 name="tanggal_pemberangkatan"
                 className='w-full text-gray-900 border-gray-300 rounded-lg'
                 selected={data.tanggal_pemberangkatan}
+                minDate={new Date()}
                 onChange={(date) => onDateChange(date)} />
               <InputError message={errors.tanggal_pemberangkatan} className="mt-2" />
             </div>

@@ -7,7 +7,9 @@ use App\Models\Layanan;
 use App\Models\Order;
 use App\Models\User;
 use App\Services\Midtrans\CreateSnapTokenService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class DashboardController extends Controller
@@ -51,7 +53,7 @@ class DashboardController extends Controller
         'status_pembayaran' => $order->status_pembayaran,
         'tanggal_pemberangkatan' => $order->tanggal_pemberangkatan
       ]));
-    
+
     return Inertia::render('Admin/Dashboard', [
       'orderCount' => $orderCount,
       'layananCount' => $layananCount,
@@ -82,9 +84,29 @@ class DashboardController extends Controller
     ]);
   }
 
-  public function sopir()
+  public function sopir(Request $request)
   {
-    return Inertia::render('Sopir/Dashboard');
+    DB::statement("SET SQL_MODE=''");
+    if ($request->date) {
+      $dateStart = Carbon::parse($request->date)->toDateString();
+    } else {
+      $dateStart = Carbon::now()->toDateString();
+    }
+    $dateEnd = Carbon::now()->addWeek()->toDateString();
+    
+    $dataLayananSopir = Order::with('layanan')
+      ->where('status_pembayaran', 'confirmed')
+      ->whereBetween('tanggal_pemberangkatan', [$dateStart, $dateEnd])
+      ->whereHas('layanan', function ($query) {
+        $query->where('id_sopir', '=', auth()->user()->id);
+      })
+      ->groupBy('id_layanan', 'tanggal_pemberangkatan')
+      ->get();
+    
+    return Inertia::render('Sopir/Dashboard', [
+      'dataLayananSopir' => $dataLayananSopir,
+      'date' => $dateStart
+    ]);
   }
 
   public function settings()

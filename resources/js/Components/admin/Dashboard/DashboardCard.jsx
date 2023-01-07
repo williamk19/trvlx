@@ -3,6 +3,7 @@ import { Link } from '@inertiajs/inertia-react';
 import React from 'react';
 
 const DashboardCard = ({ id, imgUrl, title, count, doneCount, url }) => {
+  console.log(doneCount);
   const colors = [
     'from-amber-500 to-amber-300',
     'from-emerald-500 to-emerald-300',
@@ -27,7 +28,7 @@ const DashboardCard = ({ id, imgUrl, title, count, doneCount, url }) => {
                 <p className='text-gray-600'>Total</p>
                 <div className="ml-2 text-xl font-bold text-slate-800">{count}</div>
               </div>
-              {doneCount && (
+              {doneCount <= 0 && (
                 <div className="flex items-center text-slate-400">
                   <p className='text-gray-600'>Perlu Konfirmasi</p>
                   <div className="ml-2 text-xl font-bold text-slate-800">{doneCount}</div>
