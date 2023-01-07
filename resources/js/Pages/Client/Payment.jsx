@@ -36,7 +36,7 @@ const Payment = (props) => {
         }
       });
     }
-  }
+  };
 
   return (
     <AuthenticatedLayout
@@ -50,7 +50,7 @@ const Payment = (props) => {
       />
       <div className='flex flex-col-reverse md:flex-row w-full gap-5'>
         <PaymentDetails order={props.order} />
-        <PaymentTrigger order={props.order} handlePayment={handlePayment}/>
+        <PaymentTrigger order={props.order} handlePayment={handlePayment} />
       </div>
     </AuthenticatedLayout>
   );

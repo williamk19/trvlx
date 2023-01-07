@@ -58,7 +58,7 @@ export default function Dashboard(props) {
     >
       <Head title="Dashboard" />
       <ToastContainer />
-      <div className="py-4">
+      <div className="">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className='mb-8'>
             <h1 className='text-xl md:text-2xl font-medium text-slate-800'>
@@ -73,7 +73,8 @@ export default function Dashboard(props) {
               imgUrl={cs}
               title={"Total Order Travel"}
               url={"/order"}
-              count={props.orderCount} />
+              count={props.orderCount}
+              doneCount={props.orderDoneCount} />
             <DashboardCard
               id={1}
               imgUrl={ticket}

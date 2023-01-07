@@ -20,7 +20,9 @@ export default function Dashboard(props) {
           </div>
           <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div className="p-6 bg-white border-b border-gray-200">
-              <BoxMap type='route' />
+              <div className="w-full h-52 md:h-96 rounded-2xl" >
+                <BoxMap type='route' />
+              </div>
             </div>
           </div>
         </div>

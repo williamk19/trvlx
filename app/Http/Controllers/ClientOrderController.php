@@ -221,6 +221,8 @@ class ClientOrderController extends Controller
 
     return Inertia::render('Client/Payment', [
       'order' => $order,
+      'serverKey' => config('midtrans.server_key'),
+      'clientKey' => config('midtrans.client_key'),
       'snapToken' => $snapToken
     ]);
   }

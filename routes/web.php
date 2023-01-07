@@ -34,7 +34,7 @@ Route::get('/', function () {
 Route::post('/order/payment', [OrderController::class, 'receivePayment'])->name('order.payment');
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
-  Route::group(['middleware' => ['role:1,2,3,4']], function() {
+  Route::group(['middleware' => ['role:1,2,3,4']], function () {
     Route::get('/dashboard', [DashboardController::class, 'filter'])->name('dashboard');
     Route::get('/account/settings', [DashboardController::class, 'settings'])->name('account.settings');
     Route::put('/account/{user}', [UserController::class, 'update'])->name('account.update');
@@ -47,7 +47,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::resource('layanan', LayananController::class);
 
-    Route::controller(UserController::class)->group(function() {
+    Route::controller(UserController::class)->group(function () {
       Route::get('/user/admin', 'admin')->name('user.admin');
       Route::get('/user/sopir', 'sopir')->name('user.sopir');
       Route::get('/user/pengguna', 'pengguna')->name('user.pengguna');
@@ -57,7 +57,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     });
     Route::resource('user', UserController::class);
 
-    Route::controller(OrderController::class)->group(function() {
+    Route::controller(OrderController::class)->group(function () {
       Route::get('/order/list', 'orderList')->name('order.list');
       Route::get('/order/data', 'orderData')->name('order.data');
       Route::get('/order/jemput', 'orderJemput')->name('order.jemput');
@@ -70,7 +70,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
   });
 
   Route::group(['middleware' => ['role:3']], function () {
-    
+    Route::get('/sopir/dashboard', [DashboardController::class, 'sopir'])->name('sopir.dashboard');
   });
 
   Route::group(['middleware' => ['role:4']], function () {

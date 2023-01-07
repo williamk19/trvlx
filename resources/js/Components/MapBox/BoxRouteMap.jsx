@@ -2,8 +2,16 @@ import { useMap } from 'react-leaflet';
 import { useEffect, useState, useRef } from 'react';
 import RoutingMap from './RoutingMap';
 import "leaflet/dist/leaflet.css";
+import { sortByDistance } from 'sort-by-distance';
 
-const tempDestination = [-7.4323535, 112.7205893];
+const tempDestination = [
+  [-7.289393, 112.721202],
+  [-7.253835, 112.755815],
+  [-7.309898, 112.753856],
+  [-7.319468, 112.72772],
+  [-7.343097, 112.757392],
+];
+
 const BoxRouteMap = ({ watchType = false, destination = tempDestination }) => {
   const routingMachine = useRef();
   const [host, setHost] = useState([]);
@@ -22,12 +30,19 @@ const BoxRouteMap = ({ watchType = false, destination = tempDestination }) => {
           setInitialHost([e.latlng.lat, e.latlng.lng]);
         });
       });
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (routingMachine.current) {
+      const points = destination.map((d) => {
+        return {x: d[0], y: d[1]}
+      })
+      const origin = {x: initialHost[0], y: initialHost[1]}
+      const sortedDestination = sortByDistance(origin, points).map((d) => [d.x, d.y]).reverse();
+      console.log(sortByDistance(origin, points));
+
       let waypoints = [
-        initialHost, destination
+        ...destination
       ];
       routingMachine.current.setWaypoints(waypoints);
     }

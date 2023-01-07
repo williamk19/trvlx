@@ -30,6 +30,11 @@ class DashboardController extends Controller
   public function admin()
   {
     $orderCount = Order::all()->count();
+    $orderDoneCount = Order::where(function ($query) {
+      $query
+        ->where('status_pembayaran', 'pending')
+        ->orWhere('status_pembayaran', 'done');
+    })->count();
     $layananCount = Layanan::all()->count();
     $kendaraanCount = Kendaraan::all()->count();
     $lastDoneOrder = Order::where(function ($query) {
@@ -51,7 +56,8 @@ class DashboardController extends Controller
       'orderCount' => $orderCount,
       'layananCount' => $layananCount,
       'kendaraanCount' => $kendaraanCount,
-      'lastDoneOrder' => $lastDoneOrder
+      'lastDoneOrder' => $lastDoneOrder,
+      'orderDoneCount' => $orderDoneCount
     ]);
   }
 
@@ -74,6 +80,11 @@ class DashboardController extends Controller
     return Inertia::render('Client/Dashboard', [
       'orderList' => $order
     ]);
+  }
+
+  public function sopir()
+  {
+    return Inertia::render('Sopir/Dashboard');
   }
 
   public function settings()

@@ -14,11 +14,13 @@ const DataJemput = ({ data, onHandleChange, errors, onLocationChange }) => {
           <div className="sm:flex gap-4 sm:items-start space-y-4 sm:space-y-0 sm:space-x-4 mt-5">
             <div className='w-full md:w-3/4 lg:w-2/4'>
               <InputLabel forInput="latlng_asal" value="Lokasi Jemput" className="mb-3" />
-              <BoxMap
-                name="latlng_asal"
-                latlng={data.latlng_asal}
-                onLocationChange={onLocationChange}
-              />
+              <div className="w-full h-52 md:h-72 rounded-2xl" >
+                <BoxMap
+                  name="latlng_asal"
+                  latlng={data.latlng_asal}
+                  onLocationChange={onLocationChange}
+                />
+              </div>
             </div>
             <div className='mt-10 w-full md:w-3/4 lg:w-2/4'>
               <div className='w-full'>
