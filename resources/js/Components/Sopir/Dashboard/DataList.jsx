@@ -17,12 +17,19 @@ const DataList = ({ dataLayananSopir }) => {
             <p className='font-semibold text-gray-700'>Belum Ada Pengantaran Travel</p>
           </div>
         )}
-        {dataLayananSopir.map((d) => (
-          <Link>
+        {dataLayananSopir.map((d, idx) => (
+          <Link
+            key={idx}
+            href={route('sopir.detail', {
+              tanggalPemberangkatan: d.tanggal_pemberangkatan,
+              idLayanan: d.layanan.id
+            })}
+          >
             <DataItem
               tanggalPemberangkatan={d.tanggal_pemberangkatan}
               kotaAsal={d.layanan.kota_asal}
               kotaTujuan={d.layanan.kota_tujuan}
+              idLayanan={d.layanan.id}
             />
           </Link>
         ))}

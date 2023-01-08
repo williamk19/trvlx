@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KendaraanController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SopirController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
@@ -71,6 +72,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
   Route::group(['middleware' => ['role:3']], function () {
     Route::get('/sopir/dashboard', [DashboardController::class, 'sopir'])->name('sopir.dashboard');
+    Route::get('/detail/', [SopirController::class, 'detail'])->name('sopir.detail');
+    Route::get('/jemput/', [SopirController::class, 'jemput'])->name('sopir.jemput');
+    Route::get('/antar/', [SopirController::class, 'antar'])->name('sopir.antar');
   });
 
   Route::group(['middleware' => ['role:4']], function () {

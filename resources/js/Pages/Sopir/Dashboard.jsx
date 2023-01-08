@@ -7,12 +7,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Inertia } from '@inertiajs/inertia';
 
 export default function Dashboard(props) {
-  console.log(props.date);
-  const [dateQuery, setDateQuery] = useState(props.date ? new Date(props.date) : "");
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(props.date);
+  const [update, setUpdate] = useState(false);
+  const [dateShow, setDateShow] = useState(new Date(props.date));
 
   useEffect(() => {
-    if (dateQuery !== '') {
+    if (update) {
       Inertia.get(route(route().current()),
         { date: date },
         {
@@ -21,8 +21,14 @@ export default function Dashboard(props) {
           preserveScroll: true
         }
       );
+      setUpdate(false);
     }
   }, [date]);
+
+  useEffect(() => {
+    setDate(new Date(dateShow).toISOString().slice(0, 10));
+    setUpdate(true)
+  }, [dateShow]);
 
   return (
     <AuthenticatedLayout
@@ -41,8 +47,8 @@ export default function Dashboard(props) {
             <div className='flex flex-col font-semibold gap-2'>
               <ReactDatePicker
                 className='rounded-lg text-gray-700 w-40'
-                onChange={(date) => setDate(date)}
-                selected={date}
+                onChange={(date) => setDateShow(date)}
+                selected={dateShow}
               // minDate={new Date()}
               />
             </div>
