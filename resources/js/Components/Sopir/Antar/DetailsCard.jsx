@@ -3,7 +3,6 @@ import { Link } from '@inertiajs/inertia-react';
 import React from 'react';
 
 const DetailsCard = ({ order }) => {
-  console.log(order);
   return (
     <div className="col-span-full sm:col-span-6 xl:col-span-4 bg-white shadow-lg rounded-xl mb-4 last-of-type:mb-0 border border-slate-200">
       <div className="flex flex-col h-full">

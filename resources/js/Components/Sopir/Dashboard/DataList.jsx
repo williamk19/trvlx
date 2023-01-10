@@ -3,7 +3,6 @@ import React from 'react';
 import DataItem from './DataItem';
 
 const DataList = ({ dataLayananSopir }) => {
-  console.log(dataLayananSopir);
   return (
     <div className="col-span-full xl:col-span-6 bg-white shadow-lg rounded-xl border border-slate-200">
       <header className="px-5 py-4 border-b border-slate-100">

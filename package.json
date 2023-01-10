@@ -42,6 +42,7 @@
         "react-slick": "^0.29.0",
         "react-toastify": "^9.1.1",
         "react-transition-group": "^4.4.5",
+        "react-whatsapp-widget": "^2.1.0",
         "slick-carousel": "^1.8.1",
         "sort-by-distance": "^2.0.0",
         "typewriter-effect": "^2.19.0"

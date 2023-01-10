@@ -39,7 +39,7 @@ const BoxRouteMap = ({ watchType = false, destination = tempDestination }) => {
       })
       const origin = {x: initialHost[0], y: initialHost[1]}
       const sortedDestination = sortByDistance(origin, points).map((d) => [d.x, d.y]).reverse();
-      console.log(sortByDistance(origin, points));
+      // console.log(sortByDistance(origin, points));
 
       let waypoints = [
         ...destination

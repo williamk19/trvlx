@@ -5,8 +5,9 @@ import HeroLandingPage from '@/Components/LandingPage/HeroLandingPage';
 import FooterLandingPage from '@/Components/LandingPage/FooterLandingPage';
 import BenefitsLandingPage from '@/Components/LandingPage/BenefitsLandingPage';
 import TravelPackageLandingPage from '@/Components/LandingPage/TravelPackageLandingPage';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import TestimonialsLandingPage from '@/Components/LandingPage/TestimonialsLandingPage';
+import { WhatsAppWidget } from 'react-whatsapp-widget';
+import 'react-whatsapp-widget/dist/index.css';
 
 
 export default function Welcome(props) {
@@ -20,6 +21,7 @@ export default function Welcome(props) {
         <TravelPackageLandingPage />
         <TestimonialsLandingPage />
         <FooterLandingPage />
+        <WhatsAppWidget phoneNumber="+6285156384597" />
       </div>
     </div>
   );

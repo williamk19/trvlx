@@ -5,7 +5,6 @@ import { Head, Link } from '@inertiajs/inertia-react';
 import React from 'react';
 
 const AntarDetail = (props) => {
-  // console.log(props);
   return (
     <AuthenticatedLayout
       auth={props.auth}
@@ -31,22 +30,33 @@ const AntarDetail = (props) => {
             </div>
           </div>
           <div className='flex flex-col-reverse md:gap-4 md:flex-row w-full'>
-            <div className='md:basis-4/6 h-96 overflow-auto pr-4'>
+            <div className='md:basis-4/6 h-96 md:h-96 overflow-scroll pr-4'>
               {props.order.map((o, idx) => (
                 <>
                   <DetailsCard order={o} key={idx} />
                 </>
               ))}
             </div>
-            <div className='pr-4 mb-5 max-h-56 md:basis-2/6 flex flex-row md:flex-col gap-2'>
-              <Link>
-                <div className='bg-sky-300 text-gray-800 font-semibold shadow-md p-4 rounded-lg basis-1/2 md:w-full border-2 border-gray-500'>
-                  <h1>Rute Penjemputan Penumpang</h1>
+            <div className='pr-4 w-full mb-5 max-h-56 md:basis-2/6 flex flex-row md:flex-col gap-2'>
+              <Link
+              className='w-1/2 md:w-full'
+                href={route('sopir.jemput', {
+                  tanggalPemberangkatan: props.tanggalPemberangkatan,
+                  idLayanan: props.layanan.id
+                })}
+              >
+                <div className='bg-sky-300 text-gray-800 font-semibold shadow-md p-4 rounded-lg basis-1/2 w-full md:w-full border-2 border-gray-500'>
+                  <h1>Rute Penjemputan</h1>
                 </div>
               </Link>
-              <Link>
-                <div className='bg-green-300 text-gray-800 font-semibold p-4 shadow-md rounded-lg basis-1/2 md:w-full border-2 border-gray-500'>
-                  <h1>Rute Pengantaran Penumpang</h1>
+              <Link
+                className='w-1/2 md:w-full'
+                href={route('sopir.antar', {
+                  tanggalPemberangkatan: props.tanggalPemberangkatan,
+                  idLayanan: props.layanan.id
+                })}>
+                <div className='bg-green-300 text-gray-800 font-semibold p-4 shadow-md rounded-lg basis-1/2 w-full md:w-full border-2 border-gray-500'>
+                  <h1>Rute Pengantaran</h1>
                 </div>
               </Link>
             </div>
