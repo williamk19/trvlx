@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import SidebarOrder from './SidebarOrder';
 import DataOrder from './DataOrder';
-import { useForm, usePage } from '@inertiajs/inertia-react';
+import { useForm } from '@inertiajs/inertia-react';
 import DataJemput from './DataJemput';
 import DataTujuan from './DataTujuan';
 import Modal from '@/Components/core/Modal';
 import { ToastContainer, toast } from 'react-toastify';
 import _ from 'lodash';
 import 'react-toastify/dist/ReactToastify.css';
-import { Inertia } from '@inertiajs/inertia';
 
 const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
-  console.log(orderEdit);
   const [modalOpen, setModalOpen] = useState(false);
 
   const { data, setData, post, processing, errors, reset, put } = useForm({

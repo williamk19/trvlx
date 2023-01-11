@@ -6,17 +6,9 @@ import "leaflet-routing-machine";
 
 
 const createRoutingMachineLayer = ({ waypoints }) => {
-  // console.log(waypoints);
+  console.log(waypoints); 
   const instance = leaflet.Routing.control({
-    // waypoints: [
-    //   [-7.289393, 112.721202],
-    //   [-7.343097, 112.757392],
-    //   [-7.253835, 112.755815],
-    //   [-7.309898, 112.753856],
-    //   [-7.319468, 112.72772]
-    //   // L.latLng(57.74, 11.94),
-    //   // L.latLng(57.6792, 11.949)
-    // ],
+    waypoints: waypoints,
     lineOptions: {
       styles: [{ color: "#6FA1EC", weight: 5 }]
     },

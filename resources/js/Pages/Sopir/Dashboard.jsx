@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/inertia-react';
+import { Head, usePage } from '@inertiajs/inertia-react';
 import ReactDatePicker from 'react-datepicker';
 import DataList from '@/Components/Sopir/Dashboard/DataList';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Inertia } from '@inertiajs/inertia';
+import HeaderSupir from '@/Components/admin/HeaderSupir';
 
 export default function Dashboard(props) {
   const [date, setDate] = useState(props.date);
   const [update, setUpdate] = useState(false);
   const [dateShow, setDateShow] = useState(new Date(props.date));
+  const { url } = usePage();
 
   useEffect(() => {
     if (update) {
       Inertia.get(route(route().current()),
-        { date: date },
+        { tanggalPemberangkatan: date },
         {
           replace: true,
           preserveState: true,
@@ -27,7 +29,7 @@ export default function Dashboard(props) {
 
   useEffect(() => {
     setDate(new Date(dateShow).toISOString().slice(0, 10));
-    setUpdate(true)
+    setUpdate(true);
   }, [dateShow]);
 
   return (
@@ -37,8 +39,12 @@ export default function Dashboard(props) {
       header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
     >
       <Head title="Dashboard" />
-      <div className="py-0 md:py-12">
+      <div className="py-0 md:py-8">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+          <HeaderSupir
+            className={'mb-4'}
+            url={url}
+          />
           <div className='flex flex-col gap-y-4 sm:flex-row mb-8 w-full justify-between'>
             <h1 className='text-xl md:text-2xl font-medium text-slate-800'>
               Selamat Datang,<br />

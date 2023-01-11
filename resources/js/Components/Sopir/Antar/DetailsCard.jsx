@@ -26,7 +26,7 @@ const DetailsCard = ({ order }) => {
             </div>
             <div className="text-xs md:text-sm text-slate-600">
               <h1>
-                Alamat Tujuan : {order.lokasi.alamat_asal}
+                Alamat Tujuan : {order.lokasi.alamat_tujuan}
               </h1>
             </div>
             <div className='mt-3 sm:flex sm:justify-end'>

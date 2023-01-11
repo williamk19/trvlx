@@ -87,8 +87,8 @@ class DashboardController extends Controller
   public function sopir(Request $request)
   {
     DB::statement("SET SQL_MODE=''");
-    if ($request->date) {
-      $dateStart = Carbon::parse($request->date)->toDateString();
+    if ($request->tanggalPemberangkatan) {
+      $dateStart = Carbon::parse($request->tanggalPemberangkatan)->toDateString();
     } else {
       $dateStart = Carbon::now()->toDateString();
     }

@@ -1,12 +1,21 @@
+import HeaderSupir from '@/Components/admin/HeaderSupir';
 import BoxMap from '@/Components/MapBox/BoxMap';
-import DetailsCard from '@/Components/Sopir/Antar/DetailsCard';
-import JemputCard from '@/Components/Sopir/Antar/JemputCard';
+import AntarJemputCard from '@/Components/Sopir/Antar/AntarJemputCard';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
-import { Head } from '@inertiajs/inertia-react';
+import { Head, usePage } from '@inertiajs/inertia-react';
+import { useEffect, useState } from 'react';
 
 const JemputMap = (props) => {
-  console.log(props);
+  const { url } = usePage();
+  const pathname = url;
+  const [mapState, setMapState] = useState([]);
+
+  useEffect(() => {
+    const maps = props.order.map((o) => [o.lokasi.lat_asal, o.lokasi.lng_asal]);
+    setMapState(maps);
+  }, []);
+
   return (
     <AuthenticatedLayout
       auth={props.auth}
@@ -16,6 +25,9 @@ const JemputMap = (props) => {
       <Head title="Peta Penjemputan" />
       <div className="py-0 h-full">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 h-full">
+          <HeaderSupir
+            url={pathname}
+          />
           <div className='flex flex-col gap-y-4 sm:flex-row mb-5 w-full justify-between'>
             <div className='flex justify-between flex-col xs:flex-row w-full'>
               <h1 className='text-base md:text-2xl font-semibold text-slate-800 mb-6'>
@@ -36,13 +48,11 @@ const JemputMap = (props) => {
           <div className='w-full flex flex-col-reverse justify-start md:h-4/6 md:flex-row gap-5 h-5/6'>
             <div className='basis-1/2 md:basis-1/3 overflow-scroll h-45 md:h-full pr-3'>
               {props.order.map((o, idx) => (
-                <>
-                  <JemputCard order={o} key={idx} />
-                </>
+                <AntarJemputCard order={o} type={'jemput'} key={idx} />
               ))}
             </div>
             <div className='w-full basis-1/2 md:basis-2/3 md:h-full pr-0'>
-              <BoxMap type='route' />
+              <BoxMap type='route' destination={mapState} />
             </div>
           </div>
         </div>

@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import Sidebar from '@/Components/core/Sidebar';
 import Header from '@/Components/core/Header';
-import { WhatsAppWidget } from 'react-whatsapp-widget';
-import 'react-whatsapp-widget/dist/index.css';
 
 const AuthenticatedLayout = ({ auth, header, children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -15,7 +13,6 @@ const AuthenticatedLayout = ({ auth, header, children }) => {
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl h-[calc(100%_-_4rem)] mx-auto md:h-full overflow-scroll">
             {children}
           </div>
-          <WhatsAppWidget />
         </main>
       </div>
     </div>

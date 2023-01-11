@@ -1,10 +1,14 @@
+import HeaderSupir from '@/Components/admin/HeaderSupir';
 import DetailsCard from '@/Components/Sopir/Antar/DetailsCard';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
-import { Head, Link } from '@inertiajs/inertia-react';
+import { Head, Link, usePage } from '@inertiajs/inertia-react';
 import React from 'react';
 
 const AntarDetail = (props) => {
+  const { url } = usePage();
+  const pathname = url;
+
   return (
     <AuthenticatedLayout
       auth={props.auth}
@@ -14,6 +18,9 @@ const AntarDetail = (props) => {
       <Head title="Antar Detail" />
       <div className="py-0">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+          <HeaderSupir
+            url={pathname}
+          />
           <div className='flex flex-col gap-y-4 sm:flex-row mb-8 w-full justify-between'>
             <div>
               <h1 className='text-xl md:text-2xl font-semibold text-slate-800 mb-6'>

@@ -72,9 +72,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
   Route::group(['middleware' => ['role:3']], function () {
     Route::get('/sopir/dashboard', [DashboardController::class, 'sopir'])->name('sopir.dashboard');
-    Route::get('/detail/', [SopirController::class, 'detail'])->name('sopir.detail');
-    Route::get('/jemput/', [SopirController::class, 'jemput'])->name('sopir.jemput');
-    Route::get('/antar/', [SopirController::class, 'antar'])->name('sopir.antar');
+    Route::get('/sopir/dashboard/detail/', [SopirController::class, 'detail'])->name('sopir.detail');
+    Route::get('/sopir/dashboard/detail/jemput/', [SopirController::class, 'jemput'])->name('sopir.jemput');
+    Route::get('/sopir/dashboard/detail/antar/', [SopirController::class, 'antar'])->name('sopir.antar');
   });
 
   Route::group(['middleware' => ['role:4']], function () {

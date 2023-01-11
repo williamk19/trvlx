@@ -1,11 +1,19 @@
 import React from 'react';
 import UserMenu from '@/Components/Utility/header/UserMenu';
+import { ChatBubbleBottomCenterIcon } from '@heroicons/react/24/solid';
 
-function Header({
+const Header = ({
   sidebarOpen,
   setSidebarOpen,
   auth
-}) {
+}) => {
+  const buttonHelpHandler = (e) => {
+    e.preventDefault();
+    const phoneNumber = "+6285156384597";
+    const text = "Hallo, Admin!";
+    window.open("https://wa.me/" + phoneNumber + "?text=" + text);
+  };
+
   return (
     <header className="sticky top-0 bg-white border-b border-slate-200 z-30">
       <div className="px-4 sm:px-6 lg:px-8">
@@ -26,6 +34,12 @@ function Header({
             </button>
           </div>
           <div className="flex items-center">
+            <button
+              className={`w-8 h-8 flex items-center justify-center bg-green-400 hover:bg-green-500 transition duration-150 rounded-full `}
+              onClick={buttonHelpHandler}
+            >
+              <ChatBubbleBottomCenterIcon className='w-4 h-4 text-white' />
+            </button>
             <hr className="w-px h-6 bg-slate-200 mx-3" />
             <UserMenu auth={auth} />
           </div>
@@ -33,6 +47,6 @@ function Header({
       </div>
     </header>
   );
-}
+};
 
 export default Header;
