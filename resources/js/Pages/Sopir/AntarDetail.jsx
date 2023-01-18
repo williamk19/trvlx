@@ -37,7 +37,7 @@ const AntarDetail = (props) => {
             </div>
           </div>
           <div className='flex flex-col-reverse md:gap-4 md:flex-row w-full'>
-            <div className='md:basis-4/6 h-96 md:h-96 overflow-scroll pr-4'>
+            <div className='md:basis-4/6 h-96 md:h-96 overflow-auto pr-4'>
               {props.order.map((o, idx) => (
                 <>
                   <DetailsCard order={o} key={idx} />

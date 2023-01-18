@@ -4,7 +4,15 @@ import BoxRouteMap from './BoxRouteMap';
 import "leaflet/dist/leaflet.css";
 import GeoSearchMap from './GeoSearchMap';
 
-const BoxMap = ({ type = 'pick', name, latlng, onLocationChange, destination = [] }) => {
+const BoxMap = ({
+  type = 'pick',
+  orderType = 'jemput',
+  name,
+  latlng,
+  onLocationChange,
+  orders = [],
+  destination = []
+}) => {
   return (
     <MapContainer
       className='w-full h-full rounded-2xl z-0'
@@ -15,7 +23,12 @@ const BoxMap = ({ type = 'pick', name, latlng, onLocationChange, destination = [
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {type === 'route' && (<BoxRouteMap destination={destination} />)}
+      {type === 'route' && (
+        <BoxRouteMap
+          orderType={orderType}
+          orders={orders}
+          destination={destination}
+        />)}
       {type === 'pick' && <>
         <GeoSearchMap name={name} onLocationChange={onLocationChange} />
         <DragMarkerMap

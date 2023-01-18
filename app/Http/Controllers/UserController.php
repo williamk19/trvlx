@@ -195,7 +195,7 @@ class UserController extends Controller
    */
   public function update(Request $request, User $user)
   {
-    $valid = $request->validate([
+    $request->validate([
       'nama_user' => 'required|string|max:255',
       'email' => [
         'required',
@@ -211,13 +211,7 @@ class UserController extends Controller
       ]
     ]);
 
-    $updateUser = [
-      'nama_user' => $request->nama_user,
-      'email' => $request->email,
-      'telepon_user' => $request->telepon_user
-    ];
-
-    if ($request->password !== '' || $request->password === null) {
+    if ($request->password != '' || $request->password != null) {
       $request->validate([
         'password' => 'required_with:confirm|same:confirm',
         'confirm' => 'required_with:password'
@@ -227,6 +221,12 @@ class UserController extends Controller
         'email' => $request->email,
         'telepon_user' => $request->telepon_user,
         'password' => Hash::make($request->password)
+      ];
+    } else {
+      $updateUser = [
+        'nama_user' => $request->nama_user,
+        'email' => $request->email,
+        'telepon_user' => $request->telepon_user
       ];
     }
 

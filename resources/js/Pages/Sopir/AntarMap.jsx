@@ -46,13 +46,12 @@ const AntarMap = (props) => {
             </div>
           </div>
           <div className='w-full flex flex-col-reverse justify-start md:h-4/6 md:flex-row gap-5 h-5/6'>
-            <div className='basis-1/2 md:basis-1/3 overflow-scroll h-45 md:h-full pr-3'>
-              {props.order.map((o, idx) => (
-                <AntarJemputCard order={o} type={'antar'} key={idx} />
-              ))}
-            </div>
-            <div className='w-full basis-1/2 md:basis-2/3 md:h-full pr-0'>
-              <BoxMap type='route' destination={mapState} />
+            <div className='w-full h-full pr-0'>
+              <BoxMap
+                orderType='antar'
+                type='route'
+                orders={props.order}
+                destination={mapState} />
             </div>
           </div>
         </div>

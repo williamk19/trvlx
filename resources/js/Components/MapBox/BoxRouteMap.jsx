@@ -12,7 +12,13 @@ const tempDestination = [
   [-7.343097, 112.757392],
 ];
 
-const BoxRouteMap = ({ watchType = false, destination = tempDestination }) => {
+const BoxRouteMap = ({
+  watchType = false,
+  orderType = 'jemput',
+  destination = tempDestination,
+  orders = []
+}) => {
+
   const routingMachine = useRef();
   const [host, setHost] = useState([]);
   const [initialHost, setInitialHost] = useState([]);
@@ -35,21 +41,26 @@ const BoxRouteMap = ({ watchType = false, destination = tempDestination }) => {
   useEffect(() => {
     if (routingMachine.current) {
       const points = destination.map((d) => {
-        return {x: d[0], y: d[1]}
-      })
-      const origin = {x: initialHost[0], y: initialHost[1]}
+        return { x: d[0], y: d[1] };
+      });
+      const origin = { x: initialHost[0], y: initialHost[1] };
       const sortedDestination = sortByDistance(origin, points).map((d) => [d.x, d.y]).reverse();
 
       let waypoints = [
         initialHost, ...sortedDestination
       ];
+
       routingMachine.current.setWaypoints(waypoints);
     }
   }, [initialHost, destination]);
 
   return (
     <>
-      <RoutingMap ref={routingMachine} waypoints={waypoints} />
+      <RoutingMap
+        ref={routingMachine}
+        orderType={orderType}
+        waypoints={waypoints}
+        orders={orders} />
     </>
   );
 };

@@ -32,6 +32,8 @@ const DataOrder = ({ data, layananData, onHandleChange, onDateChange, onSelectCh
               <InputLabel className='mb-2' forInput="tanggal_pemberangkatan" value="Tanggal Pemberangkatan" />
               <ReactDatePicker
                 locale="id"
+                disabledKeyboardNavigation
+                onFocus={e => e.target.blur()}
                 name="tanggal_pemberangkatan"
                 className='w-full text-gray-900 border-gray-300 rounded-lg'
                 selected={data.tanggal_pemberangkatan}

@@ -52,10 +52,11 @@ export default function Dashboard(props) {
             </h1>
             <div className='flex flex-col font-semibold gap-2'>
               <ReactDatePicker
+                disabledKeyboardNavigation
+                onFocus={e => e.target.blur()}
                 className='rounded-lg text-gray-700 w-40'
                 onChange={(date) => setDateShow(date)}
                 selected={dateShow}
-              // minDate={new Date()}
               />
             </div>
           </div>
