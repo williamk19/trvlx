@@ -20,6 +20,7 @@ return new class extends Migration
       $table->string('nama_mobil');
       $table->unsignedInteger('jumlah_seat');
       $table->timestamps();
+      $table->softDeletes();
     });
   }
 

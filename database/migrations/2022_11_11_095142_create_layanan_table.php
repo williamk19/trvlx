@@ -22,6 +22,7 @@ return new class extends Migration
       $table->double('biaya_jasa');
       $table->enum('status', ['active', 'disabled']);
       $table->timestamps();
+      $table->softDeletes();
     });
   }
 

@@ -32,6 +32,7 @@ return new class extends Migration
       $table->double('total_harga');
       $table->string('snap_token')->nullable();
       $table->timestamps();
+      $table->softDeletes();
     });
   }
 

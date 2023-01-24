@@ -154,7 +154,7 @@ class LayananController extends Controller
       'kendaraan' => 'required|numeric',
       'status' => 'required|in:active,disabled'
     ]);
-    
+
     $updateLayanan = [
       'kota_asal' => $request->kota_asal,
       'kota_tujuan' => $request->kota_tujuan,

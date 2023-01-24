@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Kendaraan extends Model
 {
   use HasFactory;
-  // use SoftDeletes;
+  use SoftDeletes;
 
   protected $table = 'kendaraan';
   protected $primaryKey = 'id';
@@ -25,6 +25,6 @@ class Kendaraan extends Model
 
   public function layanan()
   {
-    return $this->hasMany(Layanan::class, 'id_kendaraan');
+    return $this->hasMany(Layanan::class, 'id_kendaraan')->withTrashed();
   }
 }

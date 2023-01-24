@@ -5,6 +5,7 @@ import CurrencyFormat from 'react-currency-format';
 import PaginationKendaraan from '../Kendaraan/PaginationKendaraan';
 
 const TableLayanan = ({ layanan, query }) => {
+  console.log(layanan.data);
   const [data, setData] = useState(layanan.data);
   const [prevUrl, setPrevUrl] = useState(layanan.prev_page_url);
   const [nextUrl, setNextUrl] = useState(layanan.next_page_url);
@@ -63,7 +64,7 @@ const TableLayanan = ({ layanan, query }) => {
           </div>
         </td>
         <td>
-          <div className="font-semibold">
+          <div className={`font-semibold ${l.sopir.deleted_at ? 'text-red-500' : 'text-black'}`}>
             {l.sopir.nama_user}
           </div>
         </td>
@@ -73,9 +74,9 @@ const TableLayanan = ({ layanan, query }) => {
           </div>
         </td>
         <td>
-          <CurrencyFormat 
+          <CurrencyFormat
             value={l.biaya_jasa}
-            displayType={'text'} 
+            displayType={'text'}
             thousandSeparator={true}
             prefix={'Rp. '} />
         </td>
