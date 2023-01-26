@@ -16,29 +16,8 @@ export default function Login({ auth, status, canResetPassword }) {
   });
   const [bannerOpen, setBannerOpen] = useState(false);
 
-  // const [timeoutLogin, setTimeoutLogin] = useState(0);
-  // const [timeLeft, { start, pause, resume }] = useCountDown(0, 1000);
-  // useEffect(() => {
-  //   if (typeof errors?.seconds == 'number') {
-  //     setTimeoutLogin(errors?.secods);
-  //   }
-  // }, [errors]);
-  // useEffect(() => {
-  //   if (timeoutLogin > 0) {
-  //     start(timeoutLogin * 1000);
-  //   }
-  // }, [timeoutLogin]);
-  // useEffect(() => {
-  //   console.log(timeLeft);
-  //   if (timeLeft > 0) {
-  //     errors.email = `Terlalu banyak login. Coba login kembali dalam ${timeLeft / 1000} detik.`;
-  //   } else if (timeLeft === 0) {
-  //     errors.email = ``;
-  //   }
-  // }, [timeLeft]);
-
   useEffect(() => {
-    if (status) 
+    if (status)
       setBannerOpen(true);
 
     return () => {
@@ -58,7 +37,7 @@ export default function Login({ auth, status, canResetPassword }) {
   return (
     <GuestLayout auth={auth}>
       <Head title="Log in" />
-      {status && 
+      {status &&
         <Banner className="w-full mb-10" type="success" open={bannerOpen} setOpen={setBannerOpen}>
           {status}
         </Banner>}

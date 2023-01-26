@@ -5,7 +5,6 @@ import CurrencyFormat from 'react-currency-format';
 import PaginationKendaraan from '../Kendaraan/PaginationKendaraan';
 
 const TableLayanan = ({ layanan, query }) => {
-  console.log(layanan.data);
   const [data, setData] = useState(layanan.data);
   const [prevUrl, setPrevUrl] = useState(layanan.prev_page_url);
   const [nextUrl, setNextUrl] = useState(layanan.next_page_url);

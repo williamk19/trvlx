@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'Data Tidak Ditemukan.',
+    'failed' => 'Username atau Password Salah',
     'password' => 'Password yang diberikan tidak sesuai.',
     'throttle' => 'Terlalu banyak login. Coba login kembali dalam :seconds detik.',
 

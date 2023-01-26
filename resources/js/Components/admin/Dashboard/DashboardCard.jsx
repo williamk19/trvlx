@@ -3,7 +3,6 @@ import { Link } from '@inertiajs/inertia-react';
 import React from 'react';
 
 const DashboardCard = ({ id, imgUrl, title, count, doneCount, url }) => {
-  console.log(doneCount);
   const colors = [
     'from-amber-500 to-amber-300',
     'from-emerald-500 to-emerald-300',
@@ -34,7 +33,7 @@ const DashboardCard = ({ id, imgUrl, title, count, doneCount, url }) => {
                   <div className="ml-2 text-xl font-bold text-slate-800">{doneCount}</div>
                 </div>
               )}
-              
+
             </div>
             <Link href={url}>
               <button className="btn-sm text-black bg-sky-200 hover:bg-sky-300 transition-colors shadow-md rounded-md flex items-center">
