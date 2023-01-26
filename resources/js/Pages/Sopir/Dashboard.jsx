@@ -46,10 +46,12 @@ export default function Dashboard(props) {
             url={url}
           />
           <div className='flex flex-col gap-y-4 sm:flex-row mb-8 w-full justify-between'>
-            <h1 className='text-xl md:text-2xl font-medium text-slate-800'>
-              Selamat Datang,<br />
-              <span className='font-bold'>{props.auth.user.nama_user}</span> ✨
-            </h1>
+            {props.auth.user.id_kategori === '3' && (
+              <h1 className='text-xl md:text-2xl font-medium text-slate-800'>
+                Selamat Datang,<br />
+                <span className='font-bold'>{props.auth.user.nama_user}</span> ✨
+              </h1>
+            )}
             <div className='flex flex-col font-semibold gap-2'>
               <ReactDatePicker
                 disabledKeyboardNavigation
@@ -61,7 +63,7 @@ export default function Dashboard(props) {
             </div>
           </div>
           <div className=''>
-            <DataList dataLayananSopir={props.dataLayananSopir} />
+            <DataList idKategori={props.auth.user.id_kategori} dataLayananSopir={props.dataLayananSopir} />
           </div>
         </div>
       </div>

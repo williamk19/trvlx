@@ -1,6 +1,7 @@
 import leaflet, { Icon } from "leaflet";
 import { createControlComponent } from "@react-leaflet/core";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
+import icons from "leaflet-color-number-markers";
 import ReactDOMServer from "react-dom/server";
 import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine";
@@ -22,31 +23,40 @@ const createRoutingMachineLayer = ({ waypoints, orders, orderType }) => {
     collapsible: false,
     show: false,
     createMarker: (i, waypoint, n) => {
-      return leaflet.marker(
-        waypoint.latLng, {
-        icon: new Icon({
-          html: '<h1>hehe</h1>',
-          iconUrl: markerIcon,
-          iconSize: [18, 30],
-          iconAnchor: [12, 41]
+      if (i === 0) {
+        return leaflet.marker(
+          waypoint.latLng, {
+          icon: new Icon({
+            html: '<h1>hehe</h1>',
+            iconUrl: markerIcon,
+            iconSize: [25, 40],
+            iconAnchor: [12, 41]
+          })
         })
-      })
-        .bindPopup(
-          ReactDOMServer.renderToString(
-            <AntarJemputCard order={orders[1]} type={orderType} key={i} />,
-            { autoClose: false }
+          .bindPopup(
+            ReactDOMServer.renderToString(
+              <div className='p-4'>
+                <h1 className='text-xl font-semibold'>Ini Lokasi Anda</h1>
+              </div>,
+              { autoClose: false }
+            )
           )
-        )
-        .openPopup();
+          .openPopup();
+      } else {
+        return leaflet.marker(
+          waypoint.latLng, {
+          icon: icons.blue.numbers[i]
+        })
+          .bindPopup(
+            ReactDOMServer.renderToString(
+              <AntarJemputCard order={orders[i - 1]} type={orderType} key={i} />,
+              { autoClose: false }
+            )
+          )
+          .openPopup();
+      }
     }
   });
-
-  // On Routes Found Handle
-  // instance.on('routesfound', function (e) {
-  //   var routes = e.routes;
-  //   var summary = routes[0].summary;
-  //   console.log('Total distance is ' + summary.totalDistance / 1000 + ' km and total time is ' + Math.round(summary.totalTime % 3600 / 60) + ' minutes');
-  // });
 
   return instance;
 };

@@ -45,9 +45,9 @@ const JemputMap = (props) => {
               </div>
             </div>
           </div>
-          <div className='w-full flex flex-col-reverse justify-start md:h-4/6 md:flex-row gap-5 h-3/4 md:5/6'>
+          <div className='w-full flex flex-col-reverse justify-start h-3/4 md:h-5/6 md:flex-row gap-5 md:5/6 md:pb-5 lg:pb-10'>
             <div className='w-full h-full pr-0'>
-              <BoxMap 
+              <BoxMap
                 type='route'
                 orders={props.order}
                 orderType='jemput'

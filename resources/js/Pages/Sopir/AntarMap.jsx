@@ -45,7 +45,7 @@ const AntarMap = (props) => {
               </div>
             </div>
           </div>
-          <div className='w-full flex flex-col-reverse justify-start md:h-4/6 md:flex-row gap-5 h-3/4 md:5/6'>
+          <div className='w-full flex flex-col-reverse justify-start md:h-5/6 md:flex-row gap-5 h-3/4 md:5/6'>
             <div className='w-full h-full pr-0'>
               <BoxMap
                 orderType='antar'

@@ -2,7 +2,9 @@ import { Link } from '@inertiajs/inertia-react';
 import React from 'react';
 import DataItem from './DataItem';
 
-const DataList = ({ dataLayananSopir }) => {
+const DataList = ({ idKategori, dataLayananSopir }) => {
+  let nextUrl = idKategori === 3 ? 'sopir.detail' : 'keberangkatan.detail';
+
   return (
     <div className="col-span-full xl:col-span-6 bg-white shadow-lg rounded-xl border border-slate-200">
       <header className="px-5 py-4 border-b border-slate-100">
@@ -19,7 +21,7 @@ const DataList = ({ dataLayananSopir }) => {
         {dataLayananSopir.map((d, idx) => (
           <Link
             key={idx}
-            href={route('sopir.detail', {
+            href={route(nextUrl, {
               tanggalPemberangkatan: d.tanggal_pemberangkatan,
               idLayanan: d.layanan.id
             })}

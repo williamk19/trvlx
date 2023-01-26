@@ -2,12 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, usePage } from '@inertiajs/inertia-react';
 import Logo from '@/assets/images/logo.png';
 import LogoSmall from '@/assets/images/logo-small.png';
-import { 
-  UsersIcon, 
-  TvIcon, 
-  TruckIcon, 
-  TicketIcon, 
-  MapIcon 
+import {
+  UsersIcon,
+  TvIcon,
+  TruckIcon,
+  TicketIcon,
+  MapIcon,
+  CalendarDaysIcon
 } from '@heroicons/react/24/solid';
 import _ from 'lodash';
 
@@ -55,17 +56,19 @@ function Sidebar({ role, sidebarOpen, setSidebarOpen }) {
     switch (parseInt(role)) {
       case 1:
         setSidebarMenu([
-          { name: 'dashboard', slug: 'dashboard', url: '/dashboard', icon: <TvIcon className='w-5 ' /> },
-          { name: 'order', slug: 'order', url: '/order', icon: <TicketIcon className='w-5 ' /> },
-          { name: 'layanan', slug: 'layanan', url: '/layanan', icon: <MapIcon className='w-5 ' /> },
-          { name: 'kendaraan', slug: 'kendaran', url: '/kendaraan', icon: <TruckIcon className='w-5 ' /> },
-          { name: 'user', slug: 'user', url: '/user', icon: <UsersIcon className='w-5 ' /> }
+          { name: 'dashboard', url: '/dashboard', icon: <TvIcon className='w-5 ' /> },
+          { name: 'order', url: '/order', icon: <TicketIcon className='w-5 ' /> },
+          { name: 'keberangkatan', url: '/keberangkatan', icon: <CalendarDaysIcon className='w-5 ' /> },
+          { name: 'layanan', url: '/layanan', icon: <MapIcon className='w-5 ' /> },
+          { name: 'kendaraan', url: '/kendaraan', icon: <TruckIcon className='w-5 ' /> },
+          { name: 'user', url: '/user', icon: <UsersIcon className='w-5 ' /> }
         ]);
         break;
       case 2:
         setSidebarMenu([
           { name: 'dashboard', url: '/dashboard', icon: <TvIcon className='w-5 ' /> },
           { name: 'order', url: '/order', icon: <TicketIcon className='w-5 ' /> },
+          { name: 'keberangkatan', url: '/keberangkatan', icon: <CalendarDaysIcon className='w-5 ' /> },
           { name: 'layanan', url: '/layanan', icon: <MapIcon className='w-5 ' /> },
           { name: 'kendaraan', url: '/kendaraan', icon: <TruckIcon className='w-5 ' /> },
           { name: 'user', url: '/user', icon: <UsersIcon className='w-5 ' /> }

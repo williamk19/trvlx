@@ -70,11 +70,18 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::resource('order', OrderController::class);
   });
 
-  Route::group(['middleware' => ['role:3']], function () {
+  Route::group(['middleware' => ['role:1,2,3']], function () {
     Route::get('/sopir/dashboard', [DashboardController::class, 'sopir'])->name('sopir.dashboard');
-    Route::get('/sopir/dashboard/detail/', [SopirController::class, 'detail'])->name('sopir.detail');
-    Route::get('/sopir/dashboard/detail/jemput/', [SopirController::class, 'jemput'])->name('sopir.jemput');
-    Route::get('/sopir/dashboard/detail/antar/', [SopirController::class, 'antar'])->name('sopir.antar');
+
+    Route::controller(SopirController::class)->group(function () {
+      Route::get('/keberangkatan', 'keberangkatan')->name('keberangkatan');
+      Route::get('/keberangkatan/detail/', 'detail')->name('keberangkatan.detail');
+      Route::get('/keberangkatan/jemput/', 'jemput')->name('keberangkatan.jemput');
+      Route::get('/keberangkatan/antar/', 'antar')->name('keberangkatan.antar');
+      Route::get('/sopir/dashboard/detail/', 'detail')->name('sopir.detail');
+      Route::get('/sopir/dashboard/detail/jemput/', 'jemput')->name('sopir.jemput');
+      Route::get('/sopir/dashboard/detail/antar/', 'antar')->name('sopir.antar');
+    });
   });
 
   Route::group(['middleware' => ['role:4']], function () {

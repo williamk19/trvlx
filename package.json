@@ -28,6 +28,7 @@
         "daisyui": "^2.27.0",
         "laravel-echo": "^1.14.2",
         "leaflet": "^1.9.3",
+        "leaflet-color-number-markers": "^1.0.7",
         "leaflet-control-geocoder": "^2.4.0",
         "leaflet-routing-machine": "^3.2.12",
         "leaflet.locatecontrol": "^0.79.0",
@@ -44,7 +45,6 @@
         "react-transition-group": "^4.4.5",
         "react-whatsapp-widget": "^2.1.0",
         "slick-carousel": "^1.8.1",
-        "sort-by-distance": "^2.0.0",
         "typewriter-effect": "^2.19.0"
     }
 }

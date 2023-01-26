@@ -8,6 +8,7 @@ import React from 'react';
 const AntarDetail = (props) => {
   const { url } = usePage();
   const pathname = url;
+  let nextUrl = props.auth.user.id_kategori === 3 ? 'sopir' : 'keberangkatan';
 
   return (
     <AuthenticatedLayout
@@ -39,15 +40,15 @@ const AntarDetail = (props) => {
           <div className='flex flex-col-reverse md:gap-4 md:flex-row w-full'>
             <div className='md:basis-4/6 h-96 md:h-96 overflow-auto pr-4'>
               {props.order.map((o, idx) => (
-                <>
-                  <DetailsCard order={o} key={idx} />
-                </>
+                <div className='mb-4 last-of-type:mb-0' key={idx}>
+                  <DetailsCard order={o}  />
+                </div>
               ))}
             </div>
             <div className='pr-4 w-full mb-5 max-h-56 md:basis-2/6 flex flex-row md:flex-col gap-2'>
               <Link
               className='w-1/2 md:w-full'
-                href={route('sopir.jemput', {
+                href={route(`${nextUrl}.jemput`, {
                   tanggalPemberangkatan: props.tanggalPemberangkatan,
                   idLayanan: props.layanan.id
                 })}
@@ -58,7 +59,7 @@ const AntarDetail = (props) => {
               </Link>
               <Link
                 className='w-1/2 md:w-full'
-                href={route('sopir.antar', {
+                href={route(`${nextUrl}.antar`, {
                   tanggalPemberangkatan: props.tanggalPemberangkatan,
                   idLayanan: props.layanan.id
                 })}>

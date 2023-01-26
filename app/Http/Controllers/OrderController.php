@@ -146,7 +146,7 @@ class OrderController extends Controller
     $order = Order::create([
       'id_lokasi' => $lokasi->id,
       'id_layanan' => $request->layanan,
-      'id_user' => 10,
+      'id_user' => 1,
       'nama_penumpang' => $request->nama_penumpang,
       'tanggal_pemberangkatan' => Carbon::parse($request->tanggal_pemberangkatan, 'UTC')->format('Y-m-d'),
       'status_pembayaran' => 'confirmed',
@@ -275,13 +275,13 @@ class OrderController extends Controller
     ]);
 
     $total_harga = (Layanan::where('id', $request->layanan)->first('biaya_jasa')->biaya_jasa) * ($request->jumlah_seat);
-    
+
     $orderUpdate = [
       'id_lokasi' => $order->lokasi->id,
       'id_layanan' => $request->layanan,
       'id_user' => $order->id_user,
       'nama_penumpang' => $request->nama_penumpang,
-      'tanggal_pemberangkatan' => Carbon::tomorrow(),
+      'tanggal_pemberangkatan' => Carbon::parse($request->tanggal_pemberangkatan, 'UTC')->format('Y-m-d'),
       'status_pembayaran' => 'confirmed',
       'total_seat' => $request->jumlah_seat,
       'total_harga' => $total_harga,

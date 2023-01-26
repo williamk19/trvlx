@@ -1,5 +1,4 @@
 import { MapPinIcon } from '@heroicons/react/24/solid';
-import { Link } from '@inertiajs/inertia-react';
 
 const AntarJemputCard = ({ order, type = 'jemput' }) => {
   return (
@@ -16,7 +15,7 @@ const AntarJemputCard = ({ order, type = 'jemput' }) => {
               </div>
             </header>
           </div>
-          {type === 'jemput' && (
+          {(type === 'jemput' && !order.isHost) && (
             <div className="">
               <div className="text-xs md:text-sm text-slate-600">
                 Alamat Asal : {order.lokasi.alamat_asal !== null ? order.lokasi.alamat_asal : '-'}
@@ -39,7 +38,7 @@ const AntarJemputCard = ({ order, type = 'jemput' }) => {
               </div>
             </div>
           )}
-          {type === 'antar' && (
+          {(type === 'antar' && !order.isHost) && (
             <div className="">
               <div className="text-xs md:text-sm text-slate-600">
                 Alamat Tujuan : {order.lokasi.alamat_tujuan !== null ? order.lokasi.alamat_tujuan : '-'}
