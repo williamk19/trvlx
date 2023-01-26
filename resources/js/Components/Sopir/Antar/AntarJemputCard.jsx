@@ -1,6 +1,8 @@
 import { MapPinIcon } from '@heroicons/react/24/solid';
 
 const AntarJemputCard = ({ order, type = 'jemput' }) => {
+  console.log(order);
+
   return (
     <div className="col-span-full sm:col-span-6 xl:col-span-4 bg-white rounded-xl mb-4 last-of-type:mb-0 border-slate-200">
       <div className="flex flex-col h-full">

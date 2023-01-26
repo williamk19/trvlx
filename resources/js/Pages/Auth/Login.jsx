@@ -62,7 +62,6 @@ export default function Login({ auth, status, canResetPassword }) {
                           isFocused={true}
                           handleChange={onHandleChange}
                         />
-                        <InputError message={errors.email} className="mt-2" />
                       </div>
                       <div className="mt-4">
                         <InputLabel forInput="password" value="Password" />
@@ -75,7 +74,7 @@ export default function Login({ auth, status, canResetPassword }) {
                           autoComplete="current-password"
                           handleChange={onHandleChange}
                         />
-                        <InputError message={errors.password} className="mt-2" />
+                        <InputError message={errors.email} className="mt-4" />
                       </div>
                     </div>
                     <div className="block mt-4">
