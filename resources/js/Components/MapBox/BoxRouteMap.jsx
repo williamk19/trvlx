@@ -15,10 +15,8 @@ const BoxRouteMap = ({
   orders = []
 }) => {
   const routingMachine = useRef();
-  const [host, setHost] = useState([]);
-  const [initialHost, setInitialHost] = useState([]);
-  const [ordersRoute, setOrdersRoute] = useState([]);
-  let waypoints = [];
+  const [initialHost, setInitialHost] = useState();
+  const [ordersRoute, setOrdersRoute] = useState(orders);
 
   const map = useMap();
   useEffect(() => {
@@ -35,27 +33,15 @@ const BoxRouteMap = ({
   }, []);
 
   useEffect(() => {
-    if (routingMachine.current) {
+    if (routingMachine.current && initialHost) {
       const points = destination.map((d) => {
         return { lat: d[0], lng: d[1] };
       });
-
-      let ordersPath = [];
+      points.unshift({lat: initialHost[0], lng: initialHost[1]});
       const arrOfPath = tspNearestNeighbor(points).map((p) => {
-        if (orderType === "jemput") {
-          const order = orders[orders
-            .findIndex((o) => o.lokasi.lat_asal === p.lat && o.lokasi.lng_asal === p.lng)];
-          ordersPath.push(order);
-        } else if (orderType === "antar") {
-          const order = orders[orders
-            .findIndex((o) => o.lokasi.lat_tujuan === p.lat && o.lokasi.lng_tujuan === p.lng)];
-          ordersPath.push(order);
-        }
-
         return [p.lat, p.lng];
       });
-
-      setOrdersRoute(ordersPath);
+      arrOfPath.shift();
       let waypoints = [initialHost, ...arrOfPath];
       routingMachine.current.setWaypoints(waypoints);
     }
@@ -66,9 +52,7 @@ const BoxRouteMap = ({
       <RoutingMap
         ref={routingMachine}
         orderType={orderType}
-        waypoints={waypoints}
         ordersRoute={ordersRoute}
-        orders={ordersRoute}
       />
     </>
   );
