@@ -8,7 +8,6 @@ import "leaflet-routing-machine";
 import AntarJemputCard from '../Sopir/Antar/AntarJemputCard';
 
 const createRoutingMachineLayer = ({ ordersRoute, orderType }) => {
-  console.log(orderType);
   const instance = leaflet.Routing.control({
     lineOptions: {
       styles: [{ color: "#6FA1EC", weight: 5 }]
@@ -20,7 +19,7 @@ const createRoutingMachineLayer = ({ ordersRoute, orderType }) => {
     showAlternatives: false,
     addWaypoints: false,
     draggableWaypoints: false,
-    collapsible: false,
+    fitSelectedRoutes: false,
     show: false,
     createMarker: (i, waypoint, n) => {
       if (i === 0) {

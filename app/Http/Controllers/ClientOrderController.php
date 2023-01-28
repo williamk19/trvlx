@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Services\Midtrans\CreateSnapTokenService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Midtrans\Snap;
 
@@ -133,8 +134,27 @@ class ClientOrderController extends Controller
     //
   }
 
-  public function clientOrderData()
+  public function clientOrderData(Request $request)
   {
+    DB::statement("SET SQL_MODE=''");
+    $dateStart = Carbon::now()->toDateString();
+    $idLayanan = 1;
+    if ($request->tanggalPemberangkatan) {
+      $dateStart = Carbon::parse($request->tanggalPemberangkatan)->toDateString();
+      $idLayanan = $request->idLayanan;
+    }
+
+    $dataLayananKeberangkatan = Order::with('layanan')
+    ->where('status_pembayaran', 'confirmed')
+    ->where('tanggal_pemberangkatan', [$dateStart])
+      ->where('id_layanan', $idLayanan)
+      ->get();
+
+    $jumlahSeatTerpesan = $dataLayananKeberangkatan->reduce(function ($carry, $item) {
+      return $carry + $item->total_seat;
+    });
+
+
     $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
       "id" => $user->id,
       "kota_asal" => $user->kota_asal,
@@ -142,9 +162,14 @@ class ClientOrderController extends Controller
       "biaya_jasa" => $user->biaya_jasa
     ]));
 
+    $layananDipilih = Layanan::where('id', $idLayanan)->with('kendaraan')->first();
+    $seatSisa = $layananDipilih->kendaraan->jumlah_seat - $jumlahSeatTerpesan;
+
     return Inertia::render('Client/FormPageOrder', [
       'type' => 'data',
       'layananData' => $layanan,
+      'dateStart' => $dateStart,
+      'seatSisa' => $seatSisa
     ]);
   }
 
@@ -183,7 +208,7 @@ class ClientOrderController extends Controller
     $order->user;
     $order->lokasi;
     $order->layanan;
-    
+
     if ($order->status_pembayaran === 'init') {
       $snap = new CreateSnapTokenService();
       $snapToken = $snap->getSnapToken([

@@ -6,7 +6,7 @@ import ReactDatePicker, { registerLocale, setDefaultLocale } from 'react-datepic
 import id from 'date-fns/locale/id';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const DataOrder = ({ data, layananData, onHandleChange, onDateChange, onSelectChange, errors }) => {
+const DataOrder = ({ data, layananData, onHandleChange, onDateChange, onSelectChange, errors, seatSisa }) => {
   registerLocale('id', id);
 
   return (
@@ -68,7 +68,7 @@ const DataOrder = ({ data, layananData, onHandleChange, onDateChange, onSelectCh
                 value={data.layanan}
                 name='layanan'
                 className="select select-bordered w-full"
-                onChange={onHandleChange}>
+                onChange={onSelectChange}>
                 <option value={''} disabled>Kota - Tujuan</option>
                 {layananData.map((l) => (
                   <option key={l.id} value={l.id}>
@@ -79,6 +79,11 @@ const DataOrder = ({ data, layananData, onHandleChange, onDateChange, onSelectCh
               <InputError message={errors.layanan} className="mt-2" />
             </div>
           </div>
+          {seatSisa && (
+            <div className='text-black text-md font-semibold mt-4'>
+              <h1>{`Jumlah Kursi Tersisa : ${seatSisa}`}</h1>
+            </div>
+          )}
           <div className="sm:flex w-full lg:w-10/12 sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-5 mb-0 md:mb-8">
             <div className='w-full md:w-1/4'>
               <InputLabel className='mb-2' forInput="status" value="Status Pembayaran" />

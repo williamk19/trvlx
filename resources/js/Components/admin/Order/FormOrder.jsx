@@ -8,9 +8,13 @@ import Modal from '@/Components/core/Modal';
 import { ToastContainer, toast } from 'react-toastify';
 import _ from 'lodash';
 import 'react-toastify/dist/ReactToastify.css';
+import { Inertia } from '@inertiajs/inertia';
 
-const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
+const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, seatSisa}) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [update, setUpdate] = useState(false);
+  const [date, setDate] = useState(dateStart);
+  const [dateShow, setDateShow] = useState(new Date(dateStart));
 
   const { data, setData, post, processing, errors, reset, put } = useForm({
     nama_penumpang: orderEdit?.nama_penumpang ? orderEdit.nama_penumpang : '',
@@ -47,6 +51,25 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
     }
   }, [errors]);
 
+  useEffect(() => {
+    if (update) {
+      Inertia.get(route(route().current()),
+        { tanggalPemberangkatan: date, idLayanan: data.layanan },
+        {
+          replace: true,
+          preserveState: true,
+          preserveScroll: true
+        }
+      );
+      setUpdate(false);
+    }
+  }, [date, data.layanan]);
+
+  useEffect(() => {
+    setDate(new Date(dateShow).toISOString().slice(0, 10));
+    setUpdate(true);
+  }, [dateShow]);
+
   const onHandleChange = (event) => {
     if (event.target.name === 'telepon_user') {
       const re = /^[0-9\b]+$/;
@@ -62,11 +85,13 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
   };
 
   const onSelectChange = (e) => {
-    setData(e.name, e.value);
+    setData(e.target.name, e.target.value);
+    setUpdate(true);
   };
 
   const onDateChange = (date) => {
     setData('tanggal_pemberangkatan', date);
+    setDateShow(date);
   };
 
   const onLocationChange = (name, latLng) => {
@@ -83,7 +108,6 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
         ...data
       }));
     }
-
   };
 
   const formType = () => {
@@ -94,6 +118,7 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
             data={data}
             layananData={layananData}
             errors={errors}
+            seatSisa={seatSisa}
             onDateChange={onDateChange}
             onSelectChange={onSelectChange}
             onHandleChange={onHandleChange} />
@@ -138,7 +163,8 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
                     Reset
                   </button>
                 )}
-                <button disabled={processing} className={`btn ${processing && "loading"} bg-indigo-500 hover:bg-indigo-600 disabled:text-black text-white ml-3 border-none`} onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
+                <button disabled={processing || seatSisa === 0} className={`btn ${processing && "loading"} bg-indigo-500 hover:bg-indigo-600 disabled:text-black text-white ml-3 border-none`}
+                onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
                   {edit ? 'Edit' : 'Tambahkan'}
                 </button>
                 <Modal id="info-modal" modalOpen={modalOpen} setModalOpen={setModalOpen}>
@@ -166,7 +192,8 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit }) => {
                           e.stopPropagation();
                           setModalOpen(false);
                         }}>Cancel</button>
-                        <button className="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white" onClick={(e) => {
+                        <button className="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
+                        onClick={(e) => {
                           e.stopPropagation();
                           submit(e);
                           setModalOpen(false);

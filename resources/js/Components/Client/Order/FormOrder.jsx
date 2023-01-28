@@ -8,9 +8,14 @@ import Modal from '@/Components/core/Modal';
 import { ToastContainer, toast } from 'react-toastify';
 import _ from 'lodash';
 import 'react-toastify/dist/ReactToastify.css';
+import { Inertia } from '@inertiajs/inertia';
 
-const FormOrder = ({ type, layananData }) => {
+const FormOrder = ({ type, layananData, dateStart, seatSisa }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [update, setUpdate] = useState(false);
+  const [date, setDate] = useState(dateStart);
+  const [dateShow, setDateShow] = useState(new Date(dateStart));
+
   const { data, setData, post, processing, errors, reset } = useForm({
     nama_penumpang: '',
     tanggal_pemberangkatan: new Date(),
@@ -23,7 +28,7 @@ const FormOrder = ({ type, layananData }) => {
     alamat_tujuan: '',
     deskripsi_tujuan: ''
   });
-  
+
   useEffect(() => {
     if (!_.isEmpty(errors)) {
       toast.error('Ada yang belum terisi !', {
@@ -38,6 +43,25 @@ const FormOrder = ({ type, layananData }) => {
       });
     }
   }, [errors]);
+
+  useEffect(() => {
+    if (update) {
+      Inertia.get(route(route().current()),
+        { tanggalPemberangkatan: date, idLayanan: data.layanan },
+        {
+          replace: true,
+          preserveState: true,
+          preserveScroll: true
+        }
+      );
+      setUpdate(false);
+    }
+  }, [date, data.layanan]);
+
+  useEffect(() => {
+    setDate(new Date(dateShow).toISOString().slice(0, 10));
+    setUpdate(true);
+  }, [dateShow]);
 
   const onHandleChange = (event) => {
     if (event.target.name === 'telepon_user') {
@@ -55,6 +79,12 @@ const FormOrder = ({ type, layananData }) => {
 
   const onDateChange = (date) => {
     setData('tanggal_pemberangkatan', date);
+    setDateShow(date);
+  };
+
+  const onSelectChange = (e) => {
+    setData(e.target.name, e.target.value);
+    setUpdate(true);
   };
 
   const onLocationChange = (name, latLng) => {
@@ -74,6 +104,7 @@ const FormOrder = ({ type, layananData }) => {
             data={data}
             layananData={layananData}
             errors={errors}
+            onSelectChange={onSelectChange}
             onDateChange={onDateChange}
             onHandleChange={onHandleChange} />
         );
@@ -82,6 +113,7 @@ const FormOrder = ({ type, layananData }) => {
           <DataOrder
             data={data}
             layananData={layananData}
+            seatSisa={seatSisa}
             errors={errors}
             onDateChange={onDateChange}
             onHandleChange={onHandleChange} />
@@ -124,7 +156,7 @@ const FormOrder = ({ type, layananData }) => {
                 <button onClick={() => reset()} className="btn btn-error hover:bg-red-500 text-slate-100 border-slate-200 hover:border-slate-300">
                   Reset
                 </button>
-                <button disabled={processing} className={`btn ${processing && "loading"} bg-indigo-500 hover:bg-indigo-600 disabled:text-black text-white ml-3 border-none`} onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
+                <button disabled={processing || seatSisa === 0} className={`btn ${processing && "loading"} bg-indigo-500 hover:bg-indigo-600 disabled:text-black text-white ml-3 border-none`} onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
                   Pesan Travel
                 </button>
                 <Modal id="info-modal" modalOpen={modalOpen} setModalOpen={setModalOpen}>

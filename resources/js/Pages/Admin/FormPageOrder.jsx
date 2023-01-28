@@ -23,6 +23,8 @@ const FormPageOrder = (props) => {
         edit={props.edit}
         layananData={props.layananData}
         orderEdit={props.orderEdit}
+        dateStart={props.dateStart}
+        seatSisa={props.seatSisa}
       />
     </AuthenticatedLayout>
   );

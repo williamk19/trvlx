@@ -13,7 +13,9 @@ use App\Models\User;
 use App\Services\Midtrans\CallbackService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use Mockery\Undefined;
 
 class OrderController extends Controller
 {
@@ -27,8 +29,26 @@ class OrderController extends Controller
     return Inertia::render('Admin/Order');
   }
 
-  public function orderData()
+  public function orderData(Request $request)
   {
+    DB::statement("SET SQL_MODE=''");
+    $dateStart = Carbon::now()->toDateString();
+    $idLayanan = 1;
+    if ($request->tanggalPemberangkatan) {
+      $dateStart = Carbon::parse($request->tanggalPemberangkatan)->toDateString();
+      $idLayanan = $request->idLayanan;
+    }
+
+    $dataLayananKeberangkatan = Order::with('layanan')
+      ->where('status_pembayaran', 'confirmed')
+      ->where('tanggal_pemberangkatan', [$dateStart])
+      ->where('id_layanan', $idLayanan)
+      ->get();
+
+    $jumlahSeatTerpesan = $dataLayananKeberangkatan->reduce(function ($carry, $item) {
+      return $carry + $item->total_seat;
+    });
+
     $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
       "id" => $user->id,
       "kota_asal" => $user->kota_asal,
@@ -36,9 +56,14 @@ class OrderController extends Controller
       "biaya_jasa" => $user->biaya_jasa
     ]));
 
+    $layananDipilih = Layanan::where('id', $idLayanan)->with('kendaraan')->first();
+    $seatSisa = $layananDipilih->kendaraan->jumlah_seat - $jumlahSeatTerpesan;
+
     return Inertia::render('Admin/FormPageOrder', [
       'type' => 'data',
-      'layananData' => $layanan
+      'layananData' => $layanan,
+      'dateStart' => $dateStart,
+      'seatSisa' => $seatSisa
     ]);
   }
 
