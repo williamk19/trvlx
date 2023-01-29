@@ -115,6 +115,7 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa }) => {
             layananData={layananData}
             seatSisa={seatSisa}
             errors={errors}
+            onSelectChange={onSelectChange}
             onDateChange={onDateChange}
             onHandleChange={onHandleChange} />
         );
@@ -156,7 +157,7 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa }) => {
                 <button onClick={() => reset()} className="btn btn-error hover:bg-red-500 text-slate-100 border-slate-200 hover:border-slate-300">
                   Reset
                 </button>
-                <button disabled={processing || seatSisa === 0} className={`btn ${processing && "loading"} bg-indigo-500 hover:bg-indigo-600 disabled:text-black text-white ml-3 border-none`} onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
+                <button disabled={processing || (seatSisa - data.jumlah_seat < 0)} className={`btn ${processing && "loading"} bg-indigo-500 hover:bg-indigo-600 disabled:text-black text-white ml-3 border-none`} onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
                   Pesan Travel
                 </button>
                 <Modal id="info-modal" modalOpen={modalOpen} setModalOpen={setModalOpen}>

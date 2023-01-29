@@ -53,14 +53,25 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
 
   useEffect(() => {
     if (update) {
-      Inertia.get(route(route().current()),
-        { tanggalPemberangkatan: date, idLayanan: data.layanan },
-        {
-          replace: true,
-          preserveState: true,
-          preserveScroll: true
-        }
-      );
+      if (orderEdit) {
+        Inertia.get(`/order/list/${orderId}/data`,
+          { tanggalPemberangkatan: date, idLayanan: data.layanan },
+          {
+            replace: true,
+            preserveState: true,
+            preserveScroll: true
+          }
+        );
+      } else {
+        Inertia.get(route(route().current()),
+          { tanggalPemberangkatan: date, idLayanan: data.layanan },
+          {
+            replace: true,
+            preserveState: true,
+            preserveScroll: true
+          }
+        );
+      }
       setUpdate(false);
     }
   }, [date, data.layanan]);
@@ -163,7 +174,7 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
                     Reset
                   </button>
                 )}
-                <button disabled={processing || seatSisa === 0} className={`btn ${processing && "loading"} bg-indigo-500 hover:bg-indigo-600 disabled:text-black text-white ml-3 border-none`}
+                <button disabled={processing || (!edit && seatSisa === 0)} className={`btn ${processing && "loading"} bg-indigo-500 hover:bg-indigo-600 disabled:text-black text-white ml-3 border-none`}
                 onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
                   {edit ? 'Edit' : 'Tambahkan'}
                 </button>

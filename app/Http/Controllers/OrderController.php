@@ -206,25 +206,49 @@ class OrderController extends Controller
    * @return \Illuminate\Http\Response
    */
 
-  public function editData($id)
+  public function editData(Request $request, $id)
   {
+    $orderEdit = Order::where('id', $id)->first();
+    $orderEdit->lokasi;
+    $orderEdit->layanan;
+
+    DB::statement("SET SQL_MODE=''");
+    $dateStart = Carbon::parse($orderEdit->tanggal_pemberangkatan)->toDateString();
+    $idLayanan = $orderEdit->id_layanan;
+    if ($request->tanggalPemberangkatan) {
+      $dateStart = Carbon::parse($request->tanggalPemberangkatan)->toDateString();
+      $idLayanan = $request->idLayanan;
+    }
+
+    $dataLayananKeberangkatan = Order::with('layanan')
+    ->where('status_pembayaran', 'confirmed')
+    ->where('tanggal_pemberangkatan', [$dateStart])
+      ->where('id_layanan', $idLayanan)
+      ->get();
+
+    $jumlahSeatTerpesan = $dataLayananKeberangkatan->reduce(function ($carry, $item) {
+      return $carry + $item->total_seat;
+    });
+
+    $layananDipilih = Layanan::where('id', $idLayanan)->with('kendaraan')->first();
+    $seatSisa = $layananDipilih->kendaraan->jumlah_seat - $jumlahSeatTerpesan;
+
     $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
       "id" => $user->id,
       "kota_asal" => $user->kota_asal,
       "kota_tujuan" => $user->kota_tujuan,
-      "biaya_jasa" => $user->biaya_jasa
-    ]));
+      "biaya_jasa" => $user->biaya_jasa,
 
-    $orderEdit = Order::where('id', $id)->first();
-    $orderEdit->lokasi;
-    $orderEdit->layanan;
+    ]));
 
     return Inertia::render('Admin/FormPageOrder', [
       'type' => 'data',
       'edit' => true,
       'orderId' => $id,
       'layananData' => $layanan,
-      'orderEdit' => $orderEdit
+      'orderEdit' => $orderEdit,
+      'dateStart' => $dateStart,
+      "seatSisa" => $seatSisa
     ]);
   }
 

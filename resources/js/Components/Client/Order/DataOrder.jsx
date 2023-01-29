@@ -74,7 +74,7 @@ const DataOrder = ({ data, layananData, onHandleChange, onSelectChange, onDateCh
               <InputError message={errors.layanan} className="mt-2" />
             </div>
           </div>
-          {seatSisa && (
+          {seatSisa >= 0 && (
             <div className='text-black text-md font-semibold mt-4'>
               <h1>{`Jumlah Kursi Tersisa : ${seatSisa}`}</h1>
             </div>
