@@ -14,6 +14,8 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [update, setUpdate] = useState(false);
   const [date, setDate] = useState(dateStart);
+  const [updateSeat, setUpdateSeat] = useState(false);
+  const [seatEmpty, setSeatEmpty] = useState(seatSisa);
   const [dateShow, setDateShow] = useState(new Date(dateStart));
 
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -45,6 +47,13 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa }) => {
   }, [errors]);
 
   useEffect(() => {
+    if (updateSeat && (seatSisa !== seatEmpty)) {
+      setSeatEmpty(seatSisa);
+      setUpdateSeat(false);
+    }
+  }, [seatSisa, updateSeat]);
+
+  useEffect(() => {
     if (update) {
       Inertia.get(route(route().current()),
         { tanggalPemberangkatan: date, idLayanan: data.layanan },
@@ -54,6 +63,7 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa }) => {
           preserveScroll: true
         }
       );
+      setUpdateSeat(true);
       setUpdate(false);
     }
   }, [date, data.layanan]);
@@ -113,7 +123,7 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa }) => {
           <DataOrder
             data={data}
             layananData={layananData}
-            seatSisa={seatSisa}
+            seatSisa={seatEmpty}
             errors={errors}
             onSelectChange={onSelectChange}
             onDateChange={onDateChange}
@@ -157,7 +167,7 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa }) => {
                 <button onClick={() => reset()} className="btn btn-error hover:bg-red-500 text-slate-100 border-slate-200 hover:border-slate-300">
                   Reset
                 </button>
-                <button disabled={processing || (seatSisa - data.jumlah_seat < 0)} className={`btn ${processing && "loading"} bg-indigo-500 hover:bg-indigo-600 disabled:text-black text-white ml-3 border-none`} onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
+                <button disabled={processing || (seatEmpty - data.jumlah_seat < 0)} className={`btn ${processing && "loading"} bg-indigo-500 hover:bg-indigo-600 disabled:text-black text-white ml-3 border-none`} onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
                   Pesan Travel
                 </button>
                 <Modal id="info-modal" modalOpen={modalOpen} setModalOpen={setModalOpen}>

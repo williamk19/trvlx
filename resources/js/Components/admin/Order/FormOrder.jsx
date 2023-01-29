@@ -14,6 +14,8 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
   const [modalOpen, setModalOpen] = useState(false);
   const [update, setUpdate] = useState(false);
   const [date, setDate] = useState(dateStart);
+  const [updateSeat, setUpdateSeat] = useState(false);
+  const [seatEmpty, setSeatEmpty] = useState(seatSisa);
   const [dateShow, setDateShow] = useState(new Date(dateStart));
 
   const { data, setData, post, processing, errors, reset, put } = useForm({
@@ -52,6 +54,13 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
   }, [errors]);
 
   useEffect(() => {
+    if (updateSeat && (seatSisa !== seatEmpty)) {
+      setSeatEmpty(seatSisa);
+      setUpdateSeat(false);
+    }
+  }, [seatSisa, updateSeat]);
+
+  useEffect(() => {
     if (update) {
       if (orderEdit) {
         Inertia.get(`/order/list/${orderId}/data`,
@@ -72,6 +81,7 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
           }
         );
       }
+      setUpdateSeat(true);
       setUpdate(false);
     }
   }, [date, data.layanan]);
@@ -129,7 +139,7 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
             data={data}
             layananData={layananData}
             errors={errors}
-            seatSisa={seatSisa}
+            seatSisa={seatEmpty}
             onDateChange={onDateChange}
             onSelectChange={onSelectChange}
             onHandleChange={onHandleChange} />
