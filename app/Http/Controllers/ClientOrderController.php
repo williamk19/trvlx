@@ -208,6 +208,9 @@ class ClientOrderController extends Controller
     $order->user;
     $order->lokasi;
     $order->layanan;
+    if (auth()->user()->id !== $order->user->id) {
+      return redirect("dashboard");
+    }
 
     if ($order->status_pembayaran === 'init') {
       $snap = new CreateSnapTokenService();

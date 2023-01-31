@@ -7,6 +7,7 @@ use App\Events\OrderPaid;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Mail\OrderConfirmed;
 use App\Models\Layanan;
 use App\Models\Lokasi;
 use App\Models\User;
@@ -14,6 +15,7 @@ use App\Services\Midtrans\CallbackService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Mockery\Undefined;
 
@@ -221,8 +223,8 @@ class OrderController extends Controller
     }
 
     $dataLayananKeberangkatan = Order::with('layanan')
-    ->where('status_pembayaran', 'confirmed')
-    ->where('tanggal_pemberangkatan', [$dateStart])
+      ->where('status_pembayaran', 'confirmed')
+      ->where('tanggal_pemberangkatan', [$dateStart])
       ->where('id_layanan', $idLayanan)
       ->get();
 
@@ -331,13 +333,16 @@ class OrderController extends Controller
       'id_user' => $order->id_user,
       'nama_penumpang' => $request->nama_penumpang,
       'tanggal_pemberangkatan' => Carbon::parse($request->tanggal_pemberangkatan, 'UTC')->format('Y-m-d'),
-      'status_pembayaran' => 'confirmed',
       'total_seat' => $request->jumlah_seat,
       'total_harga' => $total_harga,
       'status_pembayaran' => $request->status
     ];
-    Order::where('id', $order->id)->first()
-      ->update($orderUpdate);
+
+    Order::where('id', $order->id)->first()->update($orderUpdate);
+    $orderUpdated = Order::where('id', $order->id)->first();
+    if ($request->status === "confirmed") {
+      Mail::to($order->user->email)->send(new OrderConfirmed($orderUpdated));
+    }
 
     Lokasi::where('id', $order->lokasi->id)->first()
       ->update([
