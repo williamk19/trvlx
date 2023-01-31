@@ -338,23 +338,27 @@ class OrderController extends Controller
       'status_pembayaran' => $request->status
     ];
 
-    Order::where('id', $order->id)->first()->update($orderUpdate);
-    $orderUpdated = Order::where('id', $order->id)->first();
-    if ($request->status === "confirmed") {
-      Mail::to($order->user->email)->send(new OrderConfirmed($orderUpdated));
-    }
+    $orderUpdatedData = Order::where('id', $order->id)->first();
+    $orderUpdatedData->update($orderUpdate);
 
-    Lokasi::where('id', $order->lokasi->id)->first()
-      ->update([
-        'lat_asal' => $request->latlng_asal["lat"],
-        'lng_asal' => $request->latlng_asal["lng"],
-        'lat_tujuan' => $request->latlng_tujuan["lat"],
-        'lng_tujuan' => $request->latlng_tujuan["lng"],
-        'alamat_asal' => $request->alamat_asal,
-        'alamat_tujuan' => $request->alamat_tujuan,
-        'deskripsi_asal' => $request->deskripsi_asal,
-        'deskripsi_tujuan' => $request->deskripsi_tujuan
-      ]);
+    $lokasiUpdatedData = Lokasi::where('id', $order->lokasi->id)->first();
+    $lokasiUpdatedData->update([
+      'lat_asal' => $request->latlng_asal["lat"],
+      'lng_asal' => $request->latlng_asal["lng"],
+      'lat_tujuan' => $request->latlng_tujuan["lat"],
+      'lng_tujuan' => $request->latlng_tujuan["lng"],
+      'alamat_asal' => $request->alamat_asal,
+      'alamat_tujuan' => $request->alamat_tujuan,
+      'deskripsi_asal' => $request->deskripsi_asal,
+      'deskripsi_tujuan' => $request->deskripsi_tujuan
+    ]);
+
+    if (
+      $request->status === "confirmed" &&
+      ($orderUpdatedData->wasChanged() || $lokasiUpdatedData->wasChanged())
+    ) {
+      Mail::to($order->user->email)->send(new OrderConfirmed($orderUpdatedData));
+    }
 
     $orderUpdate['type'] = 'info';
     return redirect()
