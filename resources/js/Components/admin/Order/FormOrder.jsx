@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SidebarOrder from './SidebarOrder';
 import DataOrder from './DataOrder';
-import { useForm } from '@inertiajs/inertia-react';
+import { useForm, useRemember } from '@inertiajs/inertia-react';
 import DataJemput from './DataJemput';
 import DataTujuan from './DataTujuan';
 import Modal from '@/Components/core/Modal';
@@ -10,12 +10,12 @@ import _ from 'lodash';
 import 'react-toastify/dist/ReactToastify.css';
 import { Inertia } from '@inertiajs/inertia';
 
-const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, seatSisa}) => {
+const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, seatSisa }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [update, setUpdate] = useState(false);
   const [date, setDate] = useState(dateStart);
-  const [updateSeat, setUpdateSeat] = useState(false);
-  const [seatEmpty, setSeatEmpty] = useState(seatSisa);
+  const [updateSeat, setUpdateSeat] = useRemember(false);
+  const [seatEmpty, setSeatEmpty] = useRemember(seatSisa);
   const [dateShow, setDateShow] = useState(new Date(dateStart));
 
   const { data, setData, post, processing, errors, reset, put } = useForm({
@@ -54,6 +54,9 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
   }, [errors]);
 
   useEffect(() => {
+    if (seatSisa === undefined) {
+      seatSisa = seatEmpty;
+    }
     if (updateSeat && (seatSisa !== seatEmpty)) {
       setSeatEmpty(seatSisa);
       setUpdateSeat(false);
@@ -81,8 +84,8 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
           }
         );
       }
-      setUpdateSeat(true);
       setUpdate(false);
+      setUpdateSeat(true);
     }
   }, [date, data.layanan]);
 
@@ -184,8 +187,8 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
                     Reset
                   </button>
                 )}
-                <button disabled={processing || (!edit && seatSisa === 0)} className={`btn ${processing && "loading"} bg-indigo-500 hover:bg-indigo-600 disabled:text-black text-white ml-3 border-none`}
-                onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
+                <button disabled={processing || (seatEmpty - data.jumlah_seat < 0)} className={`btn ${processing && "loading"} bg-indigo-500 hover:bg-indigo-600 disabled:text-black text-white ml-3 border-none`}
+                  onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
                   {edit ? 'Edit' : 'Tambahkan'}
                 </button>
                 <Modal id="info-modal" modalOpen={modalOpen} setModalOpen={setModalOpen}>
@@ -214,11 +217,11 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
                           setModalOpen(false);
                         }}>Cancel</button>
                         <button className="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          submit(e);
-                          setModalOpen(false);
-                        }}>Ya, {edit ? 'Edit Data' : 'Tambahkan'}</button>
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            submit(e);
+                            setModalOpen(false);
+                          }}>Ya, {edit ? 'Edit Data' : 'Tambahkan'}</button>
                       </div>
                     </div>
                   </div>

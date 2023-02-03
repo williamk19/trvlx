@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SidebarOrder from './SidebarOrder';
 import DataOrder from './DataOrder';
-import { useForm, usePage } from '@inertiajs/inertia-react';
+import { useForm, usePage, useRemember } from '@inertiajs/inertia-react';
 import DataJemput from './DataJemput';
 import DataTujuan from './DataTujuan';
 import Modal from '@/Components/core/Modal';
@@ -14,8 +14,8 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [update, setUpdate] = useState(false);
   const [date, setDate] = useState(dateStart);
-  const [updateSeat, setUpdateSeat] = useState(false);
-  const [seatEmpty, setSeatEmpty] = useState(seatSisa);
+  const [updateSeat, setUpdateSeat] = useRemember(false);
+  const [seatEmpty, setSeatEmpty] = useRemember(seatSisa);
   const [dateShow, setDateShow] = useState(new Date(dateStart));
 
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -47,6 +47,9 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa }) => {
   }, [errors]);
 
   useEffect(() => {
+    if (seatSisa === undefined) {
+      seatSisa = seatEmpty;
+    }
     if (updateSeat && (seatSisa !== seatEmpty)) {
       setSeatEmpty(seatSisa);
       setUpdateSeat(false);
