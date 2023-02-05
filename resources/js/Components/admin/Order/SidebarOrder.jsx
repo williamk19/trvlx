@@ -2,7 +2,7 @@ import { usePage } from '@inertiajs/inertia-react';
 import { Link } from '@inertiajs/inertia-react';
 import React from 'react';
 
-const SidebarOrder = ({ edit = false, orderId }) => {
+const SidebarOrder = ({ edit = false, orderId, tanggalPemberangkatan, idLayanan }) => {
   const { url } = usePage();
   const pathname = url;
 
@@ -15,7 +15,7 @@ const SidebarOrder = ({ edit = false, orderId }) => {
         {edit ? (
           <ul className="flex flex-nowrap mr-3 md:mr-0">
             <li className="mr-0.5 md:mr-0 md:mb-0.5">
-              <Link preserveState href={`/order/list/${orderId}/data`} className={`flex items-center px-2.5 py-2 rounded whitespace-nowrap ${pathname.includes(`/order/list/${orderId}/data`) && 'bg-gray-300'}`}>
+              <Link preserveState href={`/order/list/${orderId}/data?tanggalPemberangkatan=${tanggalPemberangkatan}&idLayanan=${idLayanan}`} className={`flex items-center px-2.5 py-2 rounded whitespace-nowrap ${pathname.includes(`/order/list/${orderId}/data`) && 'bg-gray-300'}`}>
                 <span className={`text-sm font-medium ${pathname.includes(`/order/list/${orderId}/data`) ? 'text-slate-800' : 'text-slate-600 hover:text-slate-900'}`}>
                   Data Diri
                 </span>
@@ -39,7 +39,7 @@ const SidebarOrder = ({ edit = false, orderId }) => {
         ) : (
           <ul className="flex flex-nowrap mr-3 md:mr-0">
             <li className="mr-0.5 md:mr-0 md:mb-0.5">
-              <Link preserveState href="/order/data" className={`flex items-center px-2.5 py-2 rounded whitespace-nowrap ${pathname.includes('/order/data') && 'bg-gray-300'}`}>
+                <Link preserveState href={`/order/data?tanggalPemberangkatan=${tanggalPemberangkatan}&idLayanan=${idLayanan}`} className={`flex items-center px-2.5 py-2 rounded whitespace-nowrap ${pathname.includes('/order/data') && 'bg-gray-300'}`}>
                 <span className={`text-sm font-medium ${pathname.includes('/order/data') ? 'text-slate-800' : 'text-slate-600 hover:text-slate-900'}`}>
                   Data Diri
                 </span>

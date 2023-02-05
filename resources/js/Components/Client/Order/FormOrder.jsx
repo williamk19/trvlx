@@ -47,9 +47,10 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa }) => {
   }, [errors]);
 
   useEffect(() => {
-    if (seatSisa === undefined) {
+    if (seatSisa === undefined && seatSisa) {
       seatSisa = seatEmpty;
     }
+
     if (updateSeat && (seatSisa !== seatEmpty)) {
       setSeatEmpty(seatSisa);
       setUpdateSeat(false);
@@ -162,7 +163,10 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa }) => {
       <ToastContainer />
       <div className="bg-white shadow-lg rounded-lg">
         <div className="flex flex-col md:-mr-px">
-          <SidebarOrder />
+          <SidebarOrder
+            tanggalPemberangkatan={date}
+            idLayanan={data.layanan}
+          />
           {formType()}
           <footer className='mt-4'>
             <div className="flex flex-col px-6 py-5 border-t border-slate-200">

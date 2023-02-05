@@ -57,6 +57,7 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
     if (seatSisa === undefined) {
       seatSisa = seatEmpty;
     }
+
     if (updateSeat && (seatSisa !== seatEmpty)) {
       setSeatEmpty(seatSisa);
       setUpdateSeat(false);
@@ -177,7 +178,11 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
       <ToastContainer />
       <div className="bg-white shadow-lg rounded-lg mb-8">
         <div className="flex flex-col md:-mr-px">
-          <SidebarOrder edit={edit} orderId={orderId} />
+          <SidebarOrder
+            tanggalPemberangkatan={date}
+            idLayanan={data.layanan}
+            edit={edit}
+            orderId={orderId} />
           {formType()}
           <footer>
             <div className="flex flex-col px-6 py-5 border-t border-slate-200">

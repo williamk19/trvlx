@@ -75,6 +75,7 @@ export default function Login({ auth, status, canResetPassword }) {
                           handleChange={onHandleChange}
                         />
                         <InputError message={errors.email} className="mt-4" />
+                        <InputError message={errors.password} className="mt-2" />
                       </div>
                     </div>
                     <div className="block mt-4">
