@@ -101,10 +101,9 @@ const FormAddKendaraan = ({ itemKendaraan }) => {
             </div>
             <div className="flex justify-between">
               {itemKendaraan ? (
-                <Link onClick={handleDelete} data-theme="light" className="btn btn-error hover:border-slate-300">
+                <Link onClick={handleDelete} data-theme="light" className="btn btn-error hover:border-slate-300 hidden">
                   Hapus Mobil
                 </Link>
-
               ) : (<div></div>)}
               <button type="submit" className="btn bg-white border-slate-200 hover:border-slate-300 text-indigo-500 hover:bg-slate-200">
                 {itemKendaraan ? "Edit" : "Tambahkan"} Mobil

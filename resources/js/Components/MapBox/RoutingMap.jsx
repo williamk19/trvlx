@@ -49,7 +49,6 @@ const createRoutingMachineLayer = ({ ordersRoute, orderType }) => {
           order = ordersRoute[ordersRoute
             .findIndex((o) => o.lokasi.lat_tujuan == waypoint.latLng.lat && o.lokasi.lng_tujuan == waypoint.latLng.lng)];
         }
-
         return leaflet.marker(
           waypoint.latLng, {
           icon: icons.blue.numbers[i]

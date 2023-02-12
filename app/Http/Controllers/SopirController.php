@@ -47,6 +47,7 @@ class SopirController extends Controller
 
     $order = Order::with('layanan', 'user', 'lokasi')
       ->where('tanggal_pemberangkatan', $tanggalPemberangkatan)
+      ->where('status_pembayaran', 'confirmed')
       ->where('id_layanan', $idLayanan)
       ->get();
 
@@ -70,6 +71,7 @@ class SopirController extends Controller
     $order = Order::with('layanan', 'user', 'lokasi')
       ->where('tanggal_pemberangkatan', $tanggalPemberangkatan)
       ->where('id_layanan', $idLayanan)
+      ->where('status_pembayaran', 'confirmed')
       ->get();
 
     return Inertia::render('Sopir/AntarMap', [
@@ -92,6 +94,7 @@ class SopirController extends Controller
     $order = Order::with('layanan', 'user', 'lokasi')
       ->where('tanggal_pemberangkatan', $tanggalPemberangkatan)
       ->where('id_layanan', $idLayanan)
+      ->where('status_pembayaran', 'confirmed')
       ->get();
 
     return Inertia::render('Sopir/JemputMap', [

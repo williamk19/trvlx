@@ -121,7 +121,7 @@ const FormAddUser = ({ itemUser, auth }) => {
             </div>
             <div className="flex justify-between">
               {itemUser ? (
-                <Link onClick={handleDelete} data-theme="light" className="btn btn-error hover:border-slate-300">
+                <Link onClick={handleDelete} data-theme="light" className="btn btn-error hover:border-slate-300 hidden">
                   Hapus User
                 </Link>
 

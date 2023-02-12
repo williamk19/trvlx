@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from 'react';
 import RoutingMap from './RoutingMap';
 import "leaflet/dist/leaflet.css";
 import { tspNearestNeighbor } from '@/Utils/TspNearestNeighbor';
+import ZoomControlMap from './ZoomControlMap';
 
 const tempDestination = [
   [-7.289393, 112.721202],
@@ -49,6 +50,7 @@ const BoxRouteMap = ({
 
   return (
     <>
+      <ZoomControlMap />
       <RoutingMap
         ref={routingMachine}
         orderType={orderType}

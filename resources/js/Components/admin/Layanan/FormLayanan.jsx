@@ -111,7 +111,7 @@ const FormLayanan = ({ itemLayanan, itemSopir, itemKendaraan, listSopir, listKen
                   Biaya Jasa Layanan
                 </label>
                 <CurrencyFormat
-                  thousandSeparator={true} 
+                  thousandSeparator={true}
                   prefix={'Rp. '}
                   id="biaya_jasa"
                   className="form-input rounded-md w-full"
@@ -144,7 +144,7 @@ const FormLayanan = ({ itemLayanan, itemSopir, itemKendaraan, listSopir, listKen
             </div>
             <div className="flex justify-between">
               {itemLayanan ? (
-                <button onClick={(e) => handleDelete(e)} data-theme="light" className="btn btn-error hover:border-slate-300">
+                <button onClick={(e) => handleDelete(e)} data-theme="light" className="btn btn-error hover:border-slate-300 hidden">
                   Hapus Layanan
                 </button>
               ) : (<div></div>)}

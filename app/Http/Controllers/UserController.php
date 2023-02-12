@@ -222,6 +222,13 @@ class UserController extends Controller
         'telepon_user' => $request->telepon_user,
         'password' => Hash::make($request->password)
       ];
+    } else if ($request->id_kategori != '' || $request->id_kategori != null)  {
+      $updateUser = [
+        'nama_user' => $request->nama_user,
+        'email' => $request->email,
+        'telepon_user' => $request->telepon_user,
+        'id_kategori' => $request->id_kategori
+      ];
     } else {
       $updateUser = [
         'nama_user' => $request->nama_user,

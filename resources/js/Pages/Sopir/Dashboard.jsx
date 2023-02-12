@@ -52,6 +52,11 @@ export default function Dashboard(props) {
                 <span className='font-bold'>{props.auth.user.nama_user}</span> ✨
               </h1>
             )}
+            {props.auth.user.id_kategori === '2' || props.auth.user.id_kategori === '1' && (
+              <h1 className='text-xl md:text-2xl font-medium text-slate-800'>
+                Jadwal Keberangkatan
+              </h1>
+            )}
             <div className='flex flex-col font-semibold gap-2'>
               <ReactDatePicker
                 disabledKeyboardNavigation
