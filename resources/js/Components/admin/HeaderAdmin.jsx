@@ -46,7 +46,7 @@ const HeaderAdmin = ({
   };
 
   return (
-    <div className="py-3">
+    <div className="pt-3">
       <div className="text-sm text-gray-800 breadcrumbs">
         <ul>
           {arrOfPath.map((p, idx) => (

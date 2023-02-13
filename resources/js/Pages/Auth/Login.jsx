@@ -41,12 +41,12 @@ export default function Login({ auth, status, canResetPassword }) {
         <Banner className="w-full mb-10" type="success" open={bannerOpen} setOpen={setBannerOpen}>
           {status}
         </Banner>}
-      <div className="w-full -mt-10 md:mt-0 lg:mt-0 2xl:-mt-5 bg-white shadow-2xl overflow-hidden rounded-xl">
+      <div className="w-full md:mt-0 lg:mt-0 2xl:-mt-5 bg-white shadow-2xl overflow-hidden rounded-xl">
         <main className="w-full shadow-xl">
           <div className=" bg-white relative md:flex">
             <div className="md:w-1/2">
               <div className="py-4 flex flex-col after:flex-1">
-                <div className="w-10/12 md:w-9/12 mx-auto px-0 md:px-4 md:py-8">
+                <div className="w-10/12 md:w-9/12 mx-auto px-0 md:px-4 py-4 md:py-8">
                   <h1 className="text-center md:text-left text-3xl text-slate-800 font-bold mb-6">Login</h1>
                   <form onSubmit={submit}>
                     <div className="space-y-4">

@@ -6,6 +6,7 @@ import DataList from '@/Components/Sopir/Dashboard/DataList';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Inertia } from '@inertiajs/inertia';
 import HeaderSupir from '@/Components/admin/HeaderSupir';
+import HeaderAdmin from '@/Components/admin/HeaderAdmin';
 
 export default function Dashboard(props) {
   const [date, setDate] = useState(props.date);
@@ -40,24 +41,24 @@ export default function Dashboard(props) {
     >
       <Head title="Dashboard" />
       <div className="py-0 md:py-8">
-        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-          <HeaderSupir
-            className={'mb-4'}
-            url={url}
-          />
-          <div className='flex flex-col gap-y-4 sm:flex-row mb-8 w-full justify-between'>
+        <div className="max-w-7xl">
+          {props.auth.user.id_kategori === '3' && (
+            <HeaderSupir
+              className={'mb-4'}
+              url={url}
+            />
+          )}
+          <div className='flex flex-col xs:flex-row w-full justify-between'>
             {props.auth.user.id_kategori === '3' && (
-              <h1 className='text-xl md:text-2xl font-medium text-slate-800'>
+              <h1 className='text-xl md:text-2xl mb-5 font-medium text-slate-800'>
                 Selamat Datang,<br />
                 <span className='font-bold'>{props.auth.user.nama_user}</span> ✨
               </h1>
             )}
             {props.auth.user.id_kategori === '2' || props.auth.user.id_kategori === '1' && (
-              <h1 className='text-xl md:text-2xl font-medium text-slate-800'>
-                Jadwal Keberangkatan
-              </h1>
+              <HeaderAdmin title={'Jadwal Keberangkatan 🗓️'} url={url} />
             )}
-            <div className='flex flex-col font-semibold gap-2'>
+            <div className='flex flex-col justify-end font-semibold gap-2 pb-8'>
               <ReactDatePicker
                 disabledKeyboardNavigation
                 onFocus={e => e.target.blur()}

@@ -14,8 +14,9 @@ const DataList = ({ idKategori, dataLayananSopir }) => {
       </header>
       <div className="p-3">
         {dataLayananSopir.length === 0 && (
-          <div className='text-center'>
-            <p className='font-semibold text-gray-700'>Belum Ada Pengantaran Travel</p>
+          <div className='text-center py-4'>
+            <p className='font-bold text-md md:text-lg text-gray-900'>Belum Ada Pengantaran Travel,</p>
+            <p className='font-medium mt-1 text-gray-800'>Silahkan Pilih Tanggal</p>
           </div>
         )}
         {dataLayananSopir.map((d, idx) => (

@@ -43,7 +43,7 @@ export default function Register({ auth }) {
   return (
     <GuestLayout auth={auth}>
       <Head title="Register" />
-      <div className="w-full mt-32 md:mt-20 2xl:mt-20 mb-10 md:mb-0 bg-white shadow-2xl overflow-hidden rounded-xl">
+      <div className="w-full mt-0 md:mt-14 mb-10 md:mb-0 bg-white shadow-2xl overflow-hidden rounded-xl">
         <main className="w-full shadow-xl">
           <div className=" bg-white relative md:flex rounded-2xl">
             <div className="md:w-2/3">
