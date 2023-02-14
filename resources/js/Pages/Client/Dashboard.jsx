@@ -73,13 +73,13 @@ export default function Dashboard(props) {
               </button>
             </Link>
           </div>
-          <h1 className='text-xl md:text-2xl mb-5 md:mb-6 font-semibold text-slate-800'>
+          <h1 className='text-xl md:text-2xl mb-5 md:mb-4 font-semibold text-slate-800'>
             Tiket Travel 🎟️
           </h1>
           {orderList.length > 0 ? (
             <>
               <TravelWrapper orderList={orderList} />
-              <div className='mt-14'>
+              <div className='mt-12'>
                 <PaginationKendaraan
                   firstIndex={props.orderList.from}
                   lastIndex={props.orderList.to}

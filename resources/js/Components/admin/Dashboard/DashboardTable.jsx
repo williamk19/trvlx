@@ -1,4 +1,5 @@
-import React from 'react'
+import { Link } from '@inertiajs/inertia-react';
+import React from 'react';
 
 const DashboardTable = ({ lastDoneOrder }) => {
   const statusColor = (type) => {
@@ -21,30 +22,38 @@ const DashboardTable = ({ lastDoneOrder }) => {
 
   const tableData = lastDoneOrder.length > 0 ? lastDoneOrder.map((d) => {
     return (
-      <tr key={d.id_payment}>
+      <tr className='cursor-pointer' key={d.id_payment}>
         <td className="p-2">
-          <div className="flex items-center">
+          <Link href={`/order/${d.id}/edit`} className="flex items-center">
             <div className="text-slate-800">{d.nama_penumpang}</div>
-          </div>
+          </Link>
         </td>
         <td className="p-2">
-          <div className="text-center">{d.id_payment}</div>
+          <Link href={`/order/${d.id}/edit`}>
+            <div className="text-center">{d.id_payment}</div>
+          </Link>
         </td>
         <td className="p-2">
-          <div className="text-center">{d.layanan}</div>
+          <Link href={`/order/${d.id}/edit`}>
+            <div className="text-center">{d.layanan}</div>
+          </Link>
         </td>
         <td className="p-2">
-          <div className='text-center'>
-            <div className={`text-xs text-center inline-flex font-medium rounded-full text-center px-2.5 py-1 ${statusColor(d.status_pembayaran)}`}>
-              {d.status_pembayaran}
+          <Link href={`/order/${d.id}/edit`}>
+            <div className='text-center'>
+              <div className={`text-xs inline-flex font-medium rounded-full text-center px-2.5 py-1 ${statusColor(d.status_pembayaran)}`}>
+                {d.status_pembayaran}
+              </div>
             </div>
-          </div>
+          </Link>
         </td>
         <td className="p-2">
-          <div className="text-center">{d.tanggal_pemberangkatan}</div>
+          <Link href={`/order/${d.id}/edit`}>
+            <div className="text-center">{d.tanggal_pemberangkatan}</div>
+          </Link>
         </td>
       </tr>
-    )
+    );
   }) : (
     <tr className='text-center'>
       <td className="p-2"></td>
@@ -59,7 +68,7 @@ const DashboardTable = ({ lastDoneOrder }) => {
   return (
     <div className="col-span-full xl:col-span-8 bg-white shadow-lg rounded-xl border border-slate-200">
       <header className="px-5 py-4 border-b border-slate-100">
-        <h2 className="font-semibold text-slate-800">5 Order Masuk Terakhir (Pending atau Done)</h2>
+        <h2 className="font-semibold text-slate-800">5 Order Masuk Terakhir (Status Done)</h2>
       </header>
       <div className="p-3">
 
@@ -94,7 +103,7 @@ const DashboardTable = ({ lastDoneOrder }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default DashboardTable;

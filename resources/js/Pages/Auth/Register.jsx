@@ -37,7 +37,10 @@ export default function Register({ auth }) {
 
   const submit = (e) => {
     e.preventDefault();
-    post(route('register'));
+    post(route('register'), {
+      preserveScroll: true,
+      replace: true
+    });
   };
 
   return (

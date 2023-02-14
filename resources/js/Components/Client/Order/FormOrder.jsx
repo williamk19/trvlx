@@ -10,13 +10,14 @@ import _ from 'lodash';
 import 'react-toastify/dist/ReactToastify.css';
 import { Inertia } from '@inertiajs/inertia';
 
-const FormOrder = ({ type, layananData, dateStart, seatSisa }) => {
+const FormOrder = ({ type, layananData, dateStart, seatSisa, nameAuth }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [update, setUpdate] = useState(false);
   const [date, setDate] = useState(dateStart);
   const [updateSeat, setUpdateSeat] = useRemember(false);
   const [seatEmpty, setSeatEmpty] = useRemember(seatSisa);
   const [dateShow, setDateShow] = useState(new Date(dateStart));
+  const [isNameSame, setIsNameSame] = useState(true);
 
   const { data, setData, post, processing, errors, reset } = useForm({
     nama_penumpang: '',
@@ -77,6 +78,14 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa }) => {
     setUpdate(true);
   }, [dateShow]);
 
+  useEffect(() => {
+    if (isNameSame) {
+      setData('nama_penumpang', nameAuth);
+    } else if (!isNameSame) {
+      setData('nama_penumpang', '');
+    }
+  }, [isNameSame]);
+
   const onHandleChange = (event) => {
     if (event.target.name === 'telepon_user') {
       const re = /^[0-9\b]+$/;
@@ -84,8 +93,8 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa }) => {
       if (event.target.value === '' || re.test(event.target.value)) {
         setData(event.target.name, number);
       }
-    } else if (event.target.type === 'checkbox') {
-      setData(event.target.name, event.target.checked);
+    } else if (event.target.type === 'checkbox' && event.target.name === 'same-name') {
+      setIsNameSame(!isNameSame);
     } else {
       setData(event.target.name, event.target.value);
     }
@@ -120,7 +129,8 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa }) => {
             errors={errors}
             onSelectChange={onSelectChange}
             onDateChange={onDateChange}
-            onHandleChange={onHandleChange} />
+            onHandleChange={onHandleChange}
+            isNameSame={isNameSame} />
         );
       case "data":
         return (
@@ -131,7 +141,8 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa }) => {
             errors={errors}
             onSelectChange={onSelectChange}
             onDateChange={onDateChange}
-            onHandleChange={onHandleChange} />
+            onHandleChange={onHandleChange}
+            isNameSame={isNameSame} />
         );
       case "jemput":
         return (

@@ -2,7 +2,7 @@ import TravelCard from '@/Components/Client/Dashboard/TravelCard';
 
 const TravelWrapper = ({ orderList }) => {
   return (
-    <div className="grid grid-cols-12 gap-3 lg:gap-6">
+    <div className="grid grid-cols-12 gap-3 lg:gap-5">
       {orderList?.map(order => (
         <TravelCard
           key={order.id}

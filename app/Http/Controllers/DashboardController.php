@@ -34,19 +34,19 @@ class DashboardController extends Controller
     $orderCount = Order::all()->count();
     $orderDoneCount = Order::where(function ($query) {
       $query
-        ->where('status_pembayaran', 'pending')
-        ->orWhere('status_pembayaran', 'done');
+        ->where('status_pembayaran', 'done');
     })->count();
     $layananCount = Layanan::all()->count();
     $kendaraanCount = Kendaraan::all()->count();
+
     $lastDoneOrder = Order::where(function ($query) {
       $query
-        ->where('status_pembayaran', 'pending')
-        ->orWhere('status_pembayaran', 'done');
+        ->where('status_pembayaran', 'done');
     })
       ->orderBy('created_at', 'DESC')
       ->limit(5)
       ->get()->map(fn ($order) => ([
+        'id' => $order->id,
         'nama_penumpang' => $order->nama_penumpang,
         'id_payment' => $order->id_payment,
         'layanan' => $order->layanan->kota_asal . " - " . $order->layanan->kota_tujuan,
@@ -93,7 +93,7 @@ class DashboardController extends Controller
       $dateStart = Carbon::now()->toDateString();
     }
     $dateEnd = Carbon::now()->addWeek()->toDateString();
-    
+
     $dataLayananSopir = Order::with('layanan')
       ->where('status_pembayaran', 'confirmed')
       ->whereBetween('tanggal_pemberangkatan', [$dateStart, $dateEnd])
@@ -102,7 +102,7 @@ class DashboardController extends Controller
       })
       ->groupBy('id_layanan', 'tanggal_pemberangkatan')
       ->get();
-    
+
     return Inertia::render('Sopir/Dashboard', [
       'dataLayananSopir' => $dataLayananSopir,
       'date' => $dateStart

@@ -14,6 +14,7 @@ const FormPageOrder = (props) => {
     >
       <Head title="Create Order" />
       <FormOrder
+        nameAuth={props.auth.user.nama_user}
         type={props.type}
         layananData={props.layananData}
         dateStart={props.dateStart}

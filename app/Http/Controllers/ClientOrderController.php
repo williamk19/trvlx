@@ -154,7 +154,6 @@ class ClientOrderController extends Controller
       return $carry + $item->total_seat;
     });
 
-
     $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
       "id" => $user->id,
       "kota_asal" => $user->kota_asal,
@@ -175,6 +174,9 @@ class ClientOrderController extends Controller
 
   public function clientOrderJemput()
   {
+    DB::statement("SET SQL_MODE=''");
+    $dateStart = Carbon::now()->toDateString();
+
     $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
       "id" => $user->id,
       "kota_asal" => $user->kota_asal,
@@ -184,20 +186,26 @@ class ClientOrderController extends Controller
 
     return Inertia::render('Client/FormPageOrder', [
       'type' => 'jemput',
+      'dateStart' => $dateStart,
       'layananData' => $layanan
     ]);
   }
 
   public function clientOrderTujuan()
   {
+    DB::statement("SET SQL_MODE=''");
+    $dateStart = Carbon::now()->toDateString();
+
     $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
       "id" => $user->id,
       "kota_asal" => $user->kota_asal,
       "kota_tujuan" => $user->kota_tujuan,
       "biaya_jasa" => $user->biaya_jasa
     ]));
+
     return Inertia::render('Client/FormPageOrder', [
       'type' => 'tujuan',
+      'dateStart' => $dateStart,
       'layananData' => $layanan
     ]);
   }

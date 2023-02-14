@@ -27,9 +27,9 @@ const DashboardCard = ({ id, imgUrl, title, count, doneCount, url }) => {
                 <p className='text-gray-600'>Total</p>
                 <div className="ml-2 text-xl font-bold text-slate-800">{count}</div>
               </div>
-              {doneCount <= 0 && (
+              {doneCount >= 0 && (
                 <div className="flex items-center text-slate-400">
-                  <p className='text-gray-600'>Perlu Konfirmasi</p>
+                  <p className='text-gray-600'>Konfirmasi</p>
                   <div className="ml-2 text-xl font-bold text-slate-800">{doneCount}</div>
                 </div>
               )}

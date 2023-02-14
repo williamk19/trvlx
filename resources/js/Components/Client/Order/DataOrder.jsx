@@ -1,3 +1,4 @@
+import Checkbox from '@/Components/Checkbox';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
@@ -5,13 +6,26 @@ import React, { useState } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const DataOrder = ({ data, layananData, onHandleChange, onSelectChange, onDateChange, errors, seatSisa }) => {
+const DataOrder = ({
+  data,
+  layananData,
+  onHandleChange,
+  onSelectChange,
+  onDateChange,
+  errors,
+  seatSisa,
+  isNameSame
+}) => {
   return (
     <div className="grow">
       <div className="p-6 md:py-0 space-y-6">
         <h2 className="text-2xl text-slate-800 font-bold mb-5">Data Diri</h2>
         <section>
-          <div className="sm:flex w-full lg:w-10/12 sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-5">
+          <label className="flex items-center">
+            <Checkbox name="same-name" value={isNameSame} handleChange={onHandleChange} />
+            <span className="ml-2 text-sm md:text-base font-bold text-gray-700">Nama penumpang sama dengan akun</span>
+          </label>
+          <div className="sm:flex w-full lg:w-10/12 sm:items-start space-y-4 sm:space-y-0 sm:space-x-4 mt-5">
             <div className='w-full md:w-2/4'>
               <InputLabel forInput="nama_penumpang" value="Nama Penumpang / Pemesan" />
               <TextInput

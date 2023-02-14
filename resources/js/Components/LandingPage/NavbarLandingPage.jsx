@@ -22,8 +22,8 @@ const NavbarLandingPage = ({ auth }) => {
             </ul>
           ) : (
             <ul className="menu menu-horizontal p-0">
-              <li><Link className='active:bg-[#a6adba1a]' href='/login'>Login</Link></li>
-              <li><Link className='active:bg-[#a6adba1a]' href='/register'>Sign Up</Link></li>
+              <li><Link replace className='active:bg-[#a6adba1a]' href='/login'>Login</Link></li>
+              <li><Link replace className='active:bg-[#a6adba1a]' href='/register'>Sign Up</Link></li>
             </ul>
           )}
 
