@@ -45,6 +45,8 @@
         "react-transition-group": "^4.4.5",
         "react-whatsapp-widget": "^2.1.0",
         "slick-carousel": "^1.8.1",
-        "typewriter-effect": "^2.19.0"
+        "typewriter-effect": "^2.19.0",
+        "workbox-routing": "^6.5.4",
+        "workbox-strategies": "^6.5.4"
     }
 }

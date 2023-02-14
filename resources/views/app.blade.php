@@ -17,6 +17,7 @@
   {{-- Midtrans JS --}}
   <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>
 
+  <link rel="manifest" href="/manifest.json">
   <!-- Scripts -->
   @routes
   @viteReactRefresh
