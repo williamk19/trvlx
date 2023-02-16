@@ -1,6 +1,6 @@
 import { MapPinIcon } from '@heroicons/react/24/solid';
 
-const AntarJemputCard = ({ order, type = 'jemput' }) => {
+const AntarJemputCard = ({ order, type = 'jemput', cardId }) => {
   return (
     <div className="col-span-full sm:col-span-6 xl:col-span-4 w-52 bg-white rounded-xl mb-4 last-of-type:mb-0 border-slate-200">
       <div className="flex flex-col h-full">
@@ -23,7 +23,10 @@ const AntarJemputCard = ({ order, type = 'jemput' }) => {
               <div className="text-xs md:text-sm text-slate-600">
                 Deskripsi Asal : {order.lokasi.deskripsi_asal}
               </div>
-              <div className='mt-3 sm:flex sm:justify-end'>
+              <div className='mt-3 sm:flex sm:justify-between items-center'>
+                <div className='font-bold text-lg'>
+                  {cardId}
+                </div>
                 <a
                   data-theme="light"
                   onClick={() => {
@@ -46,7 +49,10 @@ const AntarJemputCard = ({ order, type = 'jemput' }) => {
               <div className="text-xs md:text-sm text-slate-600">
                 Deskripsi Tujuan : {order.lokasi.deskripsi_tujuan}
               </div>
-              <div className='mt-3 sm:flex sm:justify-end'>
+              <div className='mt-3 sm:flex sm:justify-between items-center'>
+                <div className='font-bold text-lg'>
+                  {cardId}
+                </div>
                 <a
                   data-theme="light"
                   onClick={() => {

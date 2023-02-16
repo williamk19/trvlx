@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SidebarOrder from './SidebarOrder';
 import DataOrder from './DataOrder';
-import { useForm, useRemember } from '@inertiajs/inertia-react';
+import { Link, useForm, useRemember } from '@inertiajs/inertia-react';
 import DataJemput from './DataJemput';
 import DataTujuan from './DataTujuan';
 import Modal from '@/Components/core/Modal';
@@ -17,6 +17,7 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
   const [updateSeat, setUpdateSeat] = useRemember(false);
   const [seatEmpty, setSeatEmpty] = useRemember(seatSisa);
   const [dateShow, setDateShow] = useState(new Date(dateStart));
+  const [idPembayaran, setIdPembayaran] = useState(orderEdit?.id_payment);
 
   const { data, setData, post, processing, errors, reset, put } = useForm({
     nama_penumpang: orderEdit?.nama_penumpang ? orderEdit.nama_penumpang : '',
@@ -144,6 +145,7 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
             layananData={layananData}
             errors={errors}
             seatSisa={seatEmpty}
+            idPembayaran={idPembayaran}
             onDateChange={onDateChange}
             onSelectChange={onSelectChange}
             onHandleChange={onHandleChange} />
@@ -185,7 +187,12 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
             orderId={orderId} />
           {formType()}
           <footer>
-            <div className="flex flex-col px-6 py-5 border-t border-slate-200">
+            <div className={`flex
+              "justify-end"
+              px-6
+              py-5
+              border-t
+              border-slate-200`}>
               <div className="flex self-end">
                 {!edit && (
                   <button onClick={() => reset()} className="btn btn-error hover:bg-red-500 text-slate-100 border-slate-200 hover:border-slate-300">
@@ -234,9 +241,9 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
               </div>
             </div>
           </footer>
-        </div>
-      </div>
-    </div>
+        </div >
+      </div >
+    </div >
   );
 };
 

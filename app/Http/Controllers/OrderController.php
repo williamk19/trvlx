@@ -213,6 +213,7 @@ class OrderController extends Controller
     $orderEdit = Order::where('id', $id)->first();
     $orderEdit->lokasi;
     $orderEdit->layanan;
+    $orderEdit->user;
 
     DB::statement("SET SQL_MODE=''");
     $dateStart = Carbon::parse($orderEdit->tanggal_pemberangkatan)->toDateString();
@@ -266,6 +267,7 @@ class OrderController extends Controller
     $orderEdit = Order::where('id', $id)->first();
     $orderEdit->lokasi;
     $orderEdit->layanan;
+    $orderEdit->user;
 
     return Inertia::render('Admin/FormPageOrder', [
       'type' => 'jemput',
@@ -288,6 +290,7 @@ class OrderController extends Controller
     $orderEdit = Order::where('id', $id)->first();
     $orderEdit->lokasi;
     $orderEdit->layanan;
+    $orderEdit->user;
 
     return Inertia::render('Admin/FormPageOrder', [
       'type' => 'tujuan',

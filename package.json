@@ -6,6 +6,8 @@
         "build": "vite build"
     },
     "devDependencies": {
+        "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+        "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
         "@headlessui/react": "^1.4.2",
         "@inertiajs/inertia": "^0.11.0",
         "@inertiajs/inertia-react": "^0.8.0",
@@ -25,6 +27,7 @@
     "dependencies": {
         "@heroicons/react": "^2.0.12",
         "@react-leaflet/core": "^2.1.0",
+        "@react-pdf/renderer": "^3.1.4",
         "daisyui": "^2.27.0",
         "laravel-echo": "^1.14.2",
         "leaflet": "^1.9.3",

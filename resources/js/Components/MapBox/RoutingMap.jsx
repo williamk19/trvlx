@@ -49,13 +49,14 @@ const createRoutingMachineLayer = ({ ordersRoute, orderType }) => {
           order = ordersRoute[ordersRoute
             .findIndex((o) => o.lokasi.lat_tujuan == waypoint.latLng.lat && o.lokasi.lng_tujuan == waypoint.latLng.lng)];
         }
+
         return leaflet.marker(
           waypoint.latLng, {
           icon: icons.blue.numbers[i]
         })
           .bindPopup(
             ReactDOMServer.renderToString(
-              <AntarJemputCard order={order} type={orderType} key={i} />,
+              <AntarJemputCard order={order} type={orderType} key={i} cardId={i} />,
               { autoClose: false }
             )
           );
