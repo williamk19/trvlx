@@ -15,11 +15,13 @@ class SopirController extends Controller
   {
     DB::statement("SET SQL_MODE=''");
     if ($request->tanggalPemberangkatan) {
+      $date = Carbon::parse($request->tanggalPemberangkatan);
       $dateStart = Carbon::parse($request->tanggalPemberangkatan)->toDateString();
     } else {
+      $date = Carbon::now();
       $dateStart = Carbon::now()->toDateString();
     }
-    $dateEnd = Carbon::now()->addWeek()->toDateString();
+    $dateEnd = $date->addWeek()->toDateString();
 
     $dataLayananSopir = Order::with('layanan')
       ->where('status_pembayaran', 'confirmed')
