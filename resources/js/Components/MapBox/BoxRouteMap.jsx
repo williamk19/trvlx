@@ -17,7 +17,9 @@ const BoxRouteMap = ({
 }) => {
   const routingMachine = useRef();
   const [initialHost, setInitialHost] = useState();
+  const [initialHostTemp, setInitialHostTemp] = useState();
   const [ordersRoute, setOrdersRoute] = useState(orders);
+  const [first, setFirst] = useState(true);
 
   const map = useMap();
   useEffect(() => {
@@ -26,23 +28,32 @@ const BoxRouteMap = ({
         enableHighAccuracy: true,
       })
       .on("locationfound", function (e) {
-        map.flyTo(e.latlng, 16);
+        map.flyTo(e.latlng, 14);
         map.on('zoomend', () => {
-          setInitialHost([e.latlng.lat, e.latlng.lng]);
+          setInitialHostTemp([e.latlng.lat, e.latlng.lng]);
+          setFirst(false);
         });
       });
   }, []);
+
+  useEffect(() => {
+    if (first === true && initialHostTemp) {
+      setInitialHost([initialHostTemp[0], initialHostTemp[1]]);
+    }
+  }, [first, initialHostTemp]);
 
   useEffect(() => {
     if (routingMachine.current && initialHost) {
       const points = destination.map((d) => {
         return { lat: d[0], lng: d[1] };
       });
-      points.unshift({lat: initialHost[0], lng: initialHost[1]});
+
+      points.unshift({ lat: initialHost[0], lng: initialHost[1] });
       const arrOfPath = tspNearestNeighbor(points).map((p) => {
         return [p.lat, p.lng];
       });
       arrOfPath.shift();
+
       let waypoints = [initialHost, ...arrOfPath];
       routingMachine.current.setWaypoints(waypoints);
     }
