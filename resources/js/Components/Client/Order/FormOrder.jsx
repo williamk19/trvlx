@@ -48,7 +48,7 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa, nameAuth }) => {
   }, [errors]);
 
   useEffect(() => {
-    if (seatSisa === undefined && seatSisa) {
+    if (seatSisa === undefined) {
       seatSisa = seatEmpty;
     }
 

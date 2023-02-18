@@ -11,6 +11,7 @@ const FormPageOrder = (props) => {
     <AuthenticatedLayout
       auth={props.auth}
       errors={props.errors}
+      url={url}
     >
       <Head title="Create Order" />
       <FormOrder
