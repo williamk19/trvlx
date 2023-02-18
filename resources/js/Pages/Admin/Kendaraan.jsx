@@ -9,6 +9,7 @@ import { toast, ToastContainer } from 'react-toastify';
 const Kendaraan = (props) => {
   const [searchQuery, setSearchQuery] = useState(props.query);
   let { url } = usePage();
+  const base_url = url.split("?").slice(0, 1).join();
 
   useEffect(() => {
     if (!_.isEmpty(props.flash.message) && props.flash.message.type === "info") {

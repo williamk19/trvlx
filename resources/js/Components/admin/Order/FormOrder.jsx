@@ -199,7 +199,9 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
                     Reset
                   </button>
                 )}
-                <button disabled={processing || (seatEmpty - data.jumlah_seat < 0)} className={`btn ${processing && "loading"} bg-indigo-500 hover:bg-indigo-600 disabled:text-black text-white ml-3 border-none`}
+                <button
+                  disabled={processing || (edit && data.status === "confirmed" && seatEmpty - data.jumlah_seat < -1) || (edit && data.status !== "confirmed" && seatEmpty - data.jumlah_seat < 0) || (!edit && seatEmpty - data.jumlah_seat < 0)}
+                className={`btn ${processing && "loading"} bg-indigo-500 hover:bg-indigo-600 disabled:text-black text-white ml-3 border-none`}
                   onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
                   {edit ? 'Edit' : 'Tambahkan'}
                 </button>
