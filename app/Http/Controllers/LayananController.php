@@ -82,11 +82,12 @@ class LayananController extends Controller
     ]);
 
     $createLayanan = Layanan::create([
-      'id_sopir' => 3,
-      'id_kendaraan' => 1,
+      'id_sopir' => $request->sopir,
+      'id_kendaraan' => $request->kendaraan,
       'kota_asal' => $request->kota_asal,
       'kota_tujuan' => $request->kota_tujuan,
       'biaya_jasa' => $request->biaya_jasa,
+      'status' => $request->status
     ]);
 
     return redirect()

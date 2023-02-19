@@ -162,7 +162,7 @@ class ClientOrderController extends Controller
     ]));
 
     $layananDipilih = Layanan::where('id', $idLayanan)->with('kendaraan')->first();
-    $seatSisa = $layananDipilih->kendaraan->jumlah_seat - $jumlahSeatTerpesan;
+    $seatSisa = $layananDipilih?->kendaraan?->jumlah_seat - $jumlahSeatTerpesan;
 
     return Inertia::render('Client/FormPageOrder', [
       'type' => 'data',

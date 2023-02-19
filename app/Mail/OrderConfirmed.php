@@ -57,7 +57,7 @@ class OrderConfirmed extends Mailable
         'alamatAsal' => $this->order->lokasi->alamat_asal,
         'alamatTujuan' => $this->order->lokasi->alamat_tujuan,
         'totalHarga' => $this->order->total_harga,
-        'url' => url('/client-order/payment/'. $this->order)
+        'url' => url('/client-order/payment/'. $this->order->id)
       ],
     );
   }

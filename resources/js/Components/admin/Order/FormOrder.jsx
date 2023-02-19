@@ -23,7 +23,7 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
     nama_penumpang: orderEdit?.nama_penumpang ? orderEdit.nama_penumpang : '',
     tanggal_pemberangkatan: orderEdit?.tanggal_pemberangkatan ? new Date(orderEdit.tanggal_pemberangkatan) : new Date(),
     jumlah_seat: orderEdit?.total_seat ? orderEdit?.total_seat : 1,
-    layanan: orderEdit?.id_layanan ? orderEdit?.id_layanan : layananData[0].id,
+    layanan: orderEdit?.id_layanan ? orderEdit?.id_layanan : layananData[0]?.id,
     latlng_asal: orderEdit?.lokasi ? {
       lat: orderEdit.lokasi.lat_asal,
       lng: orderEdit.lokasi.lng_asal
