@@ -1,4 +1,5 @@
 import Checkbox from '@/Components/Checkbox';
+import SeatSelector from '@/Components/core/SeatSelector';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';

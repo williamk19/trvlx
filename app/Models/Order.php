@@ -16,7 +16,7 @@ class Order extends Model
   protected $fillable = [
     'id_payment',
     'id_user',
-    'id_layanan',
+    'id_schedule',
     'id_lokasi',
     'nama_penumpang',
     'tanggal_pemberangkatan',
@@ -36,8 +36,13 @@ class Order extends Model
     return $this->belongsTo(Lokasi::class, 'id_lokasi');
   }
 
-  public function layanan() 
+  public function schedule()
   {
-    return $this->belongsTo(Layanan::class, 'id_layanan');
+    return $this->belongsTo(Schedule::class, 'id_schedule');
+  }
+
+  public function seats()
+  {
+    return $this->hasMany(Seat::class, 'id_order');
   }
 }

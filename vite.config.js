@@ -10,4 +10,7 @@ export default defineConfig({
     }),
     react(),
   ],
+  esbuild: {
+    logOverride: { 'this-is-undefined-in-esm': 'silent' }
+  }
 });

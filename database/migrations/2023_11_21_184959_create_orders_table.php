@@ -17,7 +17,7 @@ return new class extends Migration
       $table->id();
       $table->string('id_payment')->nullable();
       $table->foreignId('id_user')->constrained('users');
-      $table->foreignId('id_layanan')->constrained('layanan');
+      $table->foreignId('id_schedule')->constrained('schedules');
       $table->foreignId('id_lokasi')->constrained('lokasi');
       $table->string('nama_penumpang');
       $table->date('tanggal_pemberangkatan');

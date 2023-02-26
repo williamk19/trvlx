@@ -14,28 +14,15 @@ class Layanan extends Model
   protected $primaryKey = 'id';
 
   protected $fillable = [
-    'id_sopir',
-    'id_kendaraan',
     'kota_asal',
     'kota_tujuan',
     'biaya_jasa',
-    'status',
     'created_at',
     'updated_at'
   ];
 
-  public function sopir()
+  public function schedules()
   {
-    return $this->belongsTo(User::class, 'id_sopir')->withTrashed();
-  }
-
-  public function kendaraan()
-  {
-    return $this->belongsTo(Kendaraan::class, 'id_kendaraan')->withTrashed();
-  }
-
-  public function order()
-  {
-    return $this->hasMany(Order::class, 'id_layanan');
+    return $this->hasMany(Schedule::class, 'id_layanan');
   }
 }

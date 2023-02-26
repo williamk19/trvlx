@@ -8,8 +8,8 @@ const FormLayanan = ({ itemLayanan, itemSopir, itemKendaraan, listSopir, listKen
     kota_asal: itemLayanan?.kota_asal.length > 0 ? itemLayanan.kota_asal : '',
     kota_tujuan: itemLayanan?.kota_tujuan.length > 0 ? itemLayanan.kota_tujuan : '',
     biaya_jasa: itemLayanan?.biaya_jasa > 0 ? itemLayanan.biaya_jasa : 0,
-    sopir: itemSopir?.id ? itemSopir.id : 0,
-    kendaraan: itemKendaraan?.id ? itemKendaraan.id : 0,
+    sopir: itemSopir?.id ? itemSopir.id : +listSopir[0]?.id,
+    kendaraan: itemKendaraan?.id ? itemKendaraan.id : +listKendaraan[0]?.id,
     status: itemLayanan?.status.length > 0 ? itemLayanan.status : 'active'
   });
 

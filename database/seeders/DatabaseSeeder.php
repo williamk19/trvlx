@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
         'plat_nomor' => 'M150DD',
         'merk_mobil' => 'Daihatsu',
         'nama_mobil' => 'Xenia 2022',
-        'jumlah_seat' => 5,
+        'jumlah_seat' => 7,
         'created_at' => $now,
         'updated_at' => $now
       ],
@@ -79,7 +79,7 @@ class DatabaseSeeder extends Seeder
         'plat_nomor' => 'L472XD',
         'merk_mobil' => 'Toyota',
         'nama_mobil' => 'Hiace 2019',
-        'jumlah_seat' => 14,
+        'jumlah_seat' => 15,
         'created_at' => $now,
         'updated_at' => $now
       ],
@@ -87,7 +87,7 @@ class DatabaseSeeder extends Seeder
         'plat_nomor' => 'M293XT',
         'merk_mobil' => 'Daihatsu',
         'nama_mobil' => 'Terios 2022',
-        'jumlah_seat' => 6,
+        'jumlah_seat' => 7,
         'created_at' => $now,
         'updated_at' => $now
       ],
@@ -95,89 +95,35 @@ class DatabaseSeeder extends Seeder
         'plat_nomor' => 'M517BD',
         'merk_mobil' => 'Toyota',
         'nama_mobil' => 'Hiace 2020',
-        'jumlah_seat' => 14,
+        'jumlah_seat' => 15,
         'created_at' => $now,
         'updated_at' => $now
       ],
-      [
-        'plat_nomor' => 'D223PL',
-        'merk_mobil' => 'Suzuki',
-        'nama_mobil' => 'Ertiga Black',
-        'jumlah_seat' => 6,
-        'created_at' => $now,
-        'updated_at' => $now
-      ],
-      [
-        'plat_nomor' => 'CN102DC',
-        'merk_mobil' => 'Toyota',
-        'nama_mobil' => 'Inova',
-        'jumlah_seat' => 7,
-        'created_at' => $now,
-        'updated_at' => $now
-      ],
-      [
-        'plat_nomor' => 'S924IP',
-        'merk_mobil' => 'Suzuki',
-        'nama_mobil' => 'APV Deluxe 2017',
-        'jumlah_seat' => 7,
-        'created_at' => $now,
-        'updated_at' => $now
-      ]
     ]);
 
-    Layanan::insert([
-      [
-        'id_sopir' => 3,
-        'id_kendaraan' => 1,
-        'kota_asal' => 'Surabaya',
-        'kota_tujuan' => 'Malang',
-        'biaya_jasa' => '100000',
-        'status' => 'active',
-        'created_at' => $now,
-        'updated_at' => $now
-      ],
-      [
-        'id_sopir' => 3,
-        'id_kendaraan' => 1,
-        'kota_asal' => 'Malang',
-        'kota_tujuan' => 'Madura',
-        'biaya_jasa' => '200000',
-        'status' => 'active',
-        'created_at' => $now,
-        'updated_at' => $now
-      ],
-      [
-        'id_sopir' => 3,
-        'id_kendaraan' => 1,
-        'kota_asal' => 'Jakarta',
-        'kota_tujuan' => 'Malang',
-        'biaya_jasa' => '700000',
-        'status' => 'active',
-        'created_at' => $now,
-        'updated_at' => $now
-      ],
-      [
-        'id_sopir' => 3,
-        'id_kendaraan' => 1,
-        'kota_asal' => 'Surabaya',
-        'kota_tujuan' => 'Semarang',
-        'biaya_jasa' => '450000',
-        'status' => 'active',
-        'created_at' => $now,
-        'updated_at' => $now
-      ],
-      [
-        'id_sopir' => 3,
-        'id_kendaraan' => 1,
-        'kota_asal' => 'Yogyakarta',
-        'kota_tujuan' => 'Malang',
-        'biaya_jasa' => '500000',
-        'status' => 'disabled',
-        'created_at' => $now,
-        'updated_at' => $now
-      ]
-    ]);
-    
-    User::factory(100)->create();
+    // Layanan::insert([
+    //   [
+    //     'id_sopir' => 3,
+    //     'id_kendaraan' => 1,
+    //     'kota_asal' => 'Surabaya',
+    //     'kota_tujuan' => 'Malang',
+    //     'biaya_jasa' => '100000',
+    //     'status' => 'active',
+    //     'created_at' => $now,
+    //     'updated_at' => $now
+    //   ],
+    //   [
+    //     'id_sopir' => 3,
+    //     'id_kendaraan' => 1,
+    //     'kota_asal' => 'Malang',
+    //     'kota_tujuan' => 'Madura',
+    //     'biaya_jasa' => '200000',
+    //     'status' => 'active',
+    //     'created_at' => $now,
+    //     'updated_at' => $now
+    //   ],
+    // ]);
+
+    User::factory(10)->create();
   }
 }

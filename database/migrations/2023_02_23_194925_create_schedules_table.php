@@ -13,13 +13,14 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('layanan', function (Blueprint $table) {
+    Schema::create('schedules', function (Blueprint $table) {
       $table->id();
-      $table->string('kota_asal');
-      $table->string('kota_tujuan');
-      $table->double('biaya_jasa');
+      $table->foreignId('id_layanan')->constrained('layanan');
+      $table->foreignId('id_sopir')->constrained('users')->onDelete('cascade');
+      $table->foreignId('id_kendaraan')->constrained('kendaraan')->onDelete('cascade');
+      $table->enum('status', ['active', 'disabled']);
+      $table->time('waktu');
       $table->timestamps();
-      $table->softDeletes();
     });
   }
 
@@ -30,6 +31,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('layanan');
+    Schema::dropIfExists('schedules');
   }
 };
