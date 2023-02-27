@@ -5,8 +5,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KendaraanController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SopirController;
 use App\Http\Controllers\UserController;
+use App\Models\Schedule;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -43,10 +45,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
   Route::group(['middleware' => ['role:1,2']], function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
-
     Route::resource('kendaraan', KendaraanController::class);
-
     Route::resource('layanan', LayananController::class);
+    Route::resource('jadwal', ScheduleController::class);
 
     Route::controller(UserController::class)->group(function () {
       Route::get('/user/admin', 'admin')->name('user.admin');

@@ -8,9 +8,6 @@ const FormLayanan = ({ itemLayanan, itemSopir, itemKendaraan, listSopir, listKen
     kota_asal: itemLayanan?.kota_asal.length > 0 ? itemLayanan.kota_asal : '',
     kota_tujuan: itemLayanan?.kota_tujuan.length > 0 ? itemLayanan.kota_tujuan : '',
     biaya_jasa: itemLayanan?.biaya_jasa > 0 ? itemLayanan.biaya_jasa : 0,
-    sopir: itemSopir?.id ? itemSopir.id : +listSopir[0]?.id,
-    kendaraan: itemKendaraan?.id ? itemKendaraan.id : +listKendaraan[0]?.id,
-    status: itemLayanan?.status.length > 0 ? itemLayanan.status : 'active'
   });
 
   const onHandleChange = (event) => {
@@ -20,7 +17,7 @@ const FormLayanan = ({ itemLayanan, itemSopir, itemKendaraan, listSopir, listKen
   const handleDelete = (e) => {
     e.preventDefault();
     Inertia.delete(route("layanan.destroy", itemLayanan.id_layanan));
-  }
+  };
 
   const submit = (e) => {
     e.preventDefault();
@@ -54,6 +51,8 @@ const FormLayanan = ({ itemLayanan, itemSopir, itemKendaraan, listSopir, listKen
                   placeholder='Malang, Surabaya, ...' />
                 <InputError message={errors.kota_asal} className="mt-2" />
               </div>
+            </div>
+            <div className="md:flex space-y-4 md:space-y-0 md:space-x-4">
               <div className="flex-1">
                 <label className="block text-sm font-bold mb-1" htmlFor="kota_tujuan">
                   Kota Tujuan Travel
@@ -67,42 +66,6 @@ const FormLayanan = ({ itemLayanan, itemSopir, itemKendaraan, listSopir, listKen
                   onChange={(e) => onHandleChange(e)}
                   placeholder='Jakarta, Madura, ...' />
                 <InputError message={errors.kota_tujuan} className="mt-2" />
-              </div>
-            </div>
-            <div className="md:flex space-y-4 md:space-y-0 md:space-x-4">
-              <div className="flex-1">
-                <label className="block text-sm font-bold mb-1" htmlFor="sopir">
-                  Sopir Travel
-                </label>
-                <select
-                  data-theme='light'
-                  value={data.sopir}
-                  name='sopir'
-                  className="select select-bordered border-slate-500 w-full"
-                  onChange={(e) => onHandleChange(e)}>
-                  <option value={'default'} className='text-black' disabled>Nama Sopir</option>
-                  {listSopir.map((s) => (
-                    <option key={s.id} value={s.id}>{s.title}</option>
-                  ))}
-                </select>
-                <InputError message={errors.sopir} className="mt-2" />
-              </div>
-              <div className="flex-1">
-                <label className="block text-sm font-bold mb-1" htmlFor="kendaraan">
-                  Kendaraan Travel
-                </label>
-                <select
-                  data-theme='light'
-                  value={data.kendaraan}
-                  name='kendaraan'
-                  className="select select-bordered border-slate-500 w-full"
-                  onChange={(e) => onHandleChange(e)}>
-                  <option value={'default'} className='text-black' disabled>Nama Kendaraan</option>
-                  {listKendaraan.map((k) => (
-                    <option key={k.id} value={k.id}>{k.title}</option>
-                  ))}
-                </select>
-                <InputError message={errors.kendaraan} className="mt-2" />
               </div>
             </div>
             <div className="md:flex space-y-4 md:space-y-0 md:space-x-4">
@@ -125,22 +88,6 @@ const FormLayanan = ({ itemLayanan, itemSopir, itemKendaraan, listSopir, listKen
                   placeholder='Rp. 250,000' />
                 <InputError message={errors.biaya_jasa} className="mt-2" />
               </div>
-              <div className="flex-initial">
-                <label className="block text-sm font-bold mb-1" htmlFor="status">
-                  Status Layanan
-                </label>
-                <select
-                  data-theme='light'
-                  value={data.status}
-                  name='status'
-                  className="select select-bordered border-slate-500 w-full"
-                  onChange={(e) => onHandleChange(e)}>
-                  <option value={'default'} className='text-black' disabled>Status</option>
-                    <option value={'active'}>{'Active'}</option>
-                    <option value={'disabled'}>{'Disabled'}</option>
-                </select>
-                <InputError message={errors.kendaraan} className="mt-2" />
-              </div>
             </div>
             <div className="flex justify-between">
               {itemLayanan ? (
@@ -148,7 +95,10 @@ const FormLayanan = ({ itemLayanan, itemSopir, itemKendaraan, listSopir, listKen
                   Hapus Layanan
                 </button>
               ) : (<div></div>)}
-              <button type="submit" className="btn bg-white border-slate-200 hover:border-slate-300 text-indigo-500 hover:bg-slate-200">
+              <button
+                type="submit"
+                disabled={processing}
+                className={`btn ${processing && 'loading'} bg-indigo-500 border-slate-200 hover:border-slate-300 text-white hover:bg-indigo-600 disabled:text-black`}>
                 {itemLayanan ? "Edit" : "Tambahkan"} Layanan
               </button>
             </div>

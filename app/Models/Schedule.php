@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Schedule extends Model
 {
-  use SoftDeletes;
   use HasFactory;
   protected $table = 'schedules';
   protected $primaryKey = 'id';
@@ -30,6 +29,11 @@ class Schedule extends Model
   public function kendaraan()
   {
     return $this->belongsTo(Kendaraan::class, 'id_kendaraan')->withTrashed();
+  }
+
+  public function layanan()
+  {
+    return $this->belongsTo(Layanan::class, 'id_layanan')->withTrashed();
   }
 
   public function order()

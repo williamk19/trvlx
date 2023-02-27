@@ -63,26 +63,11 @@ const TableLayanan = ({ layanan, query }) => {
           </div>
         </td>
         <td>
-          <div className={`font-semibold ${l.sopir.deleted_at ? 'text-red-500' : 'text-black'}`}>
-            {l.sopir.nama_user}
-          </div>
-        </td>
-        <td>
-          <div className="font-semibold">
-            {`${l.kendaraan.merk_mobil}, ${l.kendaraan.nama_mobil} ${l.kendaraan.plat_nomor}`}
-          </div>
-        </td>
-        <td>
           <CurrencyFormat
             value={l.biaya_jasa}
             displayType={'text'}
             thousandSeparator={true}
             prefix={'Rp. '} />
-        </td>
-        <td>
-          <div className="font-semibold">
-            {l.status}
-          </div>
         </td>
         <th>
           <Link
@@ -109,10 +94,7 @@ const TableLayanan = ({ layanan, query }) => {
             <tr>
               <th className='text-base'>Kota Asal Travel</th>
               <th className='text-base'>Kota Tujuan Travel</th>
-              <th className='text-base'>Sopir</th>
-              <th className='text-base'>Kendaraan</th>
               <th className='text-base'>Harga</th>
-              <th className='text-base'>Status</th>
               <th className='text-base'></th>
             </tr>
           </thead>

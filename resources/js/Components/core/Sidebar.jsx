@@ -8,7 +8,8 @@ import {
   TruckIcon,
   TicketIcon,
   MapIcon,
-  CalendarDaysIcon
+  CalendarDaysIcon,
+  ClockIcon
 } from '@heroicons/react/24/solid';
 import _ from 'lodash';
 
@@ -60,6 +61,7 @@ function Sidebar({ role, sidebarOpen, setSidebarOpen }) {
           { name: 'order', url: '/order', icon: <TicketIcon className='w-5 ' /> },
           { name: 'keberangkatan', url: '/keberangkatan', icon: <CalendarDaysIcon className='w-5 ' /> },
           { name: 'layanan', url: '/layanan', icon: <MapIcon className='w-5 ' /> },
+          { name: 'jadwal', url: '/jadwal', icon: <ClockIcon className='w-5 ' /> },
           { name: 'kendaraan', url: '/kendaraan', icon: <TruckIcon className='w-5 ' /> },
           { name: 'user', url: '/user', icon: <UsersIcon className='w-5 ' /> }
         ]);
@@ -70,6 +72,7 @@ function Sidebar({ role, sidebarOpen, setSidebarOpen }) {
           { name: 'order', url: '/order', icon: <TicketIcon className='w-5 ' /> },
           { name: 'keberangkatan', url: '/keberangkatan', icon: <CalendarDaysIcon className='w-5 ' /> },
           { name: 'layanan', url: '/layanan', icon: <MapIcon className='w-5 ' /> },
+          { name: 'jadwal', url: '/jadwal', icon: <ClockIcon className='w-5 ' /> },
           { name: 'kendaraan', url: '/kendaraan', icon: <TruckIcon className='w-5 ' /> },
           { name: 'user', url: '/user', icon: <UsersIcon className='w-5 ' /> }
         ]);

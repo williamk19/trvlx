@@ -24,12 +24,9 @@ class LayananController extends Controller
         fn ($item) =>
         [
           'id' => $item->id,
-          'sopir' => $item->sopir,
-          'kendaraan' => $item->kendaraan,
           'kota_asal' => $item->kota_asal,
           'kota_tujuan' => $item->kota_tujuan,
-          'biaya_jasa' => $item->biaya_jasa,
-          'status' => $item->status
+          'biaya_jasa' => $item->biaya_jasa
         ]
       );
 
@@ -47,24 +44,7 @@ class LayananController extends Controller
    */
   public function create()
   {
-    $listSopir = User::where('id_kategori', 3)->get()->map(
-      fn ($item) =>
-      [
-        'id' => $item->id,
-        'title' => $item->nama_user,
-      ]
-    );
-
-    $listKendaraan = Kendaraan::all()->map(
-      fn ($item) => [
-        'id' => $item->id,
-        'title' => $item->merk_mobil . ", " . $item->nama_mobil . " (" . $item->plat_nomor . ")"
-      ]
-    );
-    return Inertia::render('Admin/FormPageLayanan', [
-      'listSopir' => $listSopir,
-      'listKendaraan' => $listKendaraan
-    ]);
+    return Inertia::render('Admin/FormPageLayanan');
   }
 
   /**
@@ -82,12 +62,9 @@ class LayananController extends Controller
     ]);
 
     $createLayanan = Layanan::create([
-      'id_sopir' => $request->sopir,
-      'id_kendaraan' => $request->kendaraan,
       'kota_asal' => $request->kota_asal,
       'kota_tujuan' => $request->kota_tujuan,
-      'biaya_jasa' => $request->biaya_jasa,
-      'status' => $request->status
+      'biaya_jasa' => $request->biaya_jasa
     ]);
 
     return redirect()
@@ -114,27 +91,8 @@ class LayananController extends Controller
    */
   public function edit(Layanan $layanan)
   {
-    $listSopir = User::where('id_kategori', 3)->get()->map(
-      fn ($item) =>
-      [
-        'id' => $item->id,
-        'title' => $item->nama_user,
-      ]
-    );
-
-    $listKendaraan = Kendaraan::all()->map(
-      fn ($item) => [
-        'id' => $item->id,
-        'title' => $item->merk_mobil . ", " . $item->nama_mobil . " (" . $item->plat_nomor . ")"
-      ]
-    );
-
     return Inertia::render('Admin/FormPageLayanan', [
-      'layanan' => $layanan,
-      'sopir' => $layanan->sopir,
-      'kendaraan' => $layanan->kendaraan,
-      'listSopir' => $listSopir,
-      'listKendaraan' => $listKendaraan
+      'layanan' => $layanan
     ]);
   }
 
@@ -151,18 +109,12 @@ class LayananController extends Controller
       'kota_asal' => 'required|string|max:255',
       'kota_tujuan' => 'required|string|max:255',
       'biaya_jasa' => 'required',
-      'sopir' => 'required',
-      'kendaraan' => 'required|numeric',
-      'status' => 'required|in:active,disabled'
     ]);
 
     $updateLayanan = [
       'kota_asal' => $request->kota_asal,
       'kota_tujuan' => $request->kota_tujuan,
-      'biaya_jasa' => $request->biaya_jasa,
-      'id_sopir' => $request->sopir,
-      'id_kendaraan' => $request->kendaraan,
-      'status' => $request->status
+      'biaya_jasa' => $request->biaya_jasa
     ];
 
     Layanan::where('id', $layanan->id)
