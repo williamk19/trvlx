@@ -47,7 +47,7 @@ const TableJadwal = ({ jadwal, query }) => {
 
   const ListSchedule = ({id, sopir, kendaraan, waktu, status}) => {
     return (
-      <tr key={id}>
+      <tr>
         <td>
           <div className="flex items-center space-x-3">
             <div>
@@ -104,27 +104,36 @@ const TableJadwal = ({ jadwal, query }) => {
               {l.kota_asal} <ArrowRightIcon className='w-4' /> {l.kota_tujuan}
             </div>
           </div>
-          <table className="table w-full rounded-t-none">
-            <thead>
+          <table className="table w-full !rounded-t-none border border-t-gray-200">
+            <thead className='!bg-gray-100'>
               <tr>
-                <th className='text-sm w-2/12 font-bold'>Waktu</th>
-                <th className='text-sm w-3/12 font-bold'>Sopir</th>
-                <th className='text-sm font-bold w-4/12'>Kendaraan</th>
-                <th className='text-sm font-bold'>
+                <th className='text-sm w-2/12 font-bold !bg-gray-100'>Waktu</th>
+                <th className='text-sm w-3/12 font-bold !bg-gray-100'>Sopir</th>
+                <th className='text-sm font-bold w-4/12 !bg-gray-100'>Kendaraan</th>
+                <th className='text-sm font-bold !bg-gray-100'>
                   Status
                   </th>
-                <th></th>
+                <th className='text-sm font-bold !bg-gray-100'></th>
               </tr>
             </thead>
             <tbody>
               {l.schedules?.map((schedule) => (
                 <ListSchedule
+                  key={schedule.id}
                   id={schedule.id}
                   sopir={schedule.sopir}
                   kendaraan={schedule.kendaraan}
                   waktu={schedule.waktu}
                   status={schedule.status} />
               ))}
+              {l.schedules.length <= 0 && (
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>Jadwal Belum Ada</td>
+                  <td></td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

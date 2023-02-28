@@ -13,7 +13,7 @@ const Jadwal = (props) => {
 
   useEffect(() => {
     if (!_.isEmpty(props.flash.message) && props.flash.message.type === "info") {
-      toast.info(`${props.flash.message.kota_asal} - ${props.flash.message.kota_tujuan} Berhasil Diubah`, {
+      toast.info(`Data Berhasil Diubah`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -24,7 +24,7 @@ const Jadwal = (props) => {
         theme: "dark",
       });
     } else if (!_.isEmpty(props.flash.message) && props.flash.message.type === "error") {
-      toast.error(`${props.flash.message.kota_asal} - ${props.flash.message.kota_tujuan} Berhasil Dihapus`, {
+      toast.error(`Data Berhasil Dihapus`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -35,7 +35,7 @@ const Jadwal = (props) => {
         theme: "dark",
       });
     } else if (!_.isEmpty(props.flash.message)) {
-      toast.success(`${props.flash.message.kota_asal}, ${props.flash.message.kota_tujuan} Berhasil Dibuat`, {
+      toast.success(`Data Berhasil Dibuat`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

@@ -25,7 +25,7 @@ class ScheduleController extends Controller
       ],
     ])->where('kota_asal', 'like', '%' . $request->search . '%')
       ->orWhere('kota_tujuan', 'like', '%' . $request->search . '%')
-      ->paginate(5);
+      ->paginate(2);
 
     return Inertia::render('Admin/Jadwal', [
       'title' => 'Jadwal',
@@ -105,7 +105,7 @@ class ScheduleController extends Controller
   /**
    * Display the specified resource.
    *
-   * @param  int  $id
+   * @param  \App\Models\Schedule  $schedule
    * @return \Illuminate\Http\Response
    */
   public function show(Schedule $schedule)
@@ -116,11 +116,13 @@ class ScheduleController extends Controller
   /**
    * Show the form for editing the specified resource.
    *
-   * @param  int  $id
+   * @param  \App\Models\Schedule  $schedule
    * @return \Illuminate\Http\Response
    */
-  public function edit(Schedule $schedule)
+  public function edit($id)
   {
+    $schedule = Schedule::where('id', $id)->first();
+
     $listSopir = User::where('id_kategori', 3)->get()->map(
       fn ($item) =>
       [
@@ -146,8 +148,6 @@ class ScheduleController extends Controller
       ]
     );
 
-    dd($schedule);
-
     return Inertia::render('Admin/FormPageJadwal', [
       'jadwal' => $schedule,
       'listSopir' => $listSopir,
@@ -160,18 +160,42 @@ class ScheduleController extends Controller
    * Update the specified resource in storage.
    *
    * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
+   * @param  \App\Models\Schedule  $schedule
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, Schedule $schedule)
+  public function update(Request $request, $id)
   {
-    //
+    $request->validate([
+      'id_layanan' => 'required|numeric',
+      'id_sopir' => 'required|numeric',
+      'id_kendaraan' => 'required|numeric',
+      'waktu' => 'required',
+      'status' => 'required|in:active,disabled'
+    ]);
+
+    $updateSchedule = [
+      'id_layanan' => $request->id_layanan,
+      'id_sopir' => $request->id_sopir,
+      'id_kendaraan' => $request->id_kendaraan,
+      'status' => $request->status,
+      'waktu' => $request->waktu
+    ];
+
+    Schedule::where('id', $id)
+      ->first()
+      ->update($updateSchedule);
+
+    $updateSchedule['type'] = 'info';
+
+    return redirect()
+      ->route('jadwal.index')
+      ->with('message', $updateSchedule);
   }
 
   /**
    * Remove the specified resource from storage.
    *
-   * @param  int  $id
+   * @param  \App\Models\Schedule  $schedule
    * @return \Illuminate\Http\Response
    */
   public function destroy(Schedule $schedule)

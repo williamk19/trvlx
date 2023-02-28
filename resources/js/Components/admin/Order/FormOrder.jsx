@@ -10,7 +10,7 @@ import _ from 'lodash';
 import 'react-toastify/dist/ReactToastify.css';
 import { Inertia } from '@inertiajs/inertia';
 
-const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, seatSisa }) => {
+const FormOrder = ({ type, jadwalData, edit, orderId, orderEdit, dateStart, seatSisa }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [update, setUpdate] = useState(false);
   const [date, setDate] = useState(dateStart);
@@ -19,11 +19,22 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
   const [dateShow, setDateShow] = useState(new Date(dateStart));
   const [idPembayaran, setIdPembayaran] = useState(orderEdit?.id_payment);
 
+  const optionJadwal = jadwalData.map((l) => {
+    return {
+      label: `${l.kota_asal} - ${l.kota_tujuan} - (${l.biaya_jasa})`,
+      options: l.schedules.map((s) => ({
+        name: 'jadwal',
+        label: `${l.kota_asal} - ${l.kota_tujuan} ${s.waktu.split(':').slice(0, -1).join(':')}`,
+        value: s.id
+      }))
+    };
+  });
+
   const { data, setData, post, processing, errors, reset, put } = useForm({
     nama_penumpang: orderEdit?.nama_penumpang ? orderEdit.nama_penumpang : '',
     tanggal_pemberangkatan: orderEdit?.tanggal_pemberangkatan ? new Date(orderEdit.tanggal_pemberangkatan) : new Date(),
     jumlah_seat: orderEdit?.total_seat ? orderEdit?.total_seat : 1,
-    layanan: orderEdit?.id_layanan ? orderEdit?.id_layanan : layananData[0]?.id,
+    jadwal: orderEdit?.id_layanan ? orderEdit?.id_layanan : optionJadwal[0].options[0].value,
     latlng_asal: orderEdit?.lokasi ? {
       lat: orderEdit.lokasi.lat_asal,
       lng: orderEdit.lokasi.lng_asal
@@ -69,7 +80,7 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
     if (update) {
       if (orderEdit) {
         Inertia.get(`/order/list/${orderId}/data`,
-          { tanggalPemberangkatan: date, idLayanan: data.layanan },
+          { tanggalPemberangkatan: date, idJadwal: data.jadwal },
           {
             replace: true,
             preserveState: true,
@@ -78,7 +89,7 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
         );
       } else {
         Inertia.get(route(route().current()),
-          { tanggalPemberangkatan: date, idLayanan: data.layanan },
+          { tanggalPemberangkatan: date, idJadwal: data.jadwal },
           {
             replace: true,
             preserveState: true,
@@ -89,7 +100,7 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
       setUpdate(false);
       setUpdateSeat(true);
     }
-  }, [date, data.layanan]);
+  }, [date, data.jadwal]);
 
   useEffect(() => {
     setDate(new Date(dateShow).toISOString().slice(0, 10));
@@ -111,7 +122,7 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
   };
 
   const onSelectChange = (e) => {
-    setData(e.target.name, e.target.value);
+    setData(e.name, e.value);
     setUpdate(true);
   };
 
@@ -141,8 +152,9 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
       case "data":
         return (
           <DataOrder
+            optionJadwal={optionJadwal}
             data={data}
-            layananData={layananData}
+            jadwalData={jadwalData}
             errors={errors}
             seatSisa={seatEmpty}
             idPembayaran={idPembayaran}
@@ -188,7 +200,7 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
           {formType()}
           <footer>
             <div className={`flex
-              "justify-end"
+              justify-end
               px-6
               py-5
               border-t
@@ -201,7 +213,7 @@ const FormOrder = ({ type, layananData, edit, orderId, orderEdit, dateStart, sea
                 )}
                 <button
                   disabled={processing || (edit && data.status === "confirmed" && seatEmpty - data.jumlah_seat < -1) || (edit && data.status !== "confirmed" && seatEmpty - data.jumlah_seat < 0) || (!edit && seatEmpty - data.jumlah_seat < 0)}
-                className={`btn ${processing && "loading"} bg-indigo-500 hover:bg-indigo-600 disabled:text-black text-white ml-3 border-none`}
+                  className={`btn ${processing && "loading"} bg-indigo-500 hover:bg-indigo-600 disabled:text-black text-white ml-3 border-none`}
                   onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
                   {edit ? 'Edit' : 'Tambahkan'}
                 </button>

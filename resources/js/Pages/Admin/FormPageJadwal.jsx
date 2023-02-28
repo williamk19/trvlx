@@ -22,8 +22,6 @@ const FormPageJadwal = (props) => {
       />
       <FormJadwal
         itemJadwal={props.jadwal}
-        itemSopir={props.sopir}
-        itemKendaraan={props.kendaraan}
         listSopir={props.listSopir}
         listLayanan={props.listLayanan}
         listKendaraan={props.listKendaraan}

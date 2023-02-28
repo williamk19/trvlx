@@ -8,25 +8,31 @@ import moment from 'moment';
 
 const FormJadwal = ({
   itemJadwal,
-  itemSopir,
-  itemKendaraan,
   listSopir,
   listKendaraan,
   listLayanan
 }) => {
   const { data, setData, post, processing, errors, reset, put } = useForm({
-    id_layanan: itemJadwal?.id_layanan ? itemJadwal.id_layanan : listLayanan[0].value,
-    id_sopir: itemJadwal?.id_sopir ? itemJadwal.id_sopir : listSopir[0].value,
-    id_kendaraan: itemJadwal?.id_kendaraan ? itemJadwal.biaya_jasa : listKendaraan[0].value,
+    id_layanan: itemJadwal?.id_layanan
+      ? itemJadwal.id_layanan
+      : listLayanan[0].value,
+    id_sopir: itemJadwal?.id_sopir
+      ? itemJadwal.id_sopir
+      : listKendaraan[0].value,
+    id_kendaraan: itemJadwal?.id_kendaraan
+      ? itemJadwal.id_kendaraan
+      : listSopir[0].value,
     status: itemJadwal?.status ? itemJadwal.status : 'active',
-    waktu: itemJadwal?.waktu ? itemJadwal.waktu : "",
+    waktu: itemJadwal?.waktu ? itemJadwal.waktu : '',
   });
 
-  const [timeJadwal, setTimeJadwal] = useState(moment('0000', 'HHmm'));
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+
+  const [timeJadwal, setTimeJadwal] = useState(
+    itemJadwal?.waktu
+      ? moment(itemJadwal.waktu, 'HHmm')
+      : moment('0000', 'HHmm')
+  );
 
   useEffect(() => {
     setData('waktu', timeJadwal.format('HH:mm'));
@@ -41,9 +47,8 @@ const FormJadwal = ({
   };
 
   const onTimeChange = (timeChange) => {
-    // setData('waktu', timeChange);
     setTimeJadwal(timeChange);
-  }
+  };
 
   const submit = (e) => {
     e.preventDefault();
@@ -58,9 +63,9 @@ const FormJadwal = ({
   };
 
   const optionStatus = [
-    {value: 'active', label: 'Active', name: 'status'},
-    {value: 'disabled', label: 'Disabled', name: 'status'},
-  ]
+    { value: 'active', label: 'Active', name: 'status' },
+    { value: 'disabled', label: 'Disabled', name: 'status' },
+  ];
 
   return (
     <div data-theme="light" className='rounded-lg p-8 shadow-lg lg:w-8/12'>
@@ -73,7 +78,7 @@ const FormJadwal = ({
                   Layanan Kota Travel
                 </label>
                 <Select
-                  defaultValue={listLayanan[0]}
+                  defaultValue={listLayanan[listLayanan.findIndex((i) => i.value === data.id_layanan)]}
                   onChange={onSelectChange}
                   name='id_layanan'
                   options={listLayanan} />
@@ -86,7 +91,7 @@ const FormJadwal = ({
                   Kendaraan yang digunakan
                 </label>
                 <Select
-                  defaultValue={listKendaraan[0]}
+                  defaultValue={listKendaraan[listKendaraan.findIndex((i) => i.value === data.id_kendaraan)]}
                   onChange={onSelectChange}
                   name='id_kendaraan'
                   options={listKendaraan} />
@@ -99,7 +104,7 @@ const FormJadwal = ({
                   Sopir Travel
                 </label>
                 <Select
-                  defaultValue={listSopir[0]}
+                  defaultValue={listSopir[listSopir.findIndex((i) => i.value === data.id_sopir)]}
                   onChange={onSelectChange}
                   name='id_sopir'
                   options={listSopir} />

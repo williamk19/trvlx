@@ -21,7 +21,7 @@ const FormPageOrder = (props) => {
         orderId={props.orderId || null}
         type={props.type}
         edit={props.edit}
-        layananData={props.layananData}
+        jadwalData={props.jadwalData}
         orderEdit={props.orderEdit}
         dateStart={props.dateStart}
         seatSisa={props.seatSisa}
