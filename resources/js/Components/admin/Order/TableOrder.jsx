@@ -72,10 +72,10 @@ const TableOrder = ({ order, query }) => {
           </div>
         </td>
         <td>
-          {o.tanggal_pemberangkatan}
+          {o.tanggal_pemberangkatan}, {o.jadwal.waktu.split(':').slice(0, -1).join(':')}
         </td>
         <td>
-          {`${o.layanan.kota_asal} - ${o.layanan.kota_tujuan}`}
+          {`${o.jadwal.layanan.kota_asal} - ${o.jadwal.layanan.kota_tujuan}`}
         </td>
         <td>
           <div className={`text-xs inline-flex font-medium rounded-full text-center px-2.5 py-1 ${statusColor(o.status_pembayaran)}`}>
@@ -106,7 +106,7 @@ const TableOrder = ({ order, query }) => {
           <thead>
             <tr>
               <th>Nama Penumpang</th>
-              <th>Tanggal Berangkat</th>
+              <th>Tanggal Berangkat dan Waktu</th>
               <th>Layanan Order</th>
               <th>Status Pembayaran</th>
               <th></th>

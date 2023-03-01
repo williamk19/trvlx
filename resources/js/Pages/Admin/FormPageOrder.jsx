@@ -25,6 +25,7 @@ const FormPageOrder = (props) => {
         orderEdit={props.orderEdit}
         dateStart={props.dateStart}
         seatSisa={props.seatSisa}
+        seatTotal={props.seatTotal}
       />
     </AuthenticatedLayout>
   );

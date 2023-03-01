@@ -64,17 +64,21 @@ class OrderController extends Controller
 
     $jadwalDipilih = Schedule::where('id', $idSchedule)->with('kendaraan')->first();
     $seatSisa = $jadwalDipilih?->kendaraan?->jumlah_seat - $jumlahSeatTerpesan;
+    $seatTotal = $jadwalDipilih->kendaraan->jumlah_seat;
 
     return Inertia::render('Admin/FormPageOrder', [
       'type' => 'data',
       'jadwalData' => $jadwal,
       'dateStart' => $dateStart,
-      'seatSisa' => $seatSisa
+      'seatSisa' => $seatSisa,
+      'seatTotal' => $seatTotal
     ]);
   }
 
   public function orderJemput()
   {
+    $dateStart = Carbon::now()->toDateString();
+
     $jadwal = Layanan::with([
       'schedules' => [
         'kendaraan',
@@ -87,12 +91,15 @@ class OrderController extends Controller
 
     return Inertia::render('Admin/FormPageOrder', [
       'type' => 'jemput',
+      'dateStart' => $dateStart,
       'jadwalData' => $jadwal
     ]);
   }
 
   public function orderTujuan()
   {
+    $dateStart = Carbon::now()->toDateString();
+
     $jadwal = Layanan::with([
       'schedules' => [
         'kendaraan',
@@ -105,6 +112,7 @@ class OrderController extends Controller
 
     return Inertia::render('Admin/FormPageOrder', [
       'type' => 'tujuan',
+      'dateStart' => $dateStart,
       'jadwalData' => $jadwal
     ]);
   }
@@ -119,6 +127,7 @@ class OrderController extends Controller
     $dataOrder = Order::where('nama_penumpang', 'like', '%' . $request->search . '%')
       ->orWhere('id_user', $userSearch ? $userSearch->id : -1)
       ->orderBy('created_at', 'desc')
+      ->with(['schedule' => ['layanan']])
       ->paginate(5)
       ->through(
         fn ($item) =>
@@ -127,7 +136,7 @@ class OrderController extends Controller
           'nama_penumpang' => $item->nama_penumpang,
           'tanggal_pemberangkatan' => $item->tanggal_pemberangkatan,
           'status_pembayaran' => $item->status_pembayaran,
-          'jadwal' => $item->jadwal
+          'jadwal' => $item->schedule
         ]
       );
 
@@ -220,39 +229,39 @@ class OrderController extends Controller
 
   public function editData(Request $request, $id)
   {
-    $orderEdit = Order::where('id', $id)->first();
-    $orderEdit->lokasi;
-    $orderEdit->jadwal;
-    $orderEdit->user;
+    $orderEdit = Order::where('id', $id)->with(['lokasi', 'user', 'schedule'])->first();
 
     DB::statement("SET SQL_MODE=''");
     $dateStart = Carbon::parse($orderEdit->tanggal_pemberangkatan)->toDateString();
-    $idSchedule = $orderEdit->id_jadwal;
+    $idSchedule = $orderEdit->id_schedule;
     if ($request->tanggalPemberangkatan) {
       $dateStart = Carbon::parse($request->tanggalPemberangkatan)->toDateString();
-      $idSchedule = $request->idSchedule;
+      $idSchedule = $request->idJadwal;
     }
 
-    $dataLayananKeberangkatan = Order::with('jadwal')
+    $dataLayananKeberangkatan = Order::with(['schedule' => ['kendaraan']])
       ->where('status_pembayaran', 'confirmed')
       ->where('tanggal_pemberangkatan', [$dateStart])
-      ->where('id_jadwal', $idSchedule)
+      ->where('id_schedule', $idSchedule)
       ->get();
 
     $jumlahSeatTerpesan = $dataLayananKeberangkatan->reduce(function ($carry, $item) {
       return $carry + $item->total_seat;
     });
 
-    $jadwalDipilih = Layanan::where('id', $idSchedule)->with('kendaraan')->first();
+    $jadwalDipilih = Schedule::where('id', $idSchedule)->with('kendaraan')->first();
     $seatSisa = $jadwalDipilih->kendaraan->jumlah_seat - $jumlahSeatTerpesan;
 
-    $jadwal = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
-      "id" => $user->id,
-      "kota_asal" => $user->kota_asal,
-      "kota_tujuan" => $user->kota_tujuan,
-      "biaya_jasa" => $user->biaya_jasa,
+    $jadwal = Layanan::with([
+      'schedules' => [
+        'kendaraan',
+      ],
+    ])
+      ->whereHas('schedules', function ($query) {
+        $query->where('status', '=', 'active');
+      })
+      ->get();
 
-    ]));
 
     return Inertia::render('Admin/FormPageOrder', [
       'type' => 'data',
@@ -267,17 +276,17 @@ class OrderController extends Controller
 
   public function editJemput($id)
   {
-    $jadwal = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
-      "id" => $user->id,
-      "kota_asal" => $user->kota_asal,
-      "kota_tujuan" => $user->kota_tujuan,
-      "biaya_jasa" => $user->biaya_jasa
-    ]));
+    $jadwal = Layanan::with([
+      'schedules' => [
+        'kendaraan',
+      ],
+    ])
+      ->whereHas('schedules', function ($query) {
+        $query->where('status', '=', 'active');
+      })
+      ->get();
 
-    $orderEdit = Order::where('id', $id)->first();
-    $orderEdit->lokasi;
-    $orderEdit->jadwal;
-    $orderEdit->user;
+    $orderEdit = Order::where('id', $id)->with('lokasi', 'schedule', 'user')->first();
 
     return Inertia::render('Admin/FormPageOrder', [
       'type' => 'jemput',
@@ -290,17 +299,17 @@ class OrderController extends Controller
 
   public function editTujuan($id)
   {
-    $jadwal = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
-      "id" => $user->id,
-      "kota_asal" => $user->kota_asal,
-      "kota_tujuan" => $user->kota_tujuan,
-      "biaya_jasa" => $user->biaya_jasa
-    ]));
+    $jadwal = Layanan::with([
+      'schedules' => [
+        'kendaraan',
+      ],
+    ])
+      ->whereHas('schedules', function ($query) {
+        $query->where('status', '=', 'active');
+      })
+      ->get();
 
-    $orderEdit = Order::where('id', $id)->first();
-    $orderEdit->lokasi;
-    $orderEdit->jadwal;
-    $orderEdit->user;
+    $orderEdit = Order::where('id', $id)->with('lokasi', 'schedule', 'user')->first();
 
     return Inertia::render('Admin/FormPageOrder', [
       'type' => 'tujuan',
@@ -342,7 +351,7 @@ class OrderController extends Controller
 
     $orderUpdate = [
       'id_lokasi' => $order->lokasi->id,
-      'id_jadwal' => $request->jadwal,
+      'id_schedule' => $request->jadwal,
       'id_user' => $order->id_user,
       'nama_penumpang' => $request->nama_penumpang,
       'tanggal_pemberangkatan' => Carbon::parse($request->tanggal_pemberangkatan, 'UTC')->format('Y-m-d'),

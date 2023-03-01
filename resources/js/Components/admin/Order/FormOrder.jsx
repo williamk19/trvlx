@@ -10,7 +10,16 @@ import _ from 'lodash';
 import 'react-toastify/dist/ReactToastify.css';
 import { Inertia } from '@inertiajs/inertia';
 
-const FormOrder = ({ type, jadwalData, edit, orderId, orderEdit, dateStart, seatSisa }) => {
+const FormOrder = ({
+  type,
+  jadwalData,
+  edit,
+  orderId,
+  orderEdit,
+  dateStart,
+  seatSisa,
+  seatTotal
+}) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [update, setUpdate] = useState(false);
   const [date, setDate] = useState(dateStart);
@@ -34,7 +43,7 @@ const FormOrder = ({ type, jadwalData, edit, orderId, orderEdit, dateStart, seat
     nama_penumpang: orderEdit?.nama_penumpang ? orderEdit.nama_penumpang : '',
     tanggal_pemberangkatan: orderEdit?.tanggal_pemberangkatan ? new Date(orderEdit.tanggal_pemberangkatan) : new Date(),
     jumlah_seat: orderEdit?.total_seat ? orderEdit?.total_seat : 1,
-    jadwal: orderEdit?.id_layanan ? orderEdit?.id_layanan : optionJadwal[0].options[0].value,
+    jadwal: orderEdit?.id_schedule ? orderEdit?.id_schedule : optionJadwal[0].options[0].value,
     latlng_asal: orderEdit?.lokasi ? {
       lat: orderEdit.lokasi.lat_asal,
       lng: orderEdit.lokasi.lng_asal
@@ -158,6 +167,7 @@ const FormOrder = ({ type, jadwalData, edit, orderId, orderEdit, dateStart, seat
             errors={errors}
             seatSisa={seatEmpty}
             idPembayaran={idPembayaran}
+            seatTotal={seatTotal}
             onDateChange={onDateChange}
             onSelectChange={onSelectChange}
             onHandleChange={onHandleChange} />
@@ -194,7 +204,7 @@ const FormOrder = ({ type, jadwalData, edit, orderId, orderEdit, dateStart, seat
         <div className="flex flex-col md:-mr-px">
           <SidebarOrder
             tanggalPemberangkatan={date}
-            idLayanan={data.layanan}
+            idJadwal={data.jadwal}
             edit={edit}
             orderId={orderId} />
           {formType()}
