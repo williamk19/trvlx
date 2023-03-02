@@ -49,7 +49,7 @@ class DashboardController extends Controller
         'id' => $order->id,
         'nama_penumpang' => $order->nama_penumpang,
         'id_payment' => $order->id_payment,
-        'layanan' => $order->layanan->kota_asal . " - " . $order->layanan->kota_tujuan,
+        'layanan' => $order->schedule->layanan->kota_asal . " - " . $order->schedule->layanan->kota_tujuan,
         'status_pembayaran' => $order->status_pembayaran,
         'tanggal_pemberangkatan' => $order->tanggal_pemberangkatan
       ]));
@@ -75,7 +75,7 @@ class DashboardController extends Controller
           'nama_penumpang' => $item->nama_penumpang,
           'tanggal_pemberangkatan' => $item->tanggal_pemberangkatan,
           'status_pembayaran' => $item->status_pembayaran,
-          'layanan' => $item->layanan
+          'layanan' => $item->schedule->layanan
         ]
       );;
 

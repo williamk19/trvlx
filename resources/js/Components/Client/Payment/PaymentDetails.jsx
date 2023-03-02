@@ -1,6 +1,7 @@
 import React from 'react';
 
 const PaymentDetails = ({ order }) => {
+  console.log(order);
   return (
     <div className='bg-white rounded-xl shadow-md basis-3/5 p-6'>
       <h1 className='text-gray-700 font-bold text-xl mb-3'>
@@ -43,7 +44,7 @@ const PaymentDetails = ({ order }) => {
           </div>
           <div className="text-sm text-slate-800">
             <span className="mr-3">
-              {`${order.layanan.kota_asal} - ${order.layanan.kota_tujuan}`}
+              {`${order.schedule.layanan.kota_asal} - ${order.schedule.layanan.kota_tujuan} (${order.schedule.waktu})`}
             </span>
           </div>
         </li>

@@ -48,7 +48,7 @@ class ClientOrderController extends Controller
       'nama_penumpang' => 'required|string|max:255',
       'tanggal_pemberangkatan' => 'required|date',
       'jumlah_seat' => 'required|numeric',
-      'layanan' => 'required|numeric',
+      'jadwal' => 'required|numeric',
       'latlng_asal' => 'required',
       'latlng_tujuan' => 'required',
       'alamat_asal' => 'required|string|max:255',
@@ -56,6 +56,8 @@ class ClientOrderController extends Controller
       'deskripsi_asal' => 'string|nullable',
       'deskripsi_tujuan' => 'string|nullable'
     ]);
+
+    $total_harga = (Schedule::where('id', $request->jadwal)->with('layanan')->first()->layanan->biaya_jasa) * ($request->jumlah_seat);
 
     $lokasi = Lokasi::create([
       'lat_asal' => $request->latlng_asal["lat"],
@@ -68,10 +70,9 @@ class ClientOrderController extends Controller
       'deskripsi_tujuan' => $request->deskripsi_tujuan
     ]);
 
-    $total_harga = (Layanan::where('id', $request->layanan)->first('biaya_jasa')->biaya_jasa) * ($request->jumlah_seat);
     $order = Order::create([
       'id_lokasi' => $lokasi->id,
-      'id_layanan' => $request->layanan,
+      'id_schedule' => $request->jadwal,
       'id_user' => auth()->user()->id,
       'nama_penumpang' => $request->nama_penumpang,
       'tanggal_pemberangkatan' => Carbon::parse($request->tanggal_pemberangkatan, 'UTC')->format('Y-m-d'),
@@ -185,17 +186,23 @@ class ClientOrderController extends Controller
     DB::statement("SET SQL_MODE=''");
     $dateStart = Carbon::now()->toDateString();
 
-    $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
-      "id" => $user->id,
-      "kota_asal" => $user->kota_asal,
-      "kota_tujuan" => $user->kota_tujuan,
-      "biaya_jasa" => $user->biaya_jasa
-    ]));
+    $jadwal = Layanan::with([
+      'schedules' => [
+        'kendaraan',
+      ],
+    ])
+      ->whereHas('schedules', function ($query) {
+        $query->where('status', '=', 'active');
+      })
+      ->get();
+
+    $jadwalFull = Schedule::all();
 
     return Inertia::render('Client/FormPageOrder', [
       'type' => 'jemput',
       'dateStart' => $dateStart,
-      'layananData' => $layanan
+      'jadwalFull' => $jadwalFull,
+      'jadwalData' => $jadwal
     ]);
   }
 
@@ -204,17 +211,23 @@ class ClientOrderController extends Controller
     DB::statement("SET SQL_MODE=''");
     $dateStart = Carbon::now()->toDateString();
 
-    $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
-      "id" => $user->id,
-      "kota_asal" => $user->kota_asal,
-      "kota_tujuan" => $user->kota_tujuan,
-      "biaya_jasa" => $user->biaya_jasa
-    ]));
+    $jadwal = Layanan::with([
+      'schedules' => [
+        'kendaraan',
+      ],
+    ])
+      ->whereHas('schedules', function ($query) {
+        $query->where('status', '=', 'active');
+      })
+      ->get();
+
+    $jadwalFull = Schedule::all();
 
     return Inertia::render('Client/FormPageOrder', [
       'type' => 'tujuan',
       'dateStart' => $dateStart,
-      'layananData' => $layanan
+      'jadwalFull' => $jadwalFull,
+      'jadwalData' => $jadwal
     ]);
   }
 
@@ -223,7 +236,7 @@ class ClientOrderController extends Controller
     $order = Order::where('id', $id)->first();
     $order->user;
     $order->lokasi;
-    $order->layanan;
+    $order->schedule->layanan;
     if (auth()->user()->id !== $order->user->id) {
       return redirect("dashboard");
     }
@@ -237,10 +250,10 @@ class ClientOrderController extends Controller
         ],
         'item_details' => [
           [
-            'id' => $order->layanan->id,
-            'price' => $order->layanan->biaya_jasa,
+            'id' => $order->schedule->layanan->id,
+            'price' => $order->schedule->layanan->biaya_jasa,
             'quantity' => $order->total_seat,
-            'name' => 'Travel ' . $order->layanan->kota_asal . ' ' . $order->layanan->kota_tujuan,
+            'name' => 'Travel ' . $order->schedule->layanan->kota_asal . ' ' . $order->schedule->layanan->kota_tujuan,
           ],
         ],
         'customer_details' => [

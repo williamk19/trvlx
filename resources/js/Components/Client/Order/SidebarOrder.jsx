@@ -2,7 +2,7 @@ import { usePage } from '@inertiajs/inertia-react';
 import { Link } from '@inertiajs/inertia-react';
 import React from 'react';
 
-const SidebarOrder = ({ tanggalPemberangkatan, idLayanan }) => {
+const SidebarOrder = ({ tanggalPemberangkatan, idJadwal }) => {
   const { url } = usePage();
   const pathname = url;
 
@@ -14,7 +14,7 @@ const SidebarOrder = ({ tanggalPemberangkatan, idLayanan }) => {
         </div>
         <ul className="flex flex-nowrap mr-3 md:mr-0">
           <li className="mr-0.5 md:mr-0 md:mb-0.5">
-            <Link preserveState href={`/client-order/data?tanggalPemberangkatan=${tanggalPemberangkatan}&idLayanan=${idLayanan}`} className={`flex items-center px-2.5 py-2 rounded whitespace-nowrap ${pathname.includes('/client-order/data') && 'bg-gray-300'}`}>
+            <Link preserveState href={`/client-order/data?tanggalPemberangkatan=${tanggalPemberangkatan}&idJadwal=${idJadwal}`} className={`flex items-center px-2.5 py-2 rounded whitespace-nowrap ${pathname.includes('/client-order/data') && 'bg-gray-300'}`}>
               <span className={`text-sm font-medium ${pathname.includes('/client-order/data') ? 'text-slate-800' : 'text-slate-600 hover:text-slate-900'}`}>
                 Data Diri
               </span>

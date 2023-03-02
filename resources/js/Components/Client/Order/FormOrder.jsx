@@ -83,6 +83,7 @@ const FormOrder = ({ type, jadwalData, jadwalFull, dateStart, seatSisa, nameAuth
       );
       setUpdateSeat(true);
       setUpdate(false);
+      checkTimePayment();
     }
   }, [date, data.jadwal]);
 
@@ -208,7 +209,7 @@ const FormOrder = ({ type, jadwalData, jadwalFull, dateStart, seatSisa, nameAuth
         <div className="flex flex-col md:-mr-px">
           <SidebarOrder
             tanggalPemberangkatan={date}
-            idLayanan={data.layanan}
+            idJadwal={data.jadwal}
           />
           {formType()}
           <footer className='mt-4'>
