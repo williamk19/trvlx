@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowSmallRightIcon, TruckIcon } from '@heroicons/react/24/solid';
 import { Link } from '@inertiajs/inertia-react';
 
-const DataItem = ({ tanggalPemberangkatan, idLayanan, kotaAsal, kotaTujuan }) => {
+const DataItem = ({ tanggalPemberangkatan, idLayanan, kotaAsal, kotaTujuan, jamKeberangkatan }) => {
   return (
     <div>
       <ul className="my-1">
@@ -11,7 +11,7 @@ const DataItem = ({ tanggalPemberangkatan, idLayanan, kotaAsal, kotaTujuan }) =>
             <div className="grow flex justify-between">
               <div className="self-center">
                 <h1 className='font-semibold text-gray-700 text-sm md:text-base mb-2'>
-                  {tanggalPemberangkatan}
+                  {tanggalPemberangkatan} - Jadwal Waktu : {jamKeberangkatan}
                 </h1>
                 <div className='font-medium text-gray-700 text-sm md:text-base flex gap-2 items-center'>
                   {kotaAsal} <span><ArrowSmallRightIcon className='w-4 md:w-5' /></span> {kotaTujuan}

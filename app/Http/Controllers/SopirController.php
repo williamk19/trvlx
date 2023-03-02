@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Layanan;
 use App\Models\Order;
+use App\Models\Schedule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -23,10 +24,10 @@ class SopirController extends Controller
     }
     $dateEnd = $date->addWeek()->toDateString();
 
-    $dataLayananSopir = Order::with('layanan')
+    $dataLayananSopir = Order::with(['schedule' => ['layanan']])
       ->where('status_pembayaran', 'confirmed')
       ->whereBetween('tanggal_pemberangkatan', [$dateStart, $dateEnd])
-      ->groupBy('id_layanan', 'tanggal_pemberangkatan')
+      ->groupBy('id_schedule', 'tanggal_pemberangkatan')
       ->get();
 
     return Inertia::render('Sopir/Dashboard', [
@@ -37,7 +38,6 @@ class SopirController extends Controller
 
   public function detail(Request $request)
   {
-
     $idRole = auth()->user();
     $tanggalPemberangkatan = $request->tanggalPemberangkatan;
     $idLayanan = $request->idLayanan;
@@ -45,12 +45,12 @@ class SopirController extends Controller
       abort(404);
     }
 
-    $layanan = Layanan::where('id', $idLayanan)->first();
+    $layanan = Schedule::where('id', $idLayanan)->with('layanan')->first();
 
-    $order = Order::with('layanan', 'user', 'lokasi')
+    $order = Order::with(['schedule' => ['layanan'], 'user', 'lokasi'])
       ->where('tanggal_pemberangkatan', $tanggalPemberangkatan)
       ->where('status_pembayaran', 'confirmed')
-      ->where('id_layanan', $idLayanan)
+      ->where('id_schedule', $idLayanan)
       ->get();
 
     return Inertia::render('Sopir/AntarDetail', [
@@ -68,11 +68,11 @@ class SopirController extends Controller
       abort(404);
     }
 
-    $layanan = Layanan::where('id', $idLayanan)->first();
+    $layanan = Schedule::where('id', $idLayanan)->with('layanan')->first();
 
-    $order = Order::with('layanan', 'user', 'lokasi')
+    $order = Order::with(['schedule' => ['layanan'], 'user', 'lokasi'])
       ->where('tanggal_pemberangkatan', $tanggalPemberangkatan)
-      ->where('id_layanan', $idLayanan)
+      ->where('id_schedule', $idLayanan)
       ->where('status_pembayaran', 'confirmed')
       ->get();
 
@@ -91,11 +91,11 @@ class SopirController extends Controller
       abort(404);
     }
 
-    $layanan = Layanan::where('id', $idLayanan)->first();
+    $layanan = Schedule::where('id', $idLayanan)->with('layanan')->first();
 
-    $order = Order::with('layanan', 'user', 'lokasi')
+    $order = Order::with(['schedule' => ['layanan'], 'user', 'lokasi'])
       ->where('tanggal_pemberangkatan', $tanggalPemberangkatan)
-      ->where('id_layanan', $idLayanan)
+      ->where('id_schedule', $idLayanan)
       ->where('status_pembayaran', 'confirmed')
       ->get();
 

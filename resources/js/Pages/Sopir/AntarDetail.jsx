@@ -31,9 +31,9 @@ const AntarDetail = (props) => {
                 {props.tanggalPemberangkatan}
               </div>
               <div className='font-semibold flex gap-2 text-slate-600 text-sm md:text-base'>
-                {props.layanan.kota_asal}
+                {props.layanan.layanan.kota_asal}
                 <ArrowRightIcon className='w-3' />
-                {props.layanan.kota_tujuan}
+                {props.layanan.layanan.kota_tujuan}
               </div>
             </div>
           </div>

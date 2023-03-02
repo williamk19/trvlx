@@ -24,14 +24,15 @@ const DataList = ({ idKategori, dataLayananSopir }) => {
             key={idx}
             href={route(nextUrl, {
               tanggalPemberangkatan: d.tanggal_pemberangkatan,
-              idLayanan: d.layanan.id
+              idLayanan: d.schedule.id
             })}
           >
             <DataItem
+              jamKeberangkatan={d.schedule.waktu}
               tanggalPemberangkatan={d.tanggal_pemberangkatan}
-              kotaAsal={d.layanan.kota_asal}
-              kotaTujuan={d.layanan.kota_tujuan}
-              idLayanan={d.layanan.id}
+              kotaAsal={d.schedule.layanan.kota_asal}
+              kotaTujuan={d.schedule.layanan.kota_tujuan}
+              idLayanan={d.schedule.layanan.id}
             />
           </Link>
         ))}

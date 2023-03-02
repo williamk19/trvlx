@@ -27,6 +27,7 @@ const FormOrder = ({
   const [seatEmpty, setSeatEmpty] = useRemember(seatSisa);
   const [dateShow, setDateShow] = useState(new Date(dateStart));
   const [idPembayaran, setIdPembayaran] = useState(orderEdit?.id_payment);
+  const [seatDipilih, setSeatDipilih] = useState([]);
 
   const optionJadwal = jadwalData.map((l) => {
     return {
@@ -56,8 +57,13 @@ const FormOrder = ({
     } : {},
     alamat_tujuan: orderEdit?.lokasi ? orderEdit.lokasi.alamat_tujuan : "",
     deskripsi_tujuan: orderEdit?.lokasi.deskripsi_tujuan ? orderEdit.lokasi.deskripsi_tujuan : "",
-    status: orderEdit?.status_pembayaran ? orderEdit?.status_pembayaran : 'init'
+    status: orderEdit?.status_pembayaran ? orderEdit?.status_pembayaran : 'confirmed',
+    // seat_dipilih: []
   });
+
+  useEffect(() => {
+    console.log(seatDipilih);
+  }, [seatDipilih]);
 
   useEffect(() => {
     if (!_.isEmpty(errors)) {
@@ -80,6 +86,7 @@ const FormOrder = ({
     }
 
     if (updateSeat && (seatSisa !== seatEmpty)) {
+      // setData('seat_dipilih', []);
       setSeatEmpty(seatSisa);
       setUpdateSeat(false);
     }
@@ -168,6 +175,9 @@ const FormOrder = ({
             seatSisa={seatEmpty}
             idPembayaran={idPembayaran}
             seatTotal={seatTotal}
+            setData={setData}
+            seatDipilih={seatDipilih}
+            setSeatDipilih={setSeatDipilih}
             onDateChange={onDateChange}
             onSelectChange={onSelectChange}
             onHandleChange={onHandleChange} />

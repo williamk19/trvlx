@@ -94,13 +94,13 @@ class DashboardController extends Controller
     }
     $dateEnd = Carbon::now()->addWeek()->toDateString();
 
-    $dataLayananSopir = Order::with('layanan')
+    $dataLayananSopir = Order::with(['schedule' => ['layanan']])
       ->where('status_pembayaran', 'confirmed')
       ->whereBetween('tanggal_pemberangkatan', [$dateStart, $dateEnd])
-      ->whereHas('layanan', function ($query) {
+      ->whereHas('schedule', function ($query) {
         $query->where('id_sopir', '=', auth()->user()->id);
       })
-      ->groupBy('id_layanan', 'tanggal_pemberangkatan')
+      ->groupBy('id_schedule', 'tanggal_pemberangkatan')
       ->get();
 
     return Inertia::render('Sopir/Dashboard', [

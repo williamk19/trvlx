@@ -14,43 +14,48 @@ const DataOrder = ({
   data,
   idPembayaran,
   jadwalData,
+  setData,
   optionJadwal,
   onHandleChange,
   onDateChange,
   onSelectChange,
   errors,
   seatSisa,
+  seatDipilih,
+  setSeatDipilih,
   seatTotal
 }) => {
   registerLocale('id', id);
   const rows = useRef([]);
+  const [rowsState, setRowsState] = useState([]);
   const count = useRef(0);
 
   useEffect(() => {
     rows.current = [];
     for (let index = 1; index <= seatTotal; index++) {
       if (index === 1) {
-        rows.current.push([{ id: index, number: index }])
+        rows.current.push([{ id: index, number: index }]);
         count.current = count.current + 1;
       } else {
         if (rows.current[count.current] === undefined) {
-          rows.current.push([{ id: index, number: index }])
+          rows.current.push([{ id: index, number: index }]);
         } else {
           if (rows.current[count.current].length >= 3) {
-            rows.current.push([{ id: index, number: index }])
+            rows.current.push([{ id: index, number: index }]);
             count.current = count.current + 1;
           } else {
-            rows.current[count.current].push({ id: index, number: index })
+            rows.current[count.current].push({ id: index, number: index });
           }
         }
       }
     }
+    setRowsState(rows.current);
     count.current = 0;
   }, [seatTotal]);
 
   return (
     <div className="grow">
-      <div className="p-6 md:py-0 flex gap-4 flex-col md:flex-row">
+      <div className="p-6 md:py-0 flex md:gap-6 lg:gap-0 flex-col md:flex-row">
         <div className='w-full md:w-2/4'>
           <h2 className="text-2xl text-slate-800 font-bold mb-5">Data Diri</h2>
           <section>
@@ -107,7 +112,7 @@ const DataOrder = ({
               </div>
             </div>
             <div className="sm:flex w-full lg:w-11/12 sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-5 mb-0 md:mb-8 justify-between">
-              <div className='w-full md:w-1/4'>
+              <div className='w-full md:w-2/5'>
                 <InputLabel className='mb-2' forInput="status" value="Status Pembayaran" />
                 <select
                   data-theme='light'
@@ -139,7 +144,13 @@ const DataOrder = ({
               <h1>{`Jumlah Kursi Tersisa : ${seatSisa}`}</h1>
             </div>
           )}
-          <SeatSelector rows={rows.current} seatSisa={seatSisa}/>
+          <SeatSelector
+            seatDipilih={seatDipilih}
+            setSeatDipilih={setSeatDipilih}
+            data={data}
+            setData={setData}
+            rows={rowsState}
+            seatSisa={seatSisa} />
         </div>
       </div>
     </div>
