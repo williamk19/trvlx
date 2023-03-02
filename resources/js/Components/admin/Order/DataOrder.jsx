@@ -144,13 +144,13 @@ const DataOrder = ({
               <h1>{`Jumlah Kursi Tersisa : ${seatSisa}`}</h1>
             </div>
           )}
-          <SeatSelector
+          {/* <SeatSelector
             seatDipilih={seatDipilih}
             setSeatDipilih={setSeatDipilih}
             data={data}
             setData={setData}
             rows={rowsState}
-            seatSisa={seatSisa} />
+            seatSisa={seatSisa} /> */}
         </div>
       </div>
     </div>

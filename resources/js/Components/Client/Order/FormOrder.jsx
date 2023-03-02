@@ -10,7 +10,7 @@ import _ from 'lodash';
 import 'react-toastify/dist/ReactToastify.css';
 import { Inertia } from '@inertiajs/inertia';
 
-const FormOrder = ({ type, layananData, dateStart, seatSisa, nameAuth }) => {
+const FormOrder = ({ type, jadwalData, jadwalFull, dateStart, seatSisa, nameAuth }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [update, setUpdate] = useState(false);
   const [date, setDate] = useState(dateStart);
@@ -18,12 +18,24 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa, nameAuth }) => {
   const [seatEmpty, setSeatEmpty] = useRemember(seatSisa);
   const [dateShow, setDateShow] = useState(new Date(dateStart));
   const [isNameSame, setIsNameSame] = useState(true);
+  const [canOrdered, setCanOrdered] = useState(true);
+
+  const optionJadwal = jadwalData.map((l) => {
+    return {
+      label: `${l.kota_asal} - ${l.kota_tujuan} - (${l.biaya_jasa})`,
+      options: l.schedules.map((s) => ({
+        name: 'jadwal',
+        label: `${l.kota_asal} - ${l.kota_tujuan} ${s.waktu.split(':').slice(0, -1).join(':')}`,
+        value: s.id
+      }))
+    };
+  });
 
   const { data, setData, post, processing, errors, reset } = useForm({
     nama_penumpang: '',
     tanggal_pemberangkatan: new Date(),
     jumlah_seat: 1,
-    layanan: 1,
+    jadwal: optionJadwal[0].options[0].value,
     latlng_asal: {},
     alamat_asal: '',
     deskripsi_asal: '',
@@ -56,12 +68,13 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa, nameAuth }) => {
       setSeatEmpty(seatSisa);
       setUpdateSeat(false);
     }
+    checkTimePayment();
   }, [seatSisa, updateSeat]);
 
   useEffect(() => {
     if (update) {
       Inertia.get(route(route().current()),
-        { tanggalPemberangkatan: date, idLayanan: data.layanan },
+        { tanggalPemberangkatan: date, idJadwal: data.jadwal },
         {
           replace: true,
           preserveState: true,
@@ -71,7 +84,7 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa, nameAuth }) => {
       setUpdateSeat(true);
       setUpdate(false);
     }
-  }, [date, data.layanan]);
+  }, [date, data.jadwal]);
 
   useEffect(() => {
     setDate(new Date(dateShow).toISOString().slice(0, 10));
@@ -100,14 +113,14 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa, nameAuth }) => {
     }
   };
 
+  const onSelectChange = (e) => {
+    setData(e.name, e.value);
+    setUpdate(true);
+  };
+
   const onDateChange = (date) => {
     setData('tanggal_pemberangkatan', date);
     setDateShow(date);
-  };
-
-  const onSelectChange = (e) => {
-    setData(e.target.name, e.target.value);
-    setUpdate(true);
   };
 
   const onLocationChange = (name, latLng) => {
@@ -119,13 +132,31 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa, nameAuth }) => {
     post(route('client-order.store'));
   };
 
+  const checkTimePayment = () => {
+    const rightNow = new Date();
+    if (
+      rightNow.getDate() === new Date(data.tanggal_pemberangkatan).getDate()
+      && rightNow.getMonth() === new Date(data.tanggal_pemberangkatan).getMonth()
+      && rightNow.getFullYear() === new Date(data.tanggal_pemberangkatan).getFullYear()
+      ) {
+      if (+jadwalFull[data.jadwal - 1].waktu.split(':')[0] - rightNow.getHours() >= 3) {
+        setCanOrdered(true);
+      } else {
+        setCanOrdered(false);
+      }
+    } else {
+      setCanOrdered(true);
+    }
+  };
+
   const formType = () => {
     switch (type) {
       case "layanan":
         return (
           <DataOrder
             data={data}
-            layananData={layananData}
+            jadwalData={jadwalData}
+            seatSisa={seatEmpty}
             errors={errors}
             onSelectChange={onSelectChange}
             onDateChange={onDateChange}
@@ -136,7 +167,8 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa, nameAuth }) => {
         return (
           <DataOrder
             data={data}
-            layananData={layananData}
+            jadwalData={jadwalData}
+            optionJadwal={optionJadwal}
             seatSisa={seatEmpty}
             errors={errors}
             onSelectChange={onSelectChange}
@@ -185,7 +217,7 @@ const FormOrder = ({ type, layananData, dateStart, seatSisa, nameAuth }) => {
                 <button onClick={() => reset()} className="btn btn-error hover:bg-red-500 text-slate-100 border-slate-200 hover:border-slate-300">
                   Reset
                 </button>
-                <button disabled={processing || (seatEmpty - data.jumlah_seat < 0)} className={`btn ${processing && "loading"} bg-indigo-500 hover:bg-indigo-600 disabled:text-black text-white ml-3 border-none`} onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
+                <button disabled={!canOrdered || processing || (seatEmpty - data.jumlah_seat < 0)} className={`btn ${processing && "loading"} bg-indigo-500 hover:bg-indigo-600 disabled:text-black text-white ml-3 border-none`} onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}>
                   Pesan Travel
                 </button>
                 <Modal id="info-modal" modalOpen={modalOpen} setModalOpen={setModalOpen}>

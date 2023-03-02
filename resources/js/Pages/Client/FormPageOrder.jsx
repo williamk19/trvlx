@@ -17,7 +17,8 @@ const FormPageOrder = (props) => {
       <FormOrder
         nameAuth={props.auth.user.nama_user}
         type={props.type}
-        layananData={props.layananData}
+        jadwalData={props.jadwalData}
+        jadwalFull={props.jadwalFull}
         dateStart={props.dateStart}
         seatSisa={props.seatSisa}
       />

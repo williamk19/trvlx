@@ -6,6 +6,7 @@ use App\Events\OrderCreated;
 use App\Models\Layanan;
 use App\Models\Lokasi;
 use App\Models\Order;
+use App\Models\Schedule;
 use App\Services\Midtrans\CreateSnapTokenService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -138,37 +139,44 @@ class ClientOrderController extends Controller
   {
     DB::statement("SET SQL_MODE=''");
     $dateStart = Carbon::now()->toDateString();
-    $idLayanan = 1;
+    $idSchedule = 1;
     if ($request->tanggalPemberangkatan) {
       $dateStart = Carbon::parse($request->tanggalPemberangkatan)->toDateString();
-      $idLayanan = $request->idLayanan;
+      $idSchedule = $request->idJadwal;
     }
 
-    $dataLayananKeberangkatan = Order::with('layanan')
-    ->where('status_pembayaran', 'confirmed')
-    ->where('tanggal_pemberangkatan', [$dateStart])
-      ->where('id_layanan', $idLayanan)
+    $dataLayananKeberangkatan = Order::with('schedule')
+      ->where('status_pembayaran', 'confirmed')
+      ->where('tanggal_pemberangkatan', [$dateStart])
+      ->where('id_schedule', $idSchedule)
       ->get();
 
     $jumlahSeatTerpesan = $dataLayananKeberangkatan->reduce(function ($carry, $item) {
       return $carry + $item->total_seat;
     });
 
-    $layanan = Layanan::where('status', 'active')->get()->map(fn ($user) => ([
-      "id" => $user->id,
-      "kota_asal" => $user->kota_asal,
-      "kota_tujuan" => $user->kota_tujuan,
-      "biaya_jasa" => $user->biaya_jasa
-    ]));
+    $jadwal = Layanan::with([
+      'schedules' => [
+        'kendaraan',
+      ],
+    ])
+      ->whereHas('schedules', function ($query) {
+        $query->where('status', '=', 'active');
+      })->get();
 
-    $layananDipilih = Layanan::where('id', $idLayanan)->with('kendaraan')->first();
-    $seatSisa = $layananDipilih?->kendaraan?->jumlah_seat - $jumlahSeatTerpesan;
+    $jadwalDipilih = Schedule::where('id', $idSchedule)->with('kendaraan')->first();
+    $seatSisa = $jadwalDipilih?->kendaraan?->jumlah_seat - $jumlahSeatTerpesan;
+    $seatTotal = $jadwalDipilih->kendaraan->jumlah_seat;
+
+    $jadwalFull = Schedule::all();
 
     return Inertia::render('Client/FormPageOrder', [
       'type' => 'data',
-      'layananData' => $layanan,
+      'jadwalData' => $jadwal,
+      'jadwalFull' => $jadwalFull,
       'dateStart' => $dateStart,
-      'seatSisa' => $seatSisa
+      'seatSisa' => $seatSisa,
+      'seatTotal' => $seatTotal
     ]);
   }
 
@@ -251,7 +259,8 @@ class ClientOrderController extends Controller
       $order->status_pembayaran === 'pending'
       || $order->status_pembayaran === 'done'
       || $order->status_pembayaran === 'confirmed'
-      || $order->status_pembayaran === 'failed') {
+      || $order->status_pembayaran === 'failed'
+    ) {
       $snapToken = $order->snap_token;
     }
 
