@@ -57,7 +57,27 @@ class ClientOrderController extends Controller
       'deskripsi_tujuan' => 'string|nullable'
     ]);
 
+    // $kotaAsal = Schedule::where('id', $request->jadwal)->with('layanan')->first()->layanan->kota_asal;
+
+    // $url = "https://geokeo.com/geocode/v1/search.php?q=".urlencode($kotaAsal)."&api=".env("GEOCODING_API");
+
+    // $json = file_get_contents($url);
+    // $json = json_decode($json);
+    // dd($json->results);
+    // if (array_key_exists('status', $json)) {
+
+    //   if ($json->status == 'ok') {
+    //     $address = $json->results[0]->formatted_address;
+    //     $latitude = $json->results[0]->geometry->location->lat;
+    //     $longitude = $json->results[0]->geometry->location->lng;
+    //     //do something with the data
+    //     dd($json->results);
+    //   }
+    // }
+
     $total_harga = (Schedule::where('id', $request->jadwal)->with('layanan')->first()->layanan->biaya_jasa) * ($request->jumlah_seat);
+
+    dd("h3h3");
 
     $lokasi = Lokasi::create([
       'lat_asal' => $request->latlng_asal["lat"],

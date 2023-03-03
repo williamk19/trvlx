@@ -12,8 +12,10 @@ import { useRef } from 'react';
 
 const DataOrder = ({
   data,
+  edit,
   idPembayaran,
   jadwalData,
+  seatTerpesan,
   setData,
   optionJadwal,
   onHandleChange,
@@ -144,13 +146,16 @@ const DataOrder = ({
               <h1>{`Jumlah Kursi Tersisa : ${seatSisa}`}</h1>
             </div>
           )}
-          {/* <SeatSelector
+          <SeatSelector
+            seatTerpesan={seatTerpesan}
+            edit={edit}
             seatDipilih={seatDipilih}
             setSeatDipilih={setSeatDipilih}
             data={data}
             setData={setData}
             rows={rowsState}
-            seatSisa={seatSisa} /> */}
+            seatSisa={seatSisa} />
+          <InputError message={errors.seatSelected} className="mt-2" />
         </div>
       </div>
     </div>

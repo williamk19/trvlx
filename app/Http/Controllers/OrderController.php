@@ -11,6 +11,7 @@ use App\Mail\OrderConfirmed;
 use App\Models\Layanan;
 use App\Models\Lokasi;
 use App\Models\Schedule;
+use App\Models\Seat;
 use App\Models\User;
 use App\Services\Midtrans\CallbackService;
 use Carbon\Carbon;
@@ -174,7 +175,8 @@ class OrderController extends Controller
       'alamat_asal' => 'required|string|max:255',
       'alamat_tujuan' => 'required|string|max:255',
       'deskripsi_asal' => 'string|nullable',
-      'deskripsi_tujuan' => 'string|nullable'
+      'deskripsi_tujuan' => 'string|nullable',
+      'seatSelected' => ["required", "array", "min:1"]
     ]);
 
     $lokasi = Lokasi::create([
@@ -204,6 +206,13 @@ class OrderController extends Controller
     Order::where('id', $order->id)->update([
       'id_payment' => $order->id . "_" . $order->id_user . "_" . $dt,
     ]);
+
+    foreach ($request->seatSelected as $value) {
+      Seat::create([
+        'id_order' => $order->id,
+        'seat_number' => $value['seatNumber']
+      ]);
+    }
 
     return redirect()
       ->route('order.index')
@@ -251,6 +260,7 @@ class OrderController extends Controller
 
     $jadwalDipilih = Schedule::where('id', $idSchedule)->with('kendaraan')->first();
     $seatSisa = $jadwalDipilih->kendaraan->jumlah_seat - $jumlahSeatTerpesan;
+    $seatTotal = $jadwalDipilih->kendaraan->jumlah_seat;
 
     $jadwal = Layanan::with([
       'schedules' => [
@@ -262,6 +272,7 @@ class OrderController extends Controller
       })
       ->get();
 
+    $seatSelected = Seat::where('id_order', $id)->get();
 
     return Inertia::render('Admin/FormPageOrder', [
       'type' => 'data',
@@ -270,7 +281,9 @@ class OrderController extends Controller
       'jadwalData' => $jadwal,
       'orderEdit' => $orderEdit,
       'dateStart' => $dateStart,
-      "seatSisa" => $seatSisa
+      "seatSisa" => $seatSisa,
+      'seatTotal' => $seatTotal,
+      "seatSelected" => $seatSelected
     ]);
   }
 

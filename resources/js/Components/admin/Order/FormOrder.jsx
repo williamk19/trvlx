@@ -13,6 +13,7 @@ import { Inertia } from '@inertiajs/inertia';
 const FormOrder = ({
   type,
   jadwalData,
+  seatTerpesan,
   edit,
   orderId,
   orderEdit,
@@ -20,6 +21,7 @@ const FormOrder = ({
   seatSisa,
   seatTotal
 }) => {
+  // console.log(seatSelected);
   const [modalOpen, setModalOpen] = useState(false);
   const [update, setUpdate] = useState(false);
   const [date, setDate] = useState(dateStart);
@@ -43,7 +45,7 @@ const FormOrder = ({
   const { data, setData, post, processing, errors, reset, put } = useForm({
     nama_penumpang: orderEdit?.nama_penumpang ? orderEdit.nama_penumpang : '',
     tanggal_pemberangkatan: orderEdit?.tanggal_pemberangkatan ? new Date(orderEdit.tanggal_pemberangkatan) : new Date(),
-    jumlah_seat: orderEdit?.total_seat ? orderEdit?.total_seat : 1,
+    jumlah_seat: orderEdit?.total_seat ? orderEdit?.total_seat : 0,
     jadwal: orderEdit?.id_schedule ? orderEdit?.id_schedule : optionJadwal[0].options[0].value,
     latlng_asal: orderEdit?.lokasi ? {
       lat: orderEdit.lokasi.lat_asal,
@@ -58,12 +60,23 @@ const FormOrder = ({
     alamat_tujuan: orderEdit?.lokasi ? orderEdit.lokasi.alamat_tujuan : "",
     deskripsi_tujuan: orderEdit?.lokasi.deskripsi_tujuan ? orderEdit.lokasi.deskripsi_tujuan : "",
     status: orderEdit?.status_pembayaran ? orderEdit?.status_pembayaran : 'confirmed',
-    // seat_dipilih: []
+    seatSelected: []
   });
 
   useEffect(() => {
-    console.log(seatDipilih);
+    setData('jumlah_seat', seatDipilih.length);
+  }, [data.seatSelected]);
+
+  useEffect(() => {
+    setData('seatSelected', seatDipilih);
   }, [seatDipilih]);
+
+  useEffect(() => {
+    if (edit && seatTerpesan.length > 0) {
+      const arrOfSeatTerpesan = seatTerpesan.map((e) => ({ seatNumber: e.seat_number }));
+      setSeatDipilih(arrOfSeatTerpesan);
+    }
+  }, [seatTerpesan]);
 
   useEffect(() => {
     if (!_.isEmpty(errors)) {
@@ -86,7 +99,7 @@ const FormOrder = ({
     }
 
     if (updateSeat && (seatSisa !== seatEmpty)) {
-      // setData('seat_dipilih', []);
+      setSeatDipilih([]);
       setSeatEmpty(seatSisa);
       setUpdateSeat(false);
     }
@@ -115,6 +128,7 @@ const FormOrder = ({
       }
       setUpdate(false);
       setUpdateSeat(true);
+      setSeatDipilih([]);
     }
   }, [date, data.jadwal]);
 
@@ -168,6 +182,8 @@ const FormOrder = ({
       case "data":
         return (
           <DataOrder
+            seatTerpesan={seatTerpesan}
+            edit={edit}
             optionJadwal={optionJadwal}
             data={data}
             jadwalData={jadwalData}
