@@ -21,6 +21,8 @@ const FormPageOrder = (props) => {
         jadwalFull={props.jadwalFull}
         dateStart={props.dateStart}
         seatSisa={props.seatSisa}
+        seatTotal={props.seatTotal}
+        seatTerpesan={props.seatSelected}
       />
     </AuthenticatedLayout>
   );

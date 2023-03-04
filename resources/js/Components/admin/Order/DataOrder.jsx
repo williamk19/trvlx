@@ -33,6 +33,21 @@ const DataOrder = ({
   const count = useRef(0);
 
   useEffect(() => {
+    setData('jumlah_seat', seatDipilih.length);
+  }, [data.seatSelected]);
+
+  useEffect(() => {
+    setData('seatSelected', seatDipilih);
+  }, [seatDipilih]);
+
+  useEffect(() => {
+    if (edit && seatTerpesan.length > 0) {
+      const arrOfSeatTerpesan = seatTerpesan.map((e) => ({ seatNumber: e.seat_number }));
+      setSeatDipilih(arrOfSeatTerpesan);
+    }
+  }, [seatTerpesan]);
+
+  useEffect(() => {
     rows.current = [];
     for (let index = 1; index <= seatTotal; index++) {
       if (index === 1) {

@@ -21,7 +21,6 @@ const FormOrder = ({
   seatSisa,
   seatTotal
 }) => {
-  // console.log(seatSelected);
   const [modalOpen, setModalOpen] = useState(false);
   const [update, setUpdate] = useState(false);
   const [date, setDate] = useState(dateStart);
@@ -62,21 +61,6 @@ const FormOrder = ({
     status: orderEdit?.status_pembayaran ? orderEdit?.status_pembayaran : 'confirmed',
     seatSelected: []
   });
-
-  useEffect(() => {
-    setData('jumlah_seat', seatDipilih.length);
-  }, [data.seatSelected]);
-
-  useEffect(() => {
-    setData('seatSelected', seatDipilih);
-  }, [seatDipilih]);
-
-  useEffect(() => {
-    if (edit && seatTerpesan.length > 0) {
-      const arrOfSeatTerpesan = seatTerpesan.map((e) => ({ seatNumber: e.seat_number }));
-      setSeatDipilih(arrOfSeatTerpesan);
-    }
-  }, [seatTerpesan]);
 
   useEffect(() => {
     if (!_.isEmpty(errors)) {

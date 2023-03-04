@@ -10,7 +10,7 @@ import _ from 'lodash';
 import 'react-toastify/dist/ReactToastify.css';
 import { Inertia } from '@inertiajs/inertia';
 
-const FormOrder = ({ type, jadwalData, jadwalFull, dateStart, seatSisa, nameAuth }) => {
+const FormOrder = ({ type, jadwalData, jadwalFull, seatTotal, dateStart, seatSisa, nameAuth, seatTerpesan }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [update, setUpdate] = useState(false);
   const [date, setDate] = useState(dateStart);
@@ -19,6 +19,7 @@ const FormOrder = ({ type, jadwalData, jadwalFull, dateStart, seatSisa, nameAuth
   const [dateShow, setDateShow] = useState(new Date(dateStart));
   const [isNameSame, setIsNameSame] = useState(true);
   const [canOrdered, setCanOrdered] = useState(true);
+  const [seatDipilih, setSeatDipilih] = useState([]);
 
   const optionJadwal = jadwalData.map((l) => {
     return {
@@ -41,7 +42,8 @@ const FormOrder = ({ type, jadwalData, jadwalFull, dateStart, seatSisa, nameAuth
     deskripsi_asal: '',
     latlng_tujuan: {},
     alamat_tujuan: '',
-    deskripsi_tujuan: ''
+    deskripsi_tujuan: '',
+    seatSelected: []
   });
 
   useEffect(() => {
@@ -155,6 +157,7 @@ const FormOrder = ({ type, jadwalData, jadwalFull, dateStart, seatSisa, nameAuth
       case "layanan":
         return (
           <DataOrder
+            seatTerpesan={seatTerpesan}
             data={data}
             jadwalData={jadwalData}
             seatSisa={seatEmpty}
@@ -168,10 +171,15 @@ const FormOrder = ({ type, jadwalData, jadwalFull, dateStart, seatSisa, nameAuth
         return (
           <DataOrder
             data={data}
+            seatTotal={seatTotal}
+            seatTerpesan={seatTerpesan}
             jadwalData={jadwalData}
             optionJadwal={optionJadwal}
             seatSisa={seatEmpty}
             errors={errors}
+            seatDipilih={seatDipilih}
+            setData={setData}
+            setSeatDipilih={setSeatDipilih}
             onSelectChange={onSelectChange}
             onDateChange={onDateChange}
             onHandleChange={onHandleChange}

@@ -1,31 +1,24 @@
 import { useEffect, useState } from 'react';
 
 const Seat = ({ detail, data, edit, seatDipilih, setSeatDipilih, seatTerpesan }) => {
-  // const seatSelectionHandler = () => {}
-
+  console.log(seatTerpesan);
   const [isSelected, setIsSelected] = useState(
-    (seatDipilih.some((e) => e.seatNumber === detail.id))
+    ((seatDipilih.some((e) => e.seatNumber === detail.id))
+      ? true
+      : false)
+  );
+
+  const [isTerpesan, setIsTerpesan] = useState(
+    (seatTerpesan.some((e) => e.seat_number === detail.id))
       ? true
       : false
   );
 
-  // useEffect(() => {
-  //   if (edit && seatTerpesan.length > 0) {
-  //     if (seatTerpesan.some((e) => e.seat_number === detail.id)) {
-  //       console.log(seatTerpesan);
-  //       setIsSelected(true);
-  //     }
-  //   }
-  // }, [edit, seatTerpesan])
-
-  // useEffect(() => {
-  //   if (edit && seatTerpesan.length > 0) {
-  //     if (seatTerpesan.some((e) => e.seat_number === detail.id)) {
-  //       console.log({seatNumber: detail.id});
-  //       setSeatDipilih("asjidosa");
-  //     }
-  //   }
-  // }, [seatTerpesan])
+  useEffect(() => {
+    setIsTerpesan((seatTerpesan.some((e) => e.seat_number === detail.id))
+      ? true
+      : false);
+  }, [seatTerpesan]);
 
   useEffect(() => {
     if (seatDipilih.length === 0) {
@@ -50,10 +43,10 @@ const Seat = ({ detail, data, edit, seatDipilih, setSeatDipilih, seatTerpesan })
 
   return (
     <input
-      disabled={edit}
+      disabled={edit || isTerpesan}
       key={detail.id}
       type="checkbox"
-      checked={isSelected}
+      checked={isSelected || isTerpesan}
       onClick={(e) => onClickHandler(detail.id)}
       className="checkbox checkbox-accent bg-emerald-300" />
   );

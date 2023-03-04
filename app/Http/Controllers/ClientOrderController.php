@@ -10,6 +10,7 @@ use App\Models\Schedule;
 use App\Services\Midtrans\CreateSnapTokenService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Midtrans\Snap;
@@ -77,7 +78,6 @@ class ClientOrderController extends Controller
 
     $total_harga = (Schedule::where('id', $request->jadwal)->with('layanan')->first()->layanan->biaya_jasa) * ($request->jumlah_seat);
 
-    dd("h3h3");
 
     $lokasi = Lokasi::create([
       'lat_asal' => $request->latlng_asal["lat"],
@@ -189,12 +189,17 @@ class ClientOrderController extends Controller
     $seatSisa = $jadwalDipilih?->kendaraan?->jumlah_seat - $jumlahSeatTerpesan;
     $seatTotal = $jadwalDipilih->kendaraan->jumlah_seat;
 
+    $seatTerpesan = Arr::flatten($dataLayananKeberangkatan->map(function ($item) {
+      return $item->seats;
+    }));
+    $seatTotal = $jadwalDipilih->kendaraan->jumlah_seat;
     $jadwalFull = Schedule::all();
 
     return Inertia::render('Client/FormPageOrder', [
       'type' => 'data',
       'jadwalData' => $jadwal,
       'jadwalFull' => $jadwalFull,
+      'seatSelected' => $seatTerpesan,
       'dateStart' => $dateStart,
       'seatSisa' => $seatSisa,
       'seatTotal' => $seatTotal

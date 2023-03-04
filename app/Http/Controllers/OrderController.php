@@ -16,6 +16,7 @@ use App\Models\User;
 use App\Services\Midtrans\CallbackService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
@@ -43,11 +44,15 @@ class OrderController extends Controller
       $idSchedule = $request->idJadwal;
     }
 
-    $dataLayananKeberangkatan = Order::with('schedule')
+    $dataLayananKeberangkatan = Order::with('schedule', 'seats')
       ->where('status_pembayaran', 'confirmed')
       ->where('tanggal_pemberangkatan', [$dateStart])
       ->where('id_schedule', $idSchedule)
       ->get();
+
+    $seatTerpesan = Arr::flatten($dataLayananKeberangkatan->map(function ($item) {
+      return $item->seats;
+    }));
 
     $jumlahSeatTerpesan = $dataLayananKeberangkatan->reduce(function ($carry, $item) {
       return $carry + $item->total_seat;
@@ -70,6 +75,7 @@ class OrderController extends Controller
     return Inertia::render('Admin/FormPageOrder', [
       'type' => 'data',
       'jadwalData' => $jadwal,
+      'seatSelected' => $seatTerpesan,
       'dateStart' => $dateStart,
       'seatSisa' => $seatSisa,
       'seatTotal' => $seatTotal
@@ -300,13 +306,15 @@ class OrderController extends Controller
       ->get();
 
     $orderEdit = Order::where('id', $id)->with('lokasi', 'schedule', 'user')->first();
+    $seatSelected = Seat::where('id_order', $id)->get();
 
     return Inertia::render('Admin/FormPageOrder', [
       'type' => 'jemput',
       'edit' => true,
       'orderId' => $id,
       'jadwalData' => $jadwal,
-      'orderEdit' => $orderEdit
+      'orderEdit' => $orderEdit,
+      "seatSelected" => $seatSelected
     ]);
   }
 
@@ -323,13 +331,15 @@ class OrderController extends Controller
       ->get();
 
     $orderEdit = Order::where('id', $id)->with('lokasi', 'schedule', 'user')->first();
+    $seatSelected = Seat::where('id_order', $id)->get();
 
     return Inertia::render('Admin/FormPageOrder', [
       'type' => 'tujuan',
       'edit' => true,
       'jadwalData' => $jadwal,
       'orderId' => $id,
-      'orderEdit' => $orderEdit
+      'orderEdit' => $orderEdit,
+      "seatSelected" => $seatSelected
     ]);
   }
   public function edit(Order $order)

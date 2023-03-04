@@ -3,7 +3,7 @@ import SeatSelector from '@/Components/core/SeatSelector';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-select';
@@ -11,14 +11,62 @@ import Select from 'react-select';
 const DataOrder = ({
   data,
   jadwalData,
+  seatTerpesan,
+  setData,
   optionJadwal,
   onHandleChange,
   onSelectChange,
   onDateChange,
+  seatTotal,
   errors,
   seatSisa,
+  seatDipilih,
+  setSeatDipilih,
   isNameSame
 }) => {
+  const rows = useRef([]);
+  const [rowsState, setRowsState] = useState([]);
+  const count = useRef(0);
+
+  useEffect(() => {
+    setData('jumlah_seat', seatDipilih.length);
+  }, [data.seatSelected]);
+
+  useEffect(() => {
+    setData('seatSelected', seatDipilih);
+  }, [seatDipilih]);
+
+  useEffect(() => {
+    if (seatTerpesan.length > 0) {
+      const arrOfSeatTerpesan = seatTerpesan.map((e) => ({ seatNumber: e.seat_number }));
+      setSeatDipilih(arrOfSeatTerpesan);
+    }
+  }, [seatTerpesan]);
+
+  useEffect(() => {
+    rows.current = [];
+    for (let index = 1; index <= seatTotal; index++) {
+      if (index === 1) {
+        rows.current.push([{ id: index, number: index }]);
+        count.current = count.current + 1;
+      } else {
+        if (rows.current[count.current] === undefined) {
+          rows.current.push([{ id: index, number: index }]);
+        } else {
+          if (rows.current[count.current].length >= 3) {
+            rows.current.push([{ id: index, number: index }]);
+            count.current = count.current + 1;
+          } else {
+            rows.current[count.current].push({ id: index, number: index });
+          }
+        }
+      }
+    }
+    console.log(seatTotal);
+    setRowsState(rows.current);
+    count.current = 0;
+  }, [seatTotal]);
+
   return (
     <div className="grow">
       <div className="p-6 md:py-0 flex md:gap-6 lg:gap-0 flex-col md:flex-row">
@@ -87,8 +135,16 @@ const DataOrder = ({
               <h1>{`Jumlah Kursi Tersisa : ${seatSisa}`}</h1>
             </div>
           )}
+          <SeatSelector
+            seatTerpesan={seatTerpesan}
+            seatDipilih={seatDipilih}
+            setSeatDipilih={setSeatDipilih}
+            data={data}
+            setData={setData}
+            rows={rowsState}
+            seatSisa={seatSisa} />
+          <InputError message={errors.seatSelected} className="mt-2" />
         </div>
-
       </div>
     </div>
   );
