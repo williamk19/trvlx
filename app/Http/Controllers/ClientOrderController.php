@@ -7,6 +7,7 @@ use App\Models\Layanan;
 use App\Models\Lokasi;
 use App\Models\Order;
 use App\Models\Schedule;
+use App\Models\Seat;
 use App\Services\Midtrans\CreateSnapTokenService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -58,26 +59,12 @@ class ClientOrderController extends Controller
       'deskripsi_tujuan' => 'string|nullable'
     ]);
 
-    // $kotaAsal = Schedule::where('id', $request->jadwal)->with('layanan')->first()->layanan->kota_asal;
 
-    // $url = "https://geokeo.com/geocode/v1/search.php?q=".urlencode($kotaAsal)."&api=".env("GEOCODING_API");
-
-    // $json = file_get_contents($url);
-    // $json = json_decode($json);
-    // dd($json->results);
-    // if (array_key_exists('status', $json)) {
-
-    //   if ($json->status == 'ok') {
-    //     $address = $json->results[0]->formatted_address;
-    //     $latitude = $json->results[0]->geometry->location->lat;
-    //     $longitude = $json->results[0]->geometry->location->lng;
-    //     //do something with the data
-    //     dd($json->results);
-    //   }
-    // }
-
-    $total_harga = (Schedule::where('id', $request->jadwal)->with('layanan')->first()->layanan->biaya_jasa) * ($request->jumlah_seat);
-
+    if ($request->biaya_tambahan > 0) {
+      $total_harga = ((Schedule::where('id', $request->jadwal)->with('layanan')->first()->layanan->biaya_jasa) * ($request->jumlah_seat)) + $request->biaya_tambahan;
+    } else {
+      $total_harga = (Schedule::where('id', $request->jadwal)->with('layanan')->first()->layanan->biaya_jasa) * ($request->jumlah_seat);
+    }
 
     $lokasi = Lokasi::create([
       'lat_asal' => $request->latlng_asal["lat"],
@@ -105,6 +92,13 @@ class ClientOrderController extends Controller
     Order::where('id', $order->id)->update([
       'id_payment' => $order->id . "_" . $order->id_user . "_" . $dt,
     ]);
+
+    foreach ($request->seatSelected as $value) {
+      Seat::create([
+        'id_order' => $order->id,
+        'seat_number' => $value['seatNumber']
+      ]);
+    }
 
     return redirect()
       ->route('client-order.payment', ['id' => $order->id])
@@ -184,6 +178,7 @@ class ClientOrderController extends Controller
       ->whereHas('schedules', function ($query) {
         $query->where('status', '=', 'active');
       })->get();
+
 
     $jadwalDipilih = Schedule::where('id', $idSchedule)->with('kendaraan')->first();
     $seatSisa = $jadwalDipilih?->kendaraan?->jumlah_seat - $jumlahSeatTerpesan;
@@ -276,7 +271,7 @@ class ClientOrderController extends Controller
         'item_details' => [
           [
             'id' => $order->schedule->layanan->id,
-            'price' => $order->schedule->layanan->biaya_jasa,
+            'price' => $order->total_harga,
             'quantity' => $order->total_seat,
             'name' => 'Travel ' . $order->schedule->layanan->kota_asal . ' ' . $order->schedule->layanan->kota_tujuan,
           ],

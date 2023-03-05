@@ -9,7 +9,6 @@ const SeatSelector = ({
   setSeatDipilih,
   seatTerpesan
 }) => {
-
   return (
     <div>
       <h1 className='text-gray-900 md:text-lg lg:text-xl font-bold'>

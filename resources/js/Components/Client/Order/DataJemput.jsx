@@ -4,7 +4,7 @@ import TextInput from '@/Components/TextInput';
 import React from 'react';
 import BoxMap from '@/Components/MapBox/BoxMap';
 
-const DataJemput = ({ data, onHandleChange, errors, onLocationChange }) => {
+const DataJemput = ({ data, onHandleChange, tambahan, distance, errors, onLocationChange }) => {
 
   return (
     <div className="grow">
@@ -16,11 +16,18 @@ const DataJemput = ({ data, onHandleChange, errors, onLocationChange }) => {
               <InputLabel value="Lokasi Jemput" className="mb-3" />
               <form className="w-full h-52 md:h-72 rounded-2xl" >
                 <BoxMap
+                  orderType='jemput'
                   name="latlng_asal"
                   latlng={data.latlng_asal}
                   onLocationChange={onLocationChange}
                 />
               </form>
+              <p className='font-semibold text-sm text-gray-600 mt-3'>
+                Biaya Tambahan : {tambahan} Rupiah
+              </p>
+              <p className='font-semibold text-sm text-gray-600 mt-0'>
+                Jarak Dari Kantor : {parseFloat(distance).toFixed(2)} KM
+              </p>
             </div>
             <div className='mt-10 w-full md:w-3/4 lg:w-2/4'>
               <div className='w-full'>

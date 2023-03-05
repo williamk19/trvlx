@@ -1,7 +1,6 @@
 import React from 'react';
 
 const PaymentDetails = ({ order }) => {
-  console.log(order);
   return (
     <div className='bg-white rounded-xl shadow-md basis-3/5 p-6'>
       <h1 className='text-gray-700 font-bold text-xl mb-3'>

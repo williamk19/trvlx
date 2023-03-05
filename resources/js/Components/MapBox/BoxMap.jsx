@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer, ZoomControl } from 'react-leaflet';
 import DragMarkerMap from './DragMarkerMap';
 import BoxRouteMap from './BoxRouteMap';
 import "leaflet/dist/leaflet.css";
@@ -37,6 +37,21 @@ const BoxMap = ({
           onLocationChange={onLocationChange}
         />
       </>}
+      {orderType === 'jemput' && (
+        <>
+          <Marker position={[-7.999355, 112.648296]}>
+            <Popup>
+              Kantor Malang
+            </Popup>
+          </Marker>
+          <Marker position={[-7.445115, 112.713006]}>
+            <Popup>
+              Kantor Sidoarjo
+            </Popup>
+          </Marker>
+        </>
+      )}
+
     </MapContainer>
   );
 };

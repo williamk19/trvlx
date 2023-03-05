@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import _ from 'lodash';
 import 'react-toastify/dist/ReactToastify.css';
 import { Inertia } from '@inertiajs/inertia';
+import { getDistance } from '@/Utils/TspNearestNeighbor';
 
 const FormOrder = ({ type, jadwalData, jadwalFull, seatTotal, dateStart, seatSisa, nameAuth, seatTerpesan }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -32,6 +33,9 @@ const FormOrder = ({ type, jadwalData, jadwalFull, seatTotal, dateStart, seatSis
     };
   });
 
+  const [distance, setDistance] = useState(0);
+  const [tambahan, setTambahan] = useState(0);
+
   const { data, setData, post, processing, errors, reset } = useForm({
     nama_penumpang: '',
     tanggal_pemberangkatan: new Date(),
@@ -43,7 +47,8 @@ const FormOrder = ({ type, jadwalData, jadwalFull, seatTotal, dateStart, seatSis
     latlng_tujuan: {},
     alamat_tujuan: '',
     deskripsi_tujuan: '',
-    seatSelected: []
+    seatSelected: [],
+    biaya_tambahan: 0,
   });
 
   useEffect(() => {
@@ -62,11 +67,13 @@ const FormOrder = ({ type, jadwalData, jadwalFull, seatTotal, dateStart, seatSis
   }, [errors]);
 
   useEffect(() => {
+    console.log(seatSisa);
     if (seatSisa === undefined) {
       seatSisa = seatEmpty;
     }
 
     if (updateSeat && (seatSisa !== seatEmpty)) {
+      setSeatDipilih([]);
       setSeatEmpty(seatSisa);
       setUpdateSeat(false);
     }
@@ -83,6 +90,7 @@ const FormOrder = ({ type, jadwalData, jadwalFull, seatTotal, dateStart, seatSis
           preserveScroll: true
         }
       );
+      setSeatDipilih([]);
       setUpdateSeat(true);
       setUpdate(false);
       checkTimePayment();
@@ -126,7 +134,38 @@ const FormOrder = ({ type, jadwalData, jadwalFull, seatTotal, dateStart, seatSis
     setDateShow(date);
   };
 
+  useEffect(() => {
+    if (tambahan > 0) {
+      setData('biaya_tambahan', tambahan);
+    }
+  }, [tambahan]);
+
+  useEffect(() => {
+    if (distance > 5) {
+      const tambahan = (Math.round(distance) - 5) * 5000;
+      setTambahan(tambahan);
+    } else {
+      setTambahan(0);
+    }
+  }, [distance]);
+
   const onLocationChange = (name, latLng) => {
+    const kotaAsal = optionJadwal[
+      optionJadwal.findIndex((e) => (e.options.some((c) => c.value === data.jadwal)))
+    ].options[
+      optionJadwal[
+        optionJadwal.findIndex((e) => (e.options.some((c) => c.value === data.jadwal)))
+      ].options.findIndex((e) => e.value === data.jadwal)
+    ].label.split('-')[0].trim();
+
+    if (kotaAsal === "Sidoarjo") {
+      let jarak = getDistance(latLng, { lat: -7.445115, lng: 112.713006 });
+      setDistance(jarak);
+    } else if (kotaAsal === "Malang") {
+      let jarak = getDistance(latLng, { lat: -7.999355, lng: 112.648296 });
+      setDistance(jarak);
+    }
+
     setData(name, latLng);
   };
 
@@ -141,7 +180,7 @@ const FormOrder = ({ type, jadwalData, jadwalFull, seatTotal, dateStart, seatSis
       rightNow.getDate() === new Date(data.tanggal_pemberangkatan).getDate()
       && rightNow.getMonth() === new Date(data.tanggal_pemberangkatan).getMonth()
       && rightNow.getFullYear() === new Date(data.tanggal_pemberangkatan).getFullYear()
-      ) {
+    ) {
       if (+jadwalFull[data.jadwal - 1].waktu.split(':')[0] - rightNow.getHours() >= 3) {
         setCanOrdered(true);
       } else {
@@ -188,6 +227,10 @@ const FormOrder = ({ type, jadwalData, jadwalFull, seatTotal, dateStart, seatSis
       case "jemput":
         return (
           <DataJemput
+            distance={distance}
+            tambahan={tambahan}
+            // setDistance={setDistance}
+            // setTambahan={setTambahan}
             data={data}
             errors={errors}
             onLocationChange={onLocationChange}

@@ -16,6 +16,7 @@ const DataTujuan = ({ data, onHandleChange, errors, onLocationChange }) => {
               <InputLabel forInput="latlng_tujuan" value="Lokasi Tujuan" className="mb-3" />
               <form className="w-full h-52 md:h-72 rounded-2xl" >
                 <BoxMap
+                  orderType='tujuan'
                   name="latlng_tujuan"
                   latlng={data.latlng_tujuan}
                   onLocationChange={onLocationChange}

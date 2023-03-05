@@ -20,7 +20,7 @@ export function tspNearestNeighbor (coords) {
   return path;
 }
 
-function getDistance (x, y) {
+export function getDistance (x, y) {
   let lat1 = x.lat;
   let lng1 = x.lng;
   let lat2 = y.lat;

@@ -196,7 +196,7 @@ class OrderController extends Controller
       'deskripsi_tujuan' => $request->deskripsi_tujuan
     ]);
 
-    $total_harga = (Layanan::where('id', $request->jadwal)->first('biaya_jasa')->biaya_jasa) * ($request->jumlah_seat);
+    $total_harga = (Schedule::where('id', $request->jadwal)->first()->layanan->biaya_jasa) * ($request->jumlah_seat);
     $order = Order::create([
       'id_lokasi' => $lokasi->id,
       'id_schedule' => $request->jadwal,
@@ -370,7 +370,9 @@ class OrderController extends Controller
       'status' => 'string|required'
     ]);
 
-    $total_harga = (Layanan::where('id', $request->jadwal)->first('biaya_jasa')->biaya_jasa) * ($request->jumlah_seat);
+    // dd()
+
+    $total_harga = (Schedule::where('id', $request->jadwal)->first()->layanan->biaya_jasa) * ($request->jumlah_seat);
 
     $orderUpdate = [
       'id_lokasi' => $order->lokasi->id,

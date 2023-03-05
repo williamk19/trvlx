@@ -117,10 +117,10 @@ const DataOrder = ({
                   name='jadwal'
                   value={
                     optionJadwal[
-                      optionJadwal.findIndex((e) => (e.options.some((c) => c.value === data.jadwal)))
+                      optionJadwal.findIndex((e) => (e.options.some((c) => +c.value === +data.jadwal)))
                     ].options[
                     optionJadwal[
-                      optionJadwal.findIndex((e) => (e.options.some((c) => c.value === data.jadwal)))
+                      optionJadwal.findIndex((e) => (e.options.some((c) => +c.value === +data.jadwal)))
                     ].options.findIndex((e) => e.value === data.jadwal)
                     ]
                   }

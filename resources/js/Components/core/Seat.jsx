@@ -1,21 +1,20 @@
 import { useEffect, useState } from 'react';
 
 const Seat = ({ detail, data, edit, seatDipilih, setSeatDipilih, seatTerpesan }) => {
-  console.log(seatTerpesan);
   const [isSelected, setIsSelected] = useState(
-    ((seatDipilih.some((e) => e.seatNumber === detail.id))
+    ((seatDipilih.some((e) => +e.seatNumber === +detail.id))
       ? true
       : false)
   );
 
   const [isTerpesan, setIsTerpesan] = useState(
-    (seatTerpesan.some((e) => e.seat_number === detail.id))
+    (seatTerpesan.some((e) => +e.seat_number === +detail.id))
       ? true
       : false
   );
 
   useEffect(() => {
-    setIsTerpesan((seatTerpesan.some((e) => e.seat_number === detail.id))
+    setIsTerpesan((seatTerpesan.some((e) => +e.seat_number === +detail.id))
       ? true
       : false);
   }, [seatTerpesan]);
@@ -28,11 +27,11 @@ const Seat = ({ detail, data, edit, seatDipilih, setSeatDipilih, seatTerpesan })
 
   useEffect(() => {
     if (isSelected) {
-      if (!data.seatSelected.some((e) => e.seatNumber === detail.id)) {
+      if (!data.seatSelected.some((e) => +e.seatNumber === +detail.id)) {
         setSeatDipilih((prev) => [...prev, { seatNumber: detail.id }]);
       }
     } else {
-      const deletedData = seatDipilih.filter((e) => e.seatNumber !== detail.id);
+      const deletedData = seatDipilih.filter((e) => +e.seatNumber !== +detail.id);
       setSeatDipilih(deletedData);
     }
   }, [isSelected]);

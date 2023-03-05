@@ -36,12 +36,12 @@ const DataOrder = ({
     setData('seatSelected', seatDipilih);
   }, [seatDipilih]);
 
-  useEffect(() => {
-    if (seatTerpesan.length > 0) {
-      const arrOfSeatTerpesan = seatTerpesan.map((e) => ({ seatNumber: e.seat_number }));
-      setSeatDipilih(arrOfSeatTerpesan);
-    }
-  }, [seatTerpesan]);
+  // useEffect(() => {
+  //   if (seatTerpesan.length > 0) {
+  //     const arrOfSeatTerpesan = seatTerpesan.map((e) => ({ seatNumber: e.seat_number }));
+  //     setSeatDipilih(arrOfSeatTerpesan);
+  //   }
+  // }, [seatTerpesan]);
 
   useEffect(() => {
     rows.current = [];
@@ -62,7 +62,6 @@ const DataOrder = ({
         }
       }
     }
-    console.log(seatTotal);
     setRowsState(rows.current);
     count.current = 0;
   }, [seatTotal]);
