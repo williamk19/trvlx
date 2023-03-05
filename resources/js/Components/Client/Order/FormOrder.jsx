@@ -135,9 +135,7 @@ const FormOrder = ({ type, jadwalData, jadwalFull, seatTotal, dateStart, seatSis
   };
 
   useEffect(() => {
-    if (tambahan > 0) {
-      setData('biaya_tambahan', tambahan);
-    }
+    setData('biaya_tambahan', tambahan);
   }, [tambahan]);
 
   useEffect(() => {

@@ -59,7 +59,6 @@ class ClientOrderController extends Controller
       'deskripsi_tujuan' => 'string|nullable'
     ]);
 
-
     if ($request->biaya_tambahan > 0) {
       $total_harga = ((Schedule::where('id', $request->jadwal)->with('layanan')->first()->layanan->biaya_jasa) * ($request->jumlah_seat)) + $request->biaya_tambahan;
     } else {
@@ -271,7 +270,7 @@ class ClientOrderController extends Controller
         'item_details' => [
           [
             'id' => $order->schedule->layanan->id,
-            'price' => $order->total_harga,
+            'price' => ($order->total_harga / $order->total_seat),
             'quantity' => $order->total_seat,
             'name' => 'Travel ' . $order->schedule->layanan->kota_asal . ' ' . $order->schedule->layanan->kota_tujuan,
           ],
