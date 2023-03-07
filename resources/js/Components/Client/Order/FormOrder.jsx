@@ -67,7 +67,6 @@ const FormOrder = ({ type, jadwalData, jadwalFull, seatTotal, dateStart, seatSis
   }, [errors]);
 
   useEffect(() => {
-    console.log(seatSisa);
     if (seatSisa === undefined) {
       seatSisa = seatEmpty;
     }
@@ -148,20 +147,22 @@ const FormOrder = ({ type, jadwalData, jadwalFull, seatTotal, dateStart, seatSis
   }, [distance]);
 
   const onLocationChange = (name, latLng) => {
-    const kotaAsal = optionJadwal[
-      optionJadwal.findIndex((e) => (e.options.some((c) => c.value === data.jadwal)))
-    ].options[
-      optionJadwal[
+    if (name === "latlng_asal") {
+      const kotaAsal = optionJadwal[
         optionJadwal.findIndex((e) => (e.options.some((c) => c.value === data.jadwal)))
-      ].options.findIndex((e) => e.value === data.jadwal)
-    ].label.split('-')[0].trim();
+      ].options[
+        optionJadwal[
+          optionJadwal.findIndex((e) => (e.options.some((c) => c.value === data.jadwal)))
+        ].options.findIndex((e) => e.value === data.jadwal)
+      ].label.split('-')[0].trim();
 
-    if (kotaAsal === "Sidoarjo") {
-      let jarak = getDistance(latLng, { lat: -7.445115, lng: 112.713006 });
-      setDistance(jarak);
-    } else if (kotaAsal === "Malang") {
-      let jarak = getDistance(latLng, { lat: -7.999355, lng: 112.648296 });
-      setDistance(jarak);
+      if (kotaAsal === "Sidoarjo") {
+        let jarak = getDistance(latLng, { lat: -7.445115, lng: 112.713006 });
+        setDistance(jarak);
+      } else if (kotaAsal === "Malang") {
+        let jarak = getDistance(latLng, { lat: -7.999355, lng: 112.648296 });
+        setDistance(jarak);
+      }
     }
 
     setData(name, latLng);

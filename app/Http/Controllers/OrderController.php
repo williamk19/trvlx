@@ -182,7 +182,7 @@ class OrderController extends Controller
       'alamat_tujuan' => 'required|string|max:255',
       'deskripsi_asal' => 'string|nullable',
       'deskripsi_tujuan' => 'string|nullable',
-      'seatSelected' => ["required", "array", "min:1"]
+      'seatSelected' => ["required", "array", "min:0"]
     ]);
 
     $lokasi = Lokasi::create([

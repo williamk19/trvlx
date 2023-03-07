@@ -46,6 +46,7 @@ class ClientOrderController extends Controller
    */
   public function store(Request $request)
   {
+    DB::statement("SET SQL_MODE=''");
     $request->validate([
       'nama_penumpang' => 'required|string|max:255',
       'tanggal_pemberangkatan' => 'required|date',
@@ -56,13 +57,50 @@ class ClientOrderController extends Controller
       'alamat_asal' => 'required|string|max:255',
       'alamat_tujuan' => 'required|string|max:255',
       'deskripsi_asal' => 'string|nullable',
-      'deskripsi_tujuan' => 'string|nullable'
+      'deskripsi_tujuan' => 'string|nullable',
+      'seatSelected' => ["array", "min:0"]
     ]);
 
+    $jumlahSeat = $request->jumlah_seat;
+    $seatSelected = $request->seatSelected;
+    if ($jumlahSeat == 0) {
+      $dateStart = Carbon::parse($request->tanggal_pemberangkatan)->toDateString();
+      $dataLayananKeberangkatan = Order::with(['schedule' => ['kendaraan']])
+        ->where('status_pembayaran', 'confirmed')
+        ->where('tanggal_pemberangkatan', [$dateStart])
+        ->where('id_schedule', $request->jadwal)
+        ->get();
+
+      $totalSeat = $dataLayananKeberangkatan[0];
+
+      $seatTerpesan = collect(Arr::flatten($dataLayananKeberangkatan->map(function ($item) {
+        return $item->seats;
+      })));
+
+      $seatMap = collect($seatTerpesan->map(function ($item) {
+        return $item->seat_number;
+      }))->sort();
+
+      $jumlahSeat = 1;
+      if (count($seatMap) + 1 <= $totalSeat->schedule->kendaraan->jumlah_seat) {
+        $seatTerpilih = 1;
+
+        for ($i = 1; $i <= $totalSeat->schedule->kendaraan->jumlah_seat; $i++) {
+          if (!$seatMap->contains($i)) {
+            $seatTerpilih = $i;
+            break;
+          }
+        }
+        array_push($seatSelected, [
+          "seatNumber" => $seatTerpilih
+        ]);
+      }
+    }
+
     if ($request->biaya_tambahan > 0) {
-      $total_harga = ((Schedule::where('id', $request->jadwal)->with('layanan')->first()->layanan->biaya_jasa) * ($request->jumlah_seat)) + $request->biaya_tambahan;
+      $total_harga = ((Schedule::where('id', $request->jadwal)->with('layanan')->first()->layanan->biaya_jasa) * ($jumlahSeat)) + $request->biaya_tambahan;
     } else {
-      $total_harga = (Schedule::where('id', $request->jadwal)->with('layanan')->first()->layanan->biaya_jasa) * ($request->jumlah_seat);
+      $total_harga = (Schedule::where('id', $request->jadwal)->with('layanan')->first()->layanan->biaya_jasa) * ($jumlahSeat);
     }
 
     $lokasi = Lokasi::create([
@@ -83,7 +121,7 @@ class ClientOrderController extends Controller
       'nama_penumpang' => $request->nama_penumpang,
       'tanggal_pemberangkatan' => Carbon::parse($request->tanggal_pemberangkatan, 'UTC')->format('Y-m-d'),
       'status_pembayaran' => 'init',
-      'total_seat' => $request->jumlah_seat,
+      'total_seat' => $jumlahSeat,
       'total_harga' => $total_harga
     ]);
 
@@ -92,7 +130,7 @@ class ClientOrderController extends Controller
       'id_payment' => $order->id . "_" . $order->id_user . "_" . $dt,
     ]);
 
-    foreach ($request->seatSelected as $value) {
+    foreach ($seatSelected as $value) {
       Seat::create([
         'id_order' => $order->id,
         'seat_number' => $value['seatNumber']
@@ -261,6 +299,8 @@ class ClientOrderController extends Controller
     }
 
     if ($order->status_pembayaran === 'init') {
+      $hargaSatuan = floatval(number_format((float) ($order->total_harga / $order->total_seat), 0, '.', ''));
+
       $snap = new CreateSnapTokenService();
       $snapToken = $snap->getSnapToken([
         'transaction_details' => [
@@ -270,7 +310,7 @@ class ClientOrderController extends Controller
         'item_details' => [
           [
             'id' => $order->schedule->layanan->id,
-            'price' => ($order->total_harga / $order->total_seat),
+            'price' => $hargaSatuan,
             'quantity' => $order->total_seat,
             'name' => 'Travel ' . $order->schedule->layanan->kota_asal . ' ' . $order->schedule->layanan->kota_tujuan,
           ],

@@ -3,6 +3,8 @@ import DragMarkerMap from './DragMarkerMap';
 import BoxRouteMap from './BoxRouteMap';
 import "leaflet/dist/leaflet.css";
 import GeoSearchMap from './GeoSearchMap';
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import { Icon } from 'leaflet';
 
 const BoxMap = ({
   type = 'pick',
@@ -39,12 +41,16 @@ const BoxMap = ({
       </>}
       {orderType === 'jemput' && (
         <>
-          <Marker position={[-7.999355, 112.648296]}>
+          <Marker
+            icon={new Icon({ iconUrl: markerIcon, iconSize: [25, 41], iconAnchor: [12, 41] })}
+            position={[-7.999355, 112.648296]}>
             <Popup>
               Kantor Malang
             </Popup>
           </Marker>
-          <Marker position={[-7.445115, 112.713006]}>
+          <Marker
+            icon={new Icon({ iconUrl: markerIcon, iconSize: [25, 41], iconAnchor: [12, 41] })}
+            position={[-7.445115, 112.713006]}>
             <Popup>
               Kantor Sidoarjo
             </Popup>
