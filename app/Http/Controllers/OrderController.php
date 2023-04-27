@@ -70,7 +70,7 @@ class OrderController extends Controller
 
     $jadwalDipilih = Schedule::where('id', $idSchedule)->with('kendaraan')->first();
     $seatSisa = $jadwalDipilih?->kendaraan?->jumlah_seat - $jumlahSeatTerpesan;
-    $seatTotal = $jadwalDipilih->kendaraan->jumlah_seat;
+    $seatTotal = $jadwalDipilih?->kendaraan?->jumlah_seat;
 
     return Inertia::render('Admin/FormPageOrder', [
       'type' => 'data',

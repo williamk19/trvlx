@@ -14,17 +14,17 @@ const BenefitsLandingPage = () => {
         </div>
       </div>
       <div className='flex flex-col md:flex-row gap-x-4 justify-between items-center px-0 md:px-10'>
-        <div className='border shadow-lg flex flex-col mb-5 rounded-lg max-w-xs p-8 justify-center items-center'>
+        <div className='border shadow-lg flex flex-col mb-5 rounded-lg max-w-xs p-8 justify-center items-center transition-all duration-500 hover:scale-100 md:hover:scale-110'>
           <img className='w-16 h-16 mb-4' src={best} />
           <h3 className='font-bold text-lg mb-2'>Pelayanan Terbaik</h3>
           <p className='text-sm'>Menyediakan pelayanan terbaik dengan banyak pilihan layanan</p>
         </div>
-        <div className='border shadow-lg flex flex-col mb-5 rounded-lg max-w-xs p-8 justify-center items-center'>
+        <div className='border shadow-lg flex flex-col mb-5 rounded-lg max-w-xs p-8 justify-center items-center transition-all duration-500 hover:scale-100 md:hover:scale-110'>
           <img className='w-16 h-16 mb-4' src={approve} />
           <h3 className='font-bold text-lg mb-2'>Pemesanan Mudah</h3>
           <p className='text-sm'>Menyediakan pelayanan terbaik dengan banyak pilihan layanan</p>
         </div>
-        <div className='border shadow-lg flex flex-col mb-5 rounded-lg max-w-xs p-8 justify-center items-center'>
+        <div className='border shadow-lg flex flex-col mb-5 rounded-lg max-w-xs p-8 justify-center items-center transition-all duration-500 hover:scale-100 md:hover:scale-110'>
           <img className='w-16 h-16 mb-4' src={support} />
           <h3 className='font-bold text-lg mb-2'>Support Yang Cepat</h3>
           <p className='text-sm'>Menyediakan pelayanan terbaik dengan banyak pilihan layanan</p>

@@ -37,7 +37,7 @@ const FormOrder = ({ type, jadwalData, jadwalFull, seatTotal, dateStart, seatSis
   const [tambahan, setTambahan] = useState(0);
 
   const { data, setData, post, processing, errors, reset } = useForm({
-    nama_penumpang: '',
+    nama_penumpang: nameAuth,
     tanggal_pemberangkatan: new Date(),
     jumlah_seat: 1,
     jadwal: optionJadwal[0].options[0].value,
@@ -102,12 +102,33 @@ const FormOrder = ({ type, jadwalData, jadwalFull, seatTotal, dateStart, seatSis
   }, [dateShow]);
 
   useEffect(() => {
-    if (isNameSame) {
+    setData('biaya_tambahan', tambahan);
+  }, [tambahan]);
+
+  useEffect(() => {
+    if (Math.ceil(distance) >= 4) {
+      const tambahan = (Math.ceil(distance) - 4) * 5000;
+      setTambahan(tambahan);
+    } else {
+      setTambahan(0);
+    }
+  }, [distance]);
+
+  useEffect(() => {
+    if (isNameSame && data.nama_penumpang !== nameAuth) {
       setData('nama_penumpang', nameAuth);
-    } else if (!isNameSame) {
+    } else if (!isNameSame && data.nama_penumpang === nameAuth) {
       setData('nama_penumpang', '');
     }
   }, [isNameSame]);
+
+  useEffect(() => {
+    if (data.nama_penumpang !== nameAuth) {
+      setIsNameSame(false);
+    } else if (data.nama_penumpang === nameAuth) {
+      setIsNameSame(true);
+    }
+  }, [data.nama_penumpang]);
 
   const onHandleChange = (event) => {
     if (event.target.name === 'telepon_user') {
@@ -132,19 +153,6 @@ const FormOrder = ({ type, jadwalData, jadwalFull, seatTotal, dateStart, seatSis
     setData('tanggal_pemberangkatan', date);
     setDateShow(date);
   };
-
-  useEffect(() => {
-    setData('biaya_tambahan', tambahan);
-  }, [tambahan]);
-
-  useEffect(() => {
-    if (distance > 5) {
-      const tambahan = (Math.round(distance) - 5) * 5000;
-      setTambahan(tambahan);
-    } else {
-      setTambahan(0);
-    }
-  }, [distance]);
 
   const onLocationChange = (name, latLng) => {
     if (name === "latlng_asal") {

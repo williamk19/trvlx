@@ -45,7 +45,7 @@ const TableJadwal = ({ jadwal, query }) => {
     }
   };
 
-  const ListSchedule = ({id, sopir, kendaraan, waktu, status}) => {
+  const ListSchedule = ({ id, sopir, kendaraan, waktu, status }) => {
     return (
       <tr>
         <td>
@@ -97,6 +97,13 @@ const TableJadwal = ({ jadwal, query }) => {
 
   return (
     <>
+      {data.length === 0 && (
+        <div className='p-5 bg-white rounded-lg shadow-lg'>
+          <h1 className='text-base md:text-lg text-gray-700 font-semibold'>
+            Data Belum Ditemukan
+          </h1>
+        </div>
+      )}
       {data.length > 0 && data?.map((l) => (
         <div key={l.id} data-theme="light" className="overflow-x-auto mb-5 rounded-xl shadow-lg w-full">
           <div className='pl-5 py-3 bg-gray-100'>
@@ -112,7 +119,7 @@ const TableJadwal = ({ jadwal, query }) => {
                 <th className='text-sm font-bold w-4/12 !bg-gray-100'>Kendaraan</th>
                 <th className='text-sm font-bold !bg-gray-100'>
                   Status
-                  </th>
+                </th>
                 <th className='text-sm font-bold !bg-gray-100'></th>
               </tr>
             </thead>

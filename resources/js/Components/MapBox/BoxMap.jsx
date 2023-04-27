@@ -39,7 +39,7 @@ const BoxMap = ({
           onLocationChange={onLocationChange}
         />
       </>}
-      {orderType === 'jemput' && (
+      {orderType === 'jemput' && type !== 'route' && (
         <>
           <Marker
             icon={new Icon({ iconUrl: markerIcon, iconSize: [25, 41], iconAnchor: [12, 41] })}

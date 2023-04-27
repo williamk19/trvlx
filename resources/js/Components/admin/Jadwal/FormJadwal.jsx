@@ -15,18 +15,16 @@ const FormJadwal = ({
   const { data, setData, post, processing, errors, reset, put } = useForm({
     id_layanan: itemJadwal?.id_layanan
       ? itemJadwal.id_layanan
-      : listLayanan[0].value,
+      : listLayanan[0]?.value,
     id_sopir: itemJadwal?.id_sopir
       ? itemJadwal.id_sopir
-      : listKendaraan[0].value,
+      : listSopir[0]?.value,
     id_kendaraan: itemJadwal?.id_kendaraan
       ? itemJadwal.id_kendaraan
-      : listSopir[0].value,
+      : listKendaraan[0]?.value,
     status: itemJadwal?.status ? itemJadwal.status : 'active',
     waktu: itemJadwal?.waktu ? itemJadwal.waktu : '',
   });
-
-
 
   const [timeJadwal, setTimeJadwal] = useState(
     itemJadwal?.waktu
@@ -78,7 +76,7 @@ const FormJadwal = ({
                   Layanan Kota Travel
                 </label>
                 <Select
-                  defaultValue={listLayanan[listLayanan.findIndex((i) => i.value === data.id_layanan)]}
+                  defaultValue={listLayanan[listLayanan.findIndex((i) => +i.value === +data.id_layanan)]}
                   onChange={onSelectChange}
                   name='id_layanan'
                   options={listLayanan} />
@@ -91,7 +89,7 @@ const FormJadwal = ({
                   Kendaraan yang digunakan
                 </label>
                 <Select
-                  defaultValue={listKendaraan[listKendaraan.findIndex((i) => i.value === data.id_kendaraan)]}
+                  defaultValue={listKendaraan[listKendaraan.findIndex((i) => +i.value === +data.id_kendaraan)]}
                   onChange={onSelectChange}
                   name='id_kendaraan'
                   options={listKendaraan} />
@@ -104,7 +102,7 @@ const FormJadwal = ({
                   Sopir Travel
                 </label>
                 <Select
-                  defaultValue={listSopir[listSopir.findIndex((i) => i.value === data.id_sopir)]}
+                  defaultValue={listSopir[listSopir.findIndex((i) => +i.value === +data.id_sopir)]}
                   onChange={onSelectChange}
                   name='id_sopir'
                   options={listSopir} />

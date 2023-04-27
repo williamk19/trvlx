@@ -45,7 +45,7 @@ const FormOrder = ({
     nama_penumpang: orderEdit?.nama_penumpang ? orderEdit.nama_penumpang : '',
     tanggal_pemberangkatan: orderEdit?.tanggal_pemberangkatan ? new Date(orderEdit.tanggal_pemberangkatan) : new Date(),
     jumlah_seat: orderEdit?.total_seat ? orderEdit?.total_seat : 0,
-    jadwal: orderEdit?.id_schedule ? orderEdit?.id_schedule : optionJadwal[0].options[0].value,
+    jadwal: orderEdit?.id_schedule ? orderEdit?.id_schedule : optionJadwal[0]?.options[0]?.value,
     latlng_asal: orderEdit?.lokasi ? {
       lat: orderEdit.lokasi.lat_asal,
       lng: orderEdit.lokasi.lng_asal

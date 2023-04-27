@@ -58,44 +58,11 @@ class ClientOrderController extends Controller
       'alamat_tujuan' => 'required|string|max:255',
       'deskripsi_asal' => 'string|nullable',
       'deskripsi_tujuan' => 'string|nullable',
-      'seatSelected' => ["array", "min:0"]
+      'seatSelected' => ["required", "array", "min:0"]
     ]);
 
     $jumlahSeat = $request->jumlah_seat;
     $seatSelected = $request->seatSelected;
-    if ($jumlahSeat == 0) {
-      $dateStart = Carbon::parse($request->tanggal_pemberangkatan)->toDateString();
-      $dataLayananKeberangkatan = Order::with(['schedule' => ['kendaraan']])
-        ->where('status_pembayaran', 'confirmed')
-        ->where('tanggal_pemberangkatan', [$dateStart])
-        ->where('id_schedule', $request->jadwal)
-        ->get();
-
-      $totalSeat = $dataLayananKeberangkatan[0];
-
-      $seatTerpesan = collect(Arr::flatten($dataLayananKeberangkatan->map(function ($item) {
-        return $item->seats;
-      })));
-
-      $seatMap = collect($seatTerpesan->map(function ($item) {
-        return $item->seat_number;
-      }))->sort();
-
-      $jumlahSeat = 1;
-      if (count($seatMap) + 1 <= $totalSeat->schedule->kendaraan->jumlah_seat) {
-        $seatTerpilih = 1;
-
-        for ($i = 1; $i <= $totalSeat->schedule->kendaraan->jumlah_seat; $i++) {
-          if (!$seatMap->contains($i)) {
-            $seatTerpilih = $i;
-            break;
-          }
-        }
-        array_push($seatSelected, [
-          "seatNumber" => $seatTerpilih
-        ]);
-      }
-    }
 
     if ($request->biaya_tambahan > 0) {
       $total_harga = ((Schedule::where('id', $request->jadwal)->with('layanan')->first()->layanan->biaya_jasa) * ($jumlahSeat)) + $request->biaya_tambahan;
@@ -215,7 +182,6 @@ class ClientOrderController extends Controller
       ->whereHas('schedules', function ($query) {
         $query->where('status', '=', 'active');
       })->get();
-
 
     $jadwalDipilih = Schedule::where('id', $idSchedule)->with('kendaraan')->first();
     $seatSisa = $jadwalDipilih?->kendaraan?->jumlah_seat - $jumlahSeatTerpesan;
