@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { Link, useForm } from '@inertiajs/inertia-react';
+import { Link, useForm } from '@inertiajs/react';
 import InputError from '../../InputError';
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/react';
 
 const FormAddKendaraan = ({ itemKendaraan }) => {
   const { data, setData, post, processing, errors, reset, put } = useForm({

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, usePage } from '@inertiajs/inertia-react';
-import { Inertia } from '@inertiajs/inertia';
+import { Head, usePage } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
 import HeaderAdmin from '@/Components/admin/HeaderAdmin';
 import TableKendaraan from '@/Components/admin/Kendaraan/TableKendaraan';
 import { toast, ToastContainer } from 'react-toastify';

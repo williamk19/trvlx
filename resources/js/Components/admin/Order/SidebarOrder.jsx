@@ -1,5 +1,5 @@
-import { usePage } from '@inertiajs/inertia-react';
-import { Link } from '@inertiajs/inertia-react';
+import { usePage } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import React from 'react';
 
 const SidebarOrder = ({ edit = false, orderId, tanggalPemberangkatan, idJadwal }) => {

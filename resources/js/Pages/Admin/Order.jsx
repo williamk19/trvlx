@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, usePage } from '@inertiajs/inertia-react';
+import { Head, usePage } from '@inertiajs/react';
 import HeaderAdmin from '@/Components/admin/HeaderAdmin';
 import CardOrder from '@/Components/admin/Order/CardOrder';
 import { toast, ToastContainer } from 'react-toastify';

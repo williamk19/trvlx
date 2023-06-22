@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from '@inertiajs/inertia-react';
+import { Link } from '@inertiajs/react';
 
 const HeaderSupir = ({ url, className }) => {
   const nameTransform = (url) => {
@@ -34,8 +34,8 @@ const HeaderSupir = ({ url, className }) => {
                 name: nameTransform(curr),
               });
             }
-            
-          } 
+
+          }
 
           if (idx === arr.length - 1) return acc.crumbs;
           else return acc;

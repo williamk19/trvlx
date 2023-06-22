@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, usePage } from '@inertiajs/inertia-react';
+import { Link, usePage } from '@inertiajs/react';
 import Logo from '@/assets/images/logo.png';
 import LogoSmall from '@/assets/images/logo-small.png';
 import {

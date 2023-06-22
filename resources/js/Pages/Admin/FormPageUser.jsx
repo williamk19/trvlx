@@ -1,8 +1,8 @@
 import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/inertia-react';
+import { Head } from '@inertiajs/react';
 import HeaderKendaraan from '@/Components/admin/HeaderAdmin';
-import { usePage } from '@inertiajs/inertia-react';
+import { usePage } from '@inertiajs/react';
 import FormAddUser from '@/Components/admin/User/FormAddUser';
 
 const FormPageKendaraan = (props) => {

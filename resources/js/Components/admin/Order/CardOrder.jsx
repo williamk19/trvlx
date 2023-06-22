@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from '@inertiajs/inertia-react';
+import { Link } from '@inertiajs/react';
 import note from '@/assets/icon/note.svg'
 import table from '@/assets/icon/table.svg'
 

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, usePage } from '@inertiajs/inertia-react';
+import { Head, usePage } from '@inertiajs/react';
 import ReactDatePicker from 'react-datepicker';
 import DataList from '@/Components/Sopir/Dashboard/DataList';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/react';
 import HeaderSupir from '@/Components/admin/HeaderSupir';
 import HeaderAdmin from '@/Components/admin/HeaderAdmin';
 

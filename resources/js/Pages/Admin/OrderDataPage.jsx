@@ -1,10 +1,10 @@
 import '@/bootstrapAdmin';
 import React, { useState, useEffect } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, usePage } from '@inertiajs/inertia-react';
+import { Head, usePage } from '@inertiajs/react';
 import TableOrder from '@/Components/admin/Order/TableOrder';
 import HeaderAdmin from '@/Components/admin/HeaderAdmin';
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/react';
 import { toast, ToastContainer } from 'react-toastify';
 
 export default function OrderDataPage(props) {

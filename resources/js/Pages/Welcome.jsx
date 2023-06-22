@@ -1,5 +1,5 @@
 import React from "react";
-import { Head } from "@inertiajs/inertia-react";
+import { Head } from '@inertiajs/react'
 import NavbarLandingPage from '@/Components/LandingPage/NavbarLandingPage';
 import HeroLandingPage from '@/Components/LandingPage/HeroLandingPage';
 import FooterLandingPage from '@/Components/LandingPage/FooterLandingPage';

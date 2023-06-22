@@ -2,7 +2,7 @@ import HeaderSupir from '@/Components/admin/HeaderSupir';
 import DetailsCard from '@/Components/Sopir/Antar/DetailsCard';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
-import { Head, Link, usePage } from '@inertiajs/inertia-react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import React from 'react';
 
 const AntarDetail = (props) => {

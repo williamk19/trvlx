@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/react';
 import PaginationKendaraan from '../Kendaraan/PaginationKendaraan';
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
-import { Link } from '@inertiajs/inertia-react';
+import { Link } from '@inertiajs/react';
 
 const TableJadwal = ({ jadwal, query }) => {
   const [data, setData] = useState(jadwal.data);

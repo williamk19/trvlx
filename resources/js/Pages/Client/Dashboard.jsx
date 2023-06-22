@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/inertia-react';
+import { Head, Link } from '@inertiajs/react';
 import { toast, ToastContainer } from 'react-toastify';
 import TravelWrapper from '@/Components/Client/Dashboard/TravelWrapper';
 import PaginationKendaraan from '@/Components/admin/Kendaraan/PaginationKendaraan';
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/react';
 import NotFound from '@/assets/icon/not-found.svg'
 
 export default function Dashboard(props) {

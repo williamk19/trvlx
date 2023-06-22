@@ -1,14 +1,14 @@
 import '@/bootstrapAdmin';
 import React, { useEffect, useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, usePage } from '@inertiajs/inertia-react';
+import { Head, usePage } from '@inertiajs/react';
 import DashboardCard from '@/Components/admin/Dashboard/DashboardCard';
 import cs from '@/assets/icon/cs.png';
 import ticket from '@/assets/icon/ticket.png';
 import travel from '@/assets/icon/travel.png';
 import DashboardTable from '@/Components/admin/Dashboard/DashboardTable';
 import { toast, ToastContainer } from 'react-toastify';
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/react';
 
 export default function Dashboard(props) {
   const [updated, setUpdate] = useState(false);

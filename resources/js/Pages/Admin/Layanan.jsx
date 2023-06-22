@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, usePage } from '@inertiajs/inertia-react';
+import { Head, usePage } from '@inertiajs/react';
 import HeaderAdmin from '@/Components/admin/HeaderAdmin';
 import TableLayanan from '@/Components/admin/Layanan/TableLayanan';
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/react';
 import { toast, ToastContainer } from 'react-toastify';
 
 const Layanan = (props) => {

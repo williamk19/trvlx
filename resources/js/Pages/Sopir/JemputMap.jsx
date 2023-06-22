@@ -3,7 +3,7 @@ import BoxMap from '@/Components/MapBox/BoxMap';
 import AntarJemputCard from '@/Components/Sopir/Antar/AntarJemputCard';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
-import { Head, usePage } from '@inertiajs/inertia-react';
+import { Head, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 
 const JemputMap = (props) => {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { Link, useForm, usePage } from '@inertiajs/inertia-react';
+import { Link, useForm, usePage } from '@inertiajs/react';
 import InputError from '../../InputError';
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/react';
 import { toast, ToastContainer } from 'react-toastify';
 
 const FormAddUser = ({ itemUser, auth }) => {

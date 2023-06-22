@@ -1,5 +1,5 @@
 import { ArrowSmallRightIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
-import { Link } from '@inertiajs/inertia-react';
+import { Link } from '@inertiajs/react';
 
 const TravelCard = ({
   id,

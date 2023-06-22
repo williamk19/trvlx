@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from '@inertiajs/inertia-react';
+import { Link } from '@inertiajs/react';
 import Transition from '../Transition';
 import UserAvatar from '@/assets/images/user-avatar-32.png';
 

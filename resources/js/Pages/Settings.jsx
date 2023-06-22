@@ -1,7 +1,7 @@
 import InputError from '@/Components/InputError';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Inertia } from '@inertiajs/inertia';
-import { Head, useForm } from '@inertiajs/inertia-react';
+import { router } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 

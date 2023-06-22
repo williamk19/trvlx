@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowSmallRightIcon, TruckIcon } from '@heroicons/react/24/solid';
-import { Link } from '@inertiajs/inertia-react';
+import { Link } from '@inertiajs/react';
 
 const DataItem = ({ tanggalPemberangkatan, idLayanan, kotaAsal, kotaTujuan, jamKeberangkatan }) => {
   return (

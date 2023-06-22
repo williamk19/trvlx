@@ -1,5 +1,5 @@
 import InputError from '@/Components/InputError';
-import { useForm } from '@inertiajs/inertia-react';
+import { useForm } from '@inertiajs/react';
 import TimePicker from 'rc-time-picker';
 import Select from 'react-select';
 import 'rc-time-picker/assets/index.css';

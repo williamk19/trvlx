@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Link } from '@inertiajs/inertia-react';
-import { Inertia } from '@inertiajs/inertia';
+import { Link } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
 import CurrencyFormat from 'react-currency-format';
 import PaginationKendaraan from '../Kendaraan/PaginationKendaraan';
 

@@ -2,8 +2,8 @@ import HeaderAdmin from '@/Components/admin/HeaderAdmin';
 import PaymentDetails from '@/Components/Client/Payment/PaymentDetails';
 import PaymentTrigger from '@/Components/Client/Payment/PaymentTrigger';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Inertia } from '@inertiajs/inertia';
-import { Head, usePage } from '@inertiajs/inertia-react';
+import { router } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import React from 'react';
 
 const Payment = (props) => {

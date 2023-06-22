@@ -5,7 +5,7 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import AuthImage from '@/assets/images/image-login.png';
-import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import Banner from '@/Components/core/Banner';
 
 export default function Login({ auth, status, canResetPassword }) {

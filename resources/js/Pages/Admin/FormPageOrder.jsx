@@ -1,7 +1,7 @@
 import HeaderAdmin from '@/Components/admin/HeaderAdmin';
 import FormOrder from '@/Components/admin/Order/FormOrder';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, usePage } from '@inertiajs/inertia-react';
+import { Head, usePage } from '@inertiajs/react';
 import React from 'react';
 
 const FormPageOrder = (props) => {

@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/inertia-react';
+import { Link } from '@inertiajs/react';
 import Typewriter from 'typewriter-effect';
 import PrimaryButton from '../PrimaryButton';
 

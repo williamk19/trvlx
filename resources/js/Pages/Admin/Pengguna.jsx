@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, usePage } from '@inertiajs/inertia-react';
+import { Head, usePage } from '@inertiajs/react';
 import CardUser from '@/Components/admin/User/CardUser';
 import HeaderAdmin from '@/Components/admin/HeaderAdmin';
 

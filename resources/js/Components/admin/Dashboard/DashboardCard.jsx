@@ -1,5 +1,5 @@
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
-import { Link } from '@inertiajs/inertia-react';
+import { Link } from '@inertiajs/react';
 import React from 'react';
 
 const DashboardCard = ({ id, imgUrl, title, count, doneCount, url }) => {

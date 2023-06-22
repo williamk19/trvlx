@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from '@inertiajs/inertia-react';
-import { Inertia } from '@inertiajs/inertia';
+import { Link } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
 import PaginationKendaraan from './PaginationKendaraan';
 
 const TableKendaraan = ({ kendaraan, query }) => {

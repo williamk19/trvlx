@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import SidebarOrder from './SidebarOrder';
 import DataOrder from './DataOrder';
-import { Link, useForm, useRemember } from '@inertiajs/inertia-react';
+import { Link, useForm, useRemember } from '@inertiajs/react';
 import DataJemput from './DataJemput';
 import DataTujuan from './DataTujuan';
 import Modal from '@/Components/core/Modal';
 import { ToastContainer, toast } from 'react-toastify';
 import _ from 'lodash';
 import 'react-toastify/dist/ReactToastify.css';
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/react';
 
 const FormOrder = ({
   type,

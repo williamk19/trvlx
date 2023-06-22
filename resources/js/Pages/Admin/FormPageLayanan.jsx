@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/inertia-react';
+import { Head } from '@inertiajs/react';
 import HeaderAdmin from '@/Components/admin/HeaderAdmin';
-import { usePage } from '@inertiajs/inertia-react';
+import { usePage } from '@inertiajs/react';
 import FormLayanan from '@/Components/admin/Layanan/FormLayanan';
 
 const FormPageLayanan = (props) => {
