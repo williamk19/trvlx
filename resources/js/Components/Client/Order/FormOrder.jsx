@@ -81,7 +81,7 @@ const FormOrder = ({ type, jadwalData, jadwalFull, seatTotal, dateStart, seatSis
 
   useEffect(() => {
     if (update) {
-      Inertia.get(route(route().current()),
+      router.get(route(route().current()),
         { tanggalPemberangkatan: date, idJadwal: data.jadwal },
         {
           replace: true,

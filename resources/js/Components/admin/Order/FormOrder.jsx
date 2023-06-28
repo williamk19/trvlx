@@ -92,7 +92,7 @@ const FormOrder = ({
   useEffect(() => {
     if (update) {
       if (orderEdit) {
-        Inertia.get(`/order/list/${orderId}/data`,
+        router.get(`/order/list/${orderId}/data`,
           { tanggalPemberangkatan: date, idJadwal: data.jadwal },
           {
             replace: true,
@@ -101,7 +101,7 @@ const FormOrder = ({
           }
         );
       } else {
-        Inertia.get(route(route().current()),
+        router.get(route(route().current()),
           { tanggalPemberangkatan: date, idJadwal: data.jadwal },
           {
             replace: true,

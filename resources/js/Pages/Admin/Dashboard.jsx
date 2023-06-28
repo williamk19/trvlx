@@ -24,7 +24,7 @@ export default function Dashboard(props) {
 
   useEffect(() => {
     if (updated === true) {
-      Inertia.visit(`${base_url}`, {
+      router.visit(`${base_url}`, {
         replace: true,
         preserveState: true,
         preserveScroll: true

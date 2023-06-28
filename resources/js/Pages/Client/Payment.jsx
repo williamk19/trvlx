@@ -15,22 +15,22 @@ const Payment = (props) => {
       let snapToken = props.snapToken;
       snap.pay(snapToken, {
         onSuccess: function (result) {
-          return Inertia.reload({
+          return router.reload({
             preserveScroll: true
           });
         },
         onPending: function (result) {
-          return Inertia.reload({
+          return router.reload({
             preserveScroll: true
           });
         },
         onError: function (result) {
-          return Inertia.reload({
+          return router.reload({
             preserveScroll: true
           });
         },
         onClose: function () {
-          return Inertia.reload({
+          return router.reload({
             preserveScroll: true
           });
         }

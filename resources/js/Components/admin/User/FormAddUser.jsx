@@ -23,7 +23,7 @@ const FormAddUser = ({ itemUser, auth }) => {
     e.preventDefault();
     if (itemUser.id === auth.user.id)
       return toast.error('Anda tidak dapat hapus akun sendiri');
-    Inertia.delete(route("user.destroy", itemUser.id));
+    router.delete(route("user.destroy", itemUser.id));
   };
 
   const submit = (e) => {

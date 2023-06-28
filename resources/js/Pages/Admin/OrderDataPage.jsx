@@ -23,13 +23,13 @@ export default function OrderDataPage(props) {
   useEffect(() => {
     if (updated === true) {
       if (searchQuery === "") {
-        Inertia.visit(`${base_url}`, {
+        router.visit(`${base_url}`, {
           replace: true,
           preserveState: true,
           preserveScroll: true
         });
       } else {
-        Inertia.get(route(route().current()),
+        router.get(route(route().current()),
           { search: searchQuery },
           {
             replace: true,
@@ -100,13 +100,13 @@ export default function OrderDataPage(props) {
   useEffect(() => {
     if (searchQuery !== props.query) {
       if (searchQuery === "") {
-        Inertia.visit(`${base_url}`, {
+        router.visit(`${base_url}`, {
           replace: true,
           preserveState: true,
           preserveScroll: true
         });
       } else {
-        Inertia.get(route(route().current()),
+        router.get(route(route().current()),
           { search: searchQuery },
           {
             replace: true,

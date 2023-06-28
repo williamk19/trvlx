@@ -16,7 +16,7 @@ export default function Dashboard(props) {
 
   useEffect(() => {
     if (update) {
-      Inertia.get(route(route().current()),
+      router.get(route(route().current()),
         { tanggalPemberangkatan: date },
         {
           replace: true,

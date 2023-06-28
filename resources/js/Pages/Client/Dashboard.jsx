@@ -21,7 +21,7 @@ export default function Dashboard(props) {
   const handleNextClick = () => {
     if (nextUrl === null)
       return;
-    Inertia.get(nextUrl, {}, {
+    router.get(nextUrl, {}, {
       replace: true
     });
   };
@@ -29,7 +29,7 @@ export default function Dashboard(props) {
   const handlePrevClick = () => {
     if (prevUrl === null)
       return;
-    Inertia.get(prevUrl, {}, {
+    router.get(prevUrl, {}, {
       replace: true
     });
   };

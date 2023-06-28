@@ -17,7 +17,7 @@ const FormAddKendaraan = ({ itemKendaraan }) => {
 
   const handleDelete = (e) => {
     e.preventDefault();
-    Inertia.delete(route("kendaraan.destroy", itemKendaraan.id));
+    router.delete(route("kendaraan.destroy", itemKendaraan.id));
   }
 
   const submit = (e) => {

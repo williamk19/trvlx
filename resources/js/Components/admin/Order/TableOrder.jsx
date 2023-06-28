@@ -36,11 +36,11 @@ const TableOrder = ({ order, query }) => {
       return;
 
     if (query) {
-      Inertia.get(`${nextUrl}&search=${query}`, {}, {
+      router.get(`${nextUrl}&search=${query}`, {}, {
         replace: true
       });
     } else if (nextUrl !== null) {
-      Inertia.get(nextUrl, {}, {
+      router.get(nextUrl, {}, {
         replace: true
       });
     }
@@ -51,11 +51,11 @@ const TableOrder = ({ order, query }) => {
       return;
 
     if (query) {
-      Inertia.get(`${prevUrl}&search=${query}`, {}, {
+      router.get(`${prevUrl}&search=${query}`, {}, {
         replace: true
       });
     } else if (prevUrl !== null) {
-      Inertia.get(prevUrl, {}, {
+      router.get(prevUrl, {}, {
         replace: true
       });
     }
