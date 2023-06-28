@@ -5,6 +5,7 @@
 /storage/*.key
 /vendor
 .env
+.env.prod
 .env.backup
 .phpunit.result.cache
 Homestead.json
@@ -16,3 +17,4 @@ yarn-error.log
 /.vscode
 /mosaic-react
 /storage/debugbar
+/mysql-data

@@ -101,29 +101,6 @@ class DatabaseSeeder extends Seeder
       ],
     ]);
 
-    // Layanan::insert([
-    //   [
-    //     'id_sopir' => 3,
-    //     'id_kendaraan' => 1,
-    //     'kota_asal' => 'Surabaya',
-    //     'kota_tujuan' => 'Malang',
-    //     'biaya_jasa' => '100000',
-    //     'status' => 'active',
-    //     'created_at' => $now,
-    //     'updated_at' => $now
-    //   ],
-    //   [
-    //     'id_sopir' => 3,
-    //     'id_kendaraan' => 1,
-    //     'kota_asal' => 'Malang',
-    //     'kota_tujuan' => 'Madura',
-    //     'biaya_jasa' => '200000',
-    //     'status' => 'active',
-    //     'created_at' => $now,
-    //     'updated_at' => $now
-    //   ],
-    // ]);
-
-    // User::factory(10)->create();
+    User::factory(40)->create();
   }
 }
