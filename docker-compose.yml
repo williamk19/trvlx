@@ -1,0 +1,94 @@
+version: "3.8"
+
+services:
+  webserver:
+    image: nginx:alpine
+    container_name: trvlx-nginx
+    ports:
+      - "8082:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    depends_on:
+      - php
+      - database
+    networks:
+      - trvlx
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 150M
+        reservations:
+          cpus: '0.3'
+          memory: 50M
+
+  php:
+    container_name: trvlx-php
+    image: williamk19/trvlx-php:latest
+    build:
+      context: .
+      target: php
+    environment:
+      - APP_ENV=${APP_ENV}
+      - DB_HOST=database
+      - CONTAINER_ROLE=app
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www/
+    depends_on:
+      - database
+    networks:
+      - trvlx
+    deploy:
+      resources:
+        limits:
+          cpus: '0.75'
+          memory: 200M
+        reservations:
+          cpus: '0.5'
+          memory: 128M
+
+  database:
+    container_name: trvlx-db
+    image: mysql:latest
+    tty: true
+    ports:
+      - "3308:3306"
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - trvlx-db:/var/lib/mysql
+    networks:
+      - trvlx
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 400M
+        reservations:
+          cpus: '0.3'
+          memory: 100M
+
+  soketi:
+    container_name: trvlx-soketi
+    image: quay.io/soketi/soketi:latest-16-alpine
+    environment:
+      - SOKETI_DEBUG='${DEBUG:-1}'
+      - DEFAULT_APP_ID='${PUSHER_APP_ID}'
+      - DEFAULT_APP_KEY='${PUSHER_APP_KEY}'
+      - DEFAULT_APP_SECRET='${PUSHER_APP_SECRET}'
+      - PUSHER_HOST='${PUSHER_HOST}'
+      - PUSHER_PORT= '${PUSHER_PORT}'
+      - PUSHER_SCHEME='${PUSHER_SCHEME}'
+    networks:
+      - trvlx
+
+volumes:
+  trvlx-db:
+
+networks:
+  trvlx:
